@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Literacy Portfolio | 김리원</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        // Tailwind config for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap');
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .light-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Modal Animation */
+        .modal {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            opacity: 0;
+        }
+        .modal.active {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        /* Custom glow effects for colorful cards */
+        .glow-blue:hover { box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.3); border-color: rgba(59, 130, 246, 0.5); }
+        .glow-purple:hover { box-shadow: 0 10px 30px -5px rgba(139, 92, 246, 0.3); border-color: rgba(139, 92, 246, 0.5); }
+        .glow-emerald:hover { box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.3); border-color: rgba(16, 185, 129, 0.5); }
+        .glow-rose:hover { box-shadow: 0 10px 30px -5px rgba(244, 63, 94, 0.3); border-color: rgba(244, 63, 94, 0.5); }
+        .glow-amber:hover { box-shadow: 0 10px 30px -5px rgba(245, 158, 11, 0.3); border-color: rgba(245, 158, 11, 0.5); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-[#030712] dark:text-gray-100 min-h-screen">
+
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="p-3 rounded-full light-glass dark:glass border border-slate-200 dark:border-white/10 hover:scale-110 transition-transform shadow-lg">
+        <i id="theme-icon" class="fas fa-moon text-slate-700 dark:text-yellow-400"></i>
+    </button>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-16 px-6 text-center overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-blue-600/10 dark:bg-blue-600/20 blur-[120px] rounded-full"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
+                AI 리터러시의 이해:<br>
+                <span class="gradient-text">데이터로 세상을 읽고 AI로 가치를 더하다</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 dark:text-gray-400 mb-8 leading-relaxed">
+                현실 세계의 복합적인 문제를 정의하고 데이터를 해석하며,<br class="hidden md:block"> 
+                의미 있는 스토리텔링을 통해 새로운 가치를 창출하는 과정을 담았습니다.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="px-4 py-2 rounded-full light-glass dark:glass text-sm font-semibold border border-blue-500/30 text-blue-600 dark:text-blue-400">#데이터분석</span>
+                <span class="px-4 py-2 rounded-full light-glass dark:glass text-sm font-semibold border border-purple-500/30 text-purple-600 dark:text-purple-400">#AI리터러시</span>
+                <span class="px-4 py-2 rounded-full light-glass dark:glass text-sm font-semibold border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">#공공정책</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="max-w-7xl mx-auto px-6 pb-24 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="assignment-grid">
+            <!-- Cards injected by JS -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative py-20 px-6 border-t border-slate-200 dark:border-white/5 bg-white/50 dark:bg-black/40">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                <div class="relative w-36 h-36 rounded-2xl light-glass dark:glass flex items-center justify-center overflow-hidden border border-white/20">
+                    <img src="https://www.pusan.ac.kr/_contents/kor/_Img/07Intro/character01.jpg" alt="김리원 프로필" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div class="text-center md:text-left">
+                <h3 class="text-3xl font-black mb-2 text-slate-900 dark:text-white">김리원 <span class="text-sm font-medium text-slate-500 dark:text-gray-500 ml-2 uppercase tracking-widest">Kim Ri Won</span></h3>
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-4">
+                    <span class="text-sm font-bold text-blue-600 dark:text-blue-400">공공정책학부</span>
+                    <span class="text-slate-300 dark:text-gray-700">|</span>
+                    <span class="text-sm font-bold text-purple-600 dark:text-purple-400">SW 융합트랙 이수 중</span>
+                </div>
+                <p class="text-slate-600 dark:text-gray-400 text-base mb-6 leading-relaxed max-w-xl">
+                    공공정책의 통찰력과 데이터 분석 기술을 결합하여 사회적 가치를 설계합니다. <br>
+                    데이터를 도구 삼아 더 나은 세상을 위한 질문을 던지는 연구자를 꿈꿉니다.
+                </p>
+                <div class="flex justify-center md:justify-start">
+                    <a href="mailto:rladpdms200215@gmail.com" class="group flex items-center gap-3 px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-blue-600 hover:text-white transition-all duration-300">
+                        <i class="far fa-envelope text-blue-500 group-hover:text-white transition-colors"></i> 
+                        <span class="text-sm font-medium">rladpdms200215@gmail.com</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-20 text-center text-[10px] font-bold tracking-[0.2em] text-slate-400 dark:text-gray-600 uppercase">
+            &copy; 2024 AI Literacy Portfolio Portfolio Design by Kim Ri-won
+        </div>
+    </footer>
+
+    <!-- Modal Shell -->
+    <div id="modal" class="modal fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/40 dark:bg-black/90 backdrop-blur-md">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] p-10 relative scale-95 transition-transform duration-300 shadow-2xl border border-slate-200 dark:border-white/10" id="modal-content">
+            <button onclick="closeModal()" class="absolute top-8 right-8 w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 dark:bg-white/5 text-slate-400 hover:text-rose-500 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        function updateTheme(isDark) {
+            if (isDark) {
+                html.classList.add('dark');
+                themeIcon.className = 'fas fa-sun text-yellow-400';
+            } else {
+                html.classList.remove('dark');
+                themeIcon.className = 'fas fa-moon text-slate-700';
+            }
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        updateTheme(savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches));
+
+        themeToggle.onclick = () => updateTheme(!html.classList.contains('dark'));
+
+        // All assignments now have links for "결과물 보기"
+        const assignments = [
+            { 
+                id: "01", 
+                title: "AI의 이해", 
+                tool: "NotebookLM", 
+                icon: "fa-book-open", 
+                color: "blue", 
+                link: "./02/index.html",
+                summary: "AI의 정의와 역사, 생성형 AI의 개념을 NotebookLM으로 분석하고 학습 자료를 구성합니다.",
+                detail: "구글의 AI 기반 협업 도구인 NotebookLM을 활용하여 인공지능의 핵심 개념을 정리했습니다. 1950년대 튜링 테스트부터 현대의 트랜스포머 모델까지의 발전사를 추적하고, 생성형 AI가 사회 전반에 미치는 영향을 분석했습니다."
+            },
+            { id: "02", id_long: true, title: "공공 데이터를 활용한 문제 정의", tool: "Python, Pandas", icon: "fa-database", color: "purple", link: "#", summary: "정량적 데이터를 통해 사회적 이슈를 논리적으로 정의합니다.", detail: "실제 데이터를 수집하여 가공되지 않은 정보에서 의미 있는 사회적 어젠다를 도출하는 과정을 수행했습니다." },
+            { id: "03", title: "데이터 전처리와 정제 실무", tool: "Excel, OpenRefine", icon: "fa-filter", color: "emerald", link: "#", summary: "노이즈를 제거하고 분석 가치가 높은 데이터셋을 구축합니다.", detail: "데이터 분석의 핵심인 전처리 과정을 실습하며, 데이터 품질이 최종 결과에 미치는 영향을 직접 확인했습니다." },
+            { id: "04", title: "정보 시각화와 리터러시", tool: "Tableau, Canva", icon: "fa-chart-area", color: "rose", link: "#", summary: "복잡한 정보를 직관적인 비주얼로 변환하는 전략을 수립합니다.", detail: "수치 데이터를 설득력 있는 이야기로 바꾸는 시각화 기법을 학습하고 정보를 왜곡 없이 전달하는 원칙을 적용했습니다." },
+            { id: "05", title: "AI 활용의 윤리적 가이드라인", tool: "Ethics Research", icon: "fa-balance-scale", color: "amber", link: "#", summary: "기술 활용 과정에서의 책임감과 공정성을 심도 있게 고찰합니다.", detail: "AI가 가져올 수 있는 편향성과 윤리적 쟁점을 다각도에서 검토하고 나만의 활용 원칙을 세웠습니다." },
+            { id: "06", title: "머신러닝 기반 예측 모델링", tool: "Scikit-Learn", icon: "fa-project-diagram", color: "blue", link: "#", summary: "데이터를 학습하여 미래의 정책 수요를 예측하는 모델을 설계합니다.", detail: "과거 경향성을 바탕으로 데이터 간 상관관계를 파악하고 정책 지원 예측 시스템을 구축해 보았습니다." },
+            { id: "07", id_long: true, title: "텍스트 마이닝과 오피니언 리딩", tool: "NLP Tools", icon: "fa-comments", color: "purple", link: "#", summary: "시민들의 목소리에서 핵심 여론과 감성을 추출합니다.", detail: "비정형 언어 데이터를 수집하여 시민들이 느끼는 정책에 대한 감성과 주요 이슈 사항을 정량화 분석했습니다." },
+            { id: "08", title: "AI 에셋 생성과 브랜딩", tool: "Midjourney", icon: "fa-palette", color: "emerald", link: "#", summary: "AI 생성 이미지를 활용하여 고유한 비주얼 정체성을 확립합니다.", detail: "생성형 AI를 창의적 파트너로 활용하여 브랜드 메시지를 시각적으로 구체화하는 고도의 프롬프팅을 실습했습니다." },
+            { id: "09", title: "프롬프트 아키텍처 최적화", tool: "Prompt Engineering", icon: "fa-terminal", color: "rose", link: "#", summary: "AI와의 효율적인 협업을 위한 논리적 대화 구조를 설계합니다.", detail: "AI로부터 최상의 결과물을 얻기 위해 지시어의 구조와 문맥을 어떻게 설계해야 하는지 프레임워크를 개발했습니다." },
+            { id: "10", title: "AI 스토리텔링 최종 프로젝트", tool: "All Integrated", icon: "fa-rocket", color: "amber", link: "#", summary: "분석과 창의성을 결합한 완성도 높은 디지털 리포트를 제작합니다.", detail: "학습한 데이터 분석, 시각화, AI 생성 능력을 결합하여 대중의 공감을 얻는 포괄적 프로젝트를 완성했습니다." }
+        ];
+
+        const colorClasses = {
+            blue: { text: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-500/10", glow: "glow-blue", accent: "bg-blue-500" },
+            purple: { text: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-500/10", glow: "glow-purple", accent: "bg-purple-500" },
+            emerald: { text: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-500/10", glow: "glow-emerald", accent: "bg-emerald-500" },
+            rose: { text: "text-rose-600 dark:text-rose-400", bg: "bg-rose-50 dark:bg-rose-500/10", glow: "glow-rose", accent: "bg-rose-500" },
+            amber: { text: "text-amber-600 dark:text-amber-400", bg: "bg-amber-50 dark:bg-amber-500/10", glow: "glow-amber", accent: "bg-amber-500" }
+        };
+
+        const grid = document.getElementById('assignment-grid');
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalBody = document.getElementById('modal-body');
+
+        assignments.forEach((item) => {
+            const cls = colorClasses[item.color];
+            const card = document.createElement('div');
+            card.className = `group bg-white dark:bg-white/5 p-8 rounded-[2rem] card-hover border border-slate-200 dark:border-white/5 transition-all duration-500 flex flex-col justify-between cursor-pointer ${cls.glow} ${item.id_long ? 'md:col-span-2' : ''}`;
+            
+            card.innerHTML = `
+                <div>
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="px-4 py-1.5 rounded-full ${cls.bg} ${cls.text} text-[10px] font-black uppercase tracking-tighter">Assignment ${item.id}</div>
+                        <div class="w-12 h-12 rounded-2xl ${cls.bg} ${cls.text} flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-500 shadow-inner">
+                            <i class="fas ${item.icon}"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-4 leading-tight tracking-tight group-hover:${cls.text} transition-colors">${item.title}</h2>
+                    <p class="text-slate-500 dark:text-gray-400 text-sm leading-relaxed mb-4">${item.summary}</p>
+                </div>
+                <div class="flex items-center justify-between mt-8">
+                    <div class="flex items-center gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full ${cls.accent} animate-pulse"></div>
+                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">${item.tool}</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all">
+                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    </div>
+                </div>
+            `;
+            
+            // Clicking card opens the modal for all items
+            card.onclick = () => openModal(item);
+            grid.appendChild(card);
+        });
+
+        function openModal(item) {
+            const cls = colorClasses[item.color];
+            modalBody.innerHTML = `
+                <div class="inline-block px-4 py-1 rounded-full ${cls.bg} ${cls.text} text-xs font-black mb-4 uppercase tracking-widest">Task ${item.id} Overview</div>
+                <h2 class="text-4xl font-black mb-6 text-slate-900 dark:text-white leading-tight">${item.title}</h2>
+                <div class="flex flex-wrap gap-3 mb-10">
+                    <div class="px-4 py-2 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-300 text-xs font-bold">
+                        <i class="fas fa-tools mr-2 ${cls.text}"></i> ${item.tool}
+                    </div>
+                </div>
+                <div class="space-y-6 text-slate-600 dark:text-gray-400 leading-relaxed">
+                    <p class="text-xl text-slate-900 dark:text-white font-bold tracking-tight">Project Insight</p>
+                    <p class="text-lg">${item.detail}</p>
+                    <div class="p-6 rounded-2xl border-l-4 ${cls.accent.replace('bg-', 'border-')} bg-slate-50 dark:bg-white/5 italic">
+                        "기술의 본질을 이해하는 것이 AI 리터러시의 첫걸음임을 깨달았습니다."
+                    </div>
+                </div>
+                <div class="mt-12 flex justify-end gap-4">
+                    <button onclick="closeModal()" class="px-8 py-4 bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-white rounded-2xl font-black text-sm hover:bg-slate-200 dark:hover:bg-white/20 transition-all">닫기</button>
+                    <button onclick="window.location.href='${item.link}'" class="px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-black rounded-2xl font-black text-sm hover:scale-105 transition-transform shadow-xl">결과물 보기</button>
+                </div>
+            `;
+            modal.classList.add('active');
+            setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+        }
+
+        function closeModal() {
+            modalContent.classList.add('scale-95');
+            modal.classList.remove('active');
+        }
+
+        window.onclick = (e) => { if (e.target === modal) closeModal(); }
+    </script>
+</body>
+</html>
