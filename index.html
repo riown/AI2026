@@ -34,6 +34,7 @@
 
         .card-hover:hover {
             transform: translateY(-8px);
+            z-index: 10;
         }
 
         .gradient-text {
@@ -42,11 +43,12 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Modal Animation */
+        /* Modal Animation - Optimized for visibility */
         .modal {
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.3s ease;
             pointer-events: none;
             opacity: 0;
+            z-index: 1000;
         }
         .modal.active {
             pointer-events: auto;
@@ -60,7 +62,6 @@
             z-index: 100;
         }
 
-        /* Custom glow effects for colorful cards */
         .glow-blue:hover { box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.3); border-color: rgba(59, 130, 246, 0.5); }
         .glow-purple:hover { box-shadow: 0 10px 30px -5px rgba(139, 92, 246, 0.3); border-color: rgba(139, 92, 246, 0.5); }
         .glow-emerald:hover { box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.3); border-color: rgba(16, 185, 129, 0.5); }
@@ -137,8 +138,8 @@
     </footer>
 
     <!-- Modal Shell -->
-    <div id="modal" class="modal fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/40 dark:bg-black/90 backdrop-blur-md">
-        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] p-10 relative scale-95 transition-transform duration-300 shadow-2xl border border-slate-200 dark:border-white/10" id="modal-content">
+    <div id="modal" class="modal fixed inset-0 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-black/95 backdrop-blur-md">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] p-10 relative scale-95 transition-all duration-300 shadow-2xl border border-slate-200 dark:border-white/10" id="modal-content" style="z-index: 1001;">
             <button onclick="closeModal()" class="absolute top-8 right-8 w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 dark:bg-white/5 text-slate-400 hover:text-rose-500 transition-colors">
                 <i class="fas fa-times"></i>
             </button>
@@ -167,7 +168,7 @@
 
         themeToggle.onclick = () => updateTheme(!html.classList.contains('dark'));
 
-        // All assignments now have links for "결과물 보기"
+        // Assignment Data
         const assignments = [
             { 
                 id: "01", 
@@ -179,7 +180,17 @@
                 summary: "AI의 정의와 역사, 생성형 AI의 개념을 NotebookLM으로 분석하고 학습 자료를 구성합니다.",
                 detail: "구글의 AI 기반 협업 도구인 NotebookLM을 활용하여 인공지능의 핵심 개념을 정리했습니다. 1950년대 튜링 테스트부터 현대의 트랜스포머 모델까지의 발전사를 추적하고, 생성형 AI가 사회 전반에 미치는 영향을 분석했습니다."
             },
-            { id: "02", id_long: true, title: "공공 데이터를 활용한 문제 정의", tool: "Python, Pandas", icon: "fa-database", color: "purple", link: "#", summary: "정량적 데이터를 통해 사회적 이슈를 논리적으로 정의합니다.", detail: "실제 데이터를 수집하여 가공되지 않은 정보에서 의미 있는 사회적 어젠다를 도출하는 과정을 수행했습니다." },
+            { 
+                id: "02", 
+                id_long: true, 
+                title: "데이터 스토리텔링", 
+                tool: "Gemini 스토리북", 
+                icon: "fa-database", 
+                color: "purple", 
+                link: "./03/index.html", 
+                summary: "공공 데이터를 분석하고 인사이트를 도출하여 시각적으로 설득력 있는 레포트를 작성하여 스토리북으로 만들기", 
+                detail: "실제 데이터를 수집하여 가공되지 않은 정보에서 의미 있는 사회적 어젠다를 도출하고, 이를 Gemini와 결합하여 한 편의 완성도 높은 데이터 스토리북으로 변환하는 과정을 수행했습니다." 
+            },
             { id: "03", title: "데이터 전처리와 정제 실무", tool: "Excel, OpenRefine", icon: "fa-filter", color: "emerald", link: "#", summary: "노이즈를 제거하고 분석 가치가 높은 데이터셋을 구축합니다.", detail: "데이터 분석의 핵심인 전처리 과정을 실습하며, 데이터 품질이 최종 결과에 미치는 영향을 직접 확인했습니다." },
             { id: "04", title: "정보 시각화와 리터러시", tool: "Tableau, Canva", icon: "fa-chart-area", color: "rose", link: "#", summary: "복잡한 정보를 직관적인 비주얼로 변환하는 전략을 수립합니다.", detail: "수치 데이터를 설득력 있는 이야기로 바꾸는 시각화 기법을 학습하고 정보를 왜곡 없이 전달하는 원칙을 적용했습니다." },
             { id: "05", title: "AI 활용의 윤리적 가이드라인", tool: "Ethics Research", icon: "fa-balance-scale", color: "amber", link: "#", summary: "기술 활용 과정에서의 책임감과 공정성을 심도 있게 고찰합니다.", detail: "AI가 가져올 수 있는 편향성과 윤리적 쟁점을 다각도에서 검토하고 나만의 활용 원칙을 세웠습니다." },
@@ -230,10 +241,17 @@
                 </div>
             `;
             
-            // Clicking card opens the modal for all items
             card.onclick = () => openModal(item);
             grid.appendChild(card);
         });
+
+        function handleNavigate(link) {
+            if (link && link !== "#") {
+                window.location.href = link;
+            } else {
+                console.log("준비 중인 페이지입니다.");
+            }
+        }
 
         function openModal(item) {
             const cls = colorClasses[item.color];
@@ -254,14 +272,22 @@
                 </div>
                 <div class="mt-12 flex justify-end gap-4">
                     <button onclick="closeModal()" class="px-8 py-4 bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-white rounded-2xl font-black text-sm hover:bg-slate-200 dark:hover:bg-white/20 transition-all">닫기</button>
-                    <button onclick="window.location.href='${item.link}'" class="px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-black rounded-2xl font-black text-sm hover:scale-105 transition-transform shadow-xl">결과물 보기</button>
+                    <button id="modal-action-btn" class="px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-black rounded-2xl font-black text-sm hover:scale-105 transition-transform shadow-xl">결과물 보기</button>
                 </div>
             `;
+            
+            const actionBtn = document.getElementById('modal-action-btn');
+            actionBtn.onclick = () => handleNavigate(item.link);
+            
             modal.classList.add('active');
-            setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
         }
 
         function closeModal() {
+            modalContent.classList.remove('scale-100');
             modalContent.classList.add('scale-95');
             modal.classList.remove('active');
         }
