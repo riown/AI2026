@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹 기술의 이해: 건축 비유로 배우는 웹</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-node.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-cubes text-blue-600 text-2xl"></i>
+                    <span class="font-bold text-xl tracking-tight">WebTech 2025</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                    <a href="#intro" class="hover:text-blue-600">도입</a>
+                    <a href="#core" class="hover:text-blue-600">3대 기술</a>
+                    <a href="#rendering" class="hover:text-blue-600">렌더링</a>
+                    <a href="#future" class="hover:text-blue-600">미래</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="intro" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                웹을 만드는 <span class="gradient-text">세 가지 마법</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed">
+                웹 페이지를 구축하는 과정은 하나의 건축물을 올리는 과정과 흡사합니다.<br class="hidden md:block">
+                튼튼한 골조 위에 아름다운 디자인과 지능적인 로직이 더해지는 여정을 시작해 보세요.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm card-hover">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-building text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">HTML (뼈대)</h3>
+                    <p class="text-sm text-slate-500">정보의 구조와 용도를 정의하는 골조 공사</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm card-hover">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-paint-roller text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">CSS (인테리어)</h3>
+                    <p class="text-sm text-slate-500">심미적 가치와 레이아웃을 입히는 공간 설계</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm card-hover">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-microchip text-yellow-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">JS (기계 설비)</h3>
+                    <p class="text-sm text-slate-500">동적인 생명력과 지능을 부여하는 두뇌</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HTML Section -->
+    <section id="core" class="py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12 mb-20">
+                <div class="flex-1">
+                    <span class="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded-full mb-4">STRUCTURE</span>
+                    <h2 class="text-3xl font-bold mb-6">🧱 HTML: 건물의 뼈대를 세우는 '구조 정의'</h2>
+                    <p class="text-slate-600 mb-6">
+                        HTML은 정보의 성격을 규정하는 <strong>마크업 언어</strong>입니다. 단순히 텍스트를 나열하는 것이 아니라, 브라우저에게 문서의 각 부분이 어떤 의미를 갖는지 지시합니다.
+                    </p>
+                    <div class="bg-slate-50 p-6 rounded-xl border-l-4 border-orange-500">
+                        <h4 class="font-bold mb-2 flex items-center">
+                            <i class="fas fa-lightbulb text-orange-500 mr-2"></i> 통찰: 시맨틱 마크업
+                        </h4>
+                        <p class="text-sm text-slate-600">
+                            검색 엔진 최적화(SEO)와 웹 접근성(A11y)의 핵심입니다. 태그 자체가 의미를 갖게 하여 기계와 인간 모두에게 정확한 정보를 전달합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex-1 w-full">
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 text-slate-700 font-bold">
+                                <tr>
+                                    <th class="px-4 py-3">태그</th>
+                                    <th class="px-4 py-3">용도</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="px-4 py-3 font-mono text-orange-600">&lt;h1&gt;~&lt;h6&gt;</td>
+                                    <td class="px-4 py-3">문서의 계층적 구조 정의 (SEO 필수)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-mono text-orange-600">&lt;strong&gt;, &lt;em&gt;</td>
+                                    <td class="px-4 py-3">의미론적 강조 (스크린 리더 대응)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-mono text-orange-600">&lt;figure&gt;</td>
+                                    <td class="px-4 py-3">이미지와 캡션의 그룹화</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-mono text-orange-600">&lt;abbr&gt;, &lt;ruby&gt;</td>
+                                    <td class="px-4 py-3">약어 설명 및 발음 보조 (전문가용)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSS Section -->
+            <div class="flex flex-col md:flex-row-reverse items-center gap-12 mb-20">
+                <div class="flex-1 text-right md:text-left">
+                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-4">STYLE</span>
+                    <h2 class="text-3xl font-bold mb-6">🎨 CSS: 시각적 가치를 더하는 '디자인의 마법'</h2>
+                    <p class="text-slate-600 mb-6">
+                        내용과 디자인을 분리하여 유지보수 효율을 극대화합니다. <strong>캐스케이딩(Cascading)</strong> 원칙을 통해 스타일의 우선순위를 결정하며, 현대 웹에서는 Flexbox와 Grid를 통해 정교한 레이아웃을 구성합니다.
+                    </p>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-blue-500"></i>
+                            <span><strong>Flexbox:</strong> 1차원 정렬 (메뉴바, 버튼 그룹)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-blue-500"></i>
+                            <span><strong>CSS Grid:</strong> 2차원 배치 (전체 레이아웃)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-1 w-full bg-slate-900 rounded-2xl p-6 text-blue-400 font-mono text-sm shadow-xl">
+                    <div class="flex space-x-2 mb-4">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <p class="mb-2"><span class="text-purple-400">.card</span> {</p>
+                    <p class="ml-4">display: <span class="text-yellow-200">flex</span>;</p>
+                    <p class="ml-4">border-radius: <span class="text-yellow-200">1rem</span>;</p>
+                    <p class="ml-4">background: <span class="text-yellow-200">var(--modern-white)</span>;</p>
+                    <p class="ml-4">transition: <span class="text-yellow-200">all 0.3s ease</span>;</p>
+                    <p class="mb-2">}</p>
+                    <p><span class="text-slate-500">// Tailwind CSS가 대세인 2025</span></p>
+                </div>
+            </div>
+
+            <!-- JS Section -->
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="flex-1">
+                    <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full mb-4">INTELLIGENCE</span>
+                    <h2 class="text-3xl font-bold mb-6">🧠 JavaScript: 건물에 생명력을 불어넣는 '지능'</h2>
+                    <p class="text-slate-600 mb-6">
+                        사용자의 상호작용에 반응하는 논리적 스위치입니다. DOM 조작을 통해 실시간으로 화면을 바꾸고, 비동기 통신으로 페이지 새로고침 없는 앱 환경을 제공합니다.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50 rounded-lg">
+                            <h5 class="font-bold text-sm mb-1">DOM 조작</h5>
+                            <p class="text-xs text-slate-500">HTML 구조를 실시간 수정</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg">
+                            <h5 class="font-bold text-sm mb-1">비동기 통신</h5>
+                            <p class="text-xs text-slate-500">Async/Await 기반 데이터 통신</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 w-full text-center">
+                    <div class="relative inline-block">
+                        <div class="w-48 h-48 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse shadow-2xl shadow-yellow-200">
+                            <i class="fab fa-js text-6xl text-slate-900"></i>
+                        </div>
+                        <div class="absolute -top-4 -right-4 bg-white p-3 rounded-xl shadow-lg border border-slate-100">
+                            <p class="text-xs font-bold">V8 Engine</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rendering Section -->
+    <section id="rendering" class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">⚙️ 브라우저 렌더링 경로</h2>
+            <p class="text-slate-600 mb-12">코드에서 픽셀까지, 브라우저가 화면을 그리는 5단계 여정</p>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-10">
+                <button onclick="showStep(1)" class="step-btn active px-4 py-2 rounded-full bg-white border border-slate-200 text-sm font-medium hover:border-blue-500 transition-all shadow-sm" id="btn-1">1. DOM 생성</button>
+                <button onclick="showStep(2)" class="step-btn px-4 py-2 rounded-full bg-white border border-slate-200 text-sm font-medium hover:border-blue-500 transition-all shadow-sm" id="btn-2">2. 렌더 트리</button>
+                <button onclick="showStep(3)" class="step-btn px-4 py-2 rounded-full bg-white border border-slate-200 text-sm font-medium hover:border-blue-500 transition-all shadow-sm" id="btn-3">3. 레이아웃</button>
+                <button onclick="showStep(4)" class="step-btn px-4 py-2 rounded-full bg-white border border-slate-200 text-sm font-medium hover:border-blue-500 transition-all shadow-sm" id="btn-4">4. 페인트</button>
+                <button onclick="showStep(5)" class="step-btn px-4 py-2 rounded-full bg-white border border-slate-200 text-sm font-medium hover:border-blue-500 transition-all shadow-sm" id="btn-5">5. 합성</button>
+            </div>
+
+            <div id="step-content" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm min-h-[200px] flex flex-col justify-center items-center text-center">
+                <h3 id="step-title" class="text-xl font-bold mb-4 text-blue-600">DOM 및 CSSOM 생성</h3>
+                <p id="step-desc" class="text-slate-600 max-w-lg">
+                    서버로부터 받은 바이트 데이터를 파싱하여 HTML은 DOM 트리로, CSS는 CSSOM 트리로 변환합니다.
+                </p>
+            </div>
+
+            <div class="mt-8 inline-flex items-center p-4 bg-blue-50 text-blue-700 rounded-2xl text-sm">
+                <i class="fas fa-bolt mr-3"></i>
+                <span><strong>성능 팁:</strong> 레이아웃을 발생시키지 않는 <code>transform</code>을 활용해 부드러운 애니메이션을 구현하세요!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Roadmap -->
+    <section id="future" class="py-20 bg-slate-900 text-white overflow-hidden relative">
+        <div class="max-w-5xl mx-auto px-4 relative z-10">
+            <h2 class="text-3xl font-bold mb-12 text-center">🌟 미래의 웹과 학습 로드맵</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3 text-sm">AI</span>
+                        2025년 웹의 변화
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="text-blue-400 font-bold">01</div>
+                            <div>
+                                <p class="font-bold mb-1">AI 기반 개발</p>
+                                <p class="text-sm text-slate-400">Cursor 등 AI 에디터가 자연어 명령을 코드로 변환</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="text-blue-400 font-bold">02</div>
+                            <div>
+                                <p class="font-bold mb-1">WebAssembly (Wasm)</p>
+                                <p class="text-sm text-slate-400">웹 환경에서 고사양 게임 및 복잡한 연산 가능</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="text-blue-400 font-bold">03</div>
+                            <div>
+                                <p class="font-bold mb-1">멀티모달 인터페이스</p>
+                                <p class="text-sm text-slate-400">음성(VUI) 및 제스처 기반의 다변화된 UI/UX</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <h3 class="text-xl font-bold mb-6 italic text-blue-400">Success Roadmap</h3>
+                    <div class="flex flex-col space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center border border-slate-600 font-bold mr-4">1</div>
+                            <span class="text-slate-300 italic">Core Fundamentals (HTML/CSS/JS)</span>
+                        </div>
+                        <div class="w-px h-6 bg-slate-700 ml-5"></div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center border border-slate-600 font-bold mr-4">2</div>
+                            <span class="text-slate-300 italic">Modern Frameworks (React/Vue/Tailwind)</span>
+                        </div>
+                        <div class="w-px h-6 bg-slate-700 ml-5"></div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center border border-blue-500 font-bold mr-4 shadow-lg shadow-blue-500/20">3</div>
+                            <span class="text-white font-bold">Project-Driven Learning</span>
+                        </div>
+                    </div>
+                    <p class="mt-8 text-sm text-slate-400 leading-relaxed">
+                        "작은 계산기라도 직접 만들며 실패하고 배우는 과정이 백 권의 이론서보다 가치 있습니다."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-white border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm mb-4">
+                웹의 본질은 <strong>정보 접근성</strong>과 <strong>사용자 가치</strong>에 있습니다.
+            </p>
+            <p class="text-slate-400 text-xs">
+                &copy; 2025 Web Technology Guide. Created for Learning.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const steps = [
+            {
+                title: "1. DOM 및 CSSOM 생성",
+                desc: "서버로부터 받은 바이트 데이터를 파싱하여 HTML은 DOM 트리로, CSS는 CSSOM 트리로 변환합니다. 문서의 의미를 파악하는 첫 단계입니다."
+            },
+            {
+                title: "2. 렌더 트리 결합",
+                desc: "DOM과 CSSOM을 결합하여 실제로 화면에 보일 요소들(display: none 제외 등)만 선별한 '렌더 트리'를 구성합니다."
+            },
+            {
+                title: "3. 레이아웃 (Layout/Reflow)",
+                desc: "뷰포트 내에서 각 요소의 정확한 크기와 위치를 픽셀 단위로 계산합니다. 상자 모델(Box Model)이 적용되는 단계입니다."
+            },
+            {
+                title: "4. 페인트 (Paint/Repaint)",
+                desc: "위치가 확정된 요소들에 실제 스타일(색상, 이미지, 그림자 등)을 입히는 시각적 작업이 수행됩니다."
+            },
+            {
+                title: "5. 합성 (Composite)",
+                desc: "브라우저가 그린 여러 층의 레이어들을 순서에 맞게 겹쳐 최종 화면을 완성하여 사용자에게 보여줍니다."
+            }
+        ];
+
+        function showStep(idx) {
+            const content = steps[idx - 1];
+            document.getElementById('step-title').innerText = content.title;
+            document.getElementById('step-desc').innerText = content.desc;
+            
+            // Update buttons
+            document.querySelectorAll('.step-btn').forEach((btn, i) => {
+                if (i === idx - 1) {
+                    btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+                    btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                    btn.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
