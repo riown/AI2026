@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: CODEX - Public Policy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap');
+
+        :root {
+            --midnight-blue: #0A192F;
+            --antique-ivory: #FDFBF7;
+            --champagne-gold: #D4AF37;
+            --glass-bg: rgba(253, 251, 247, 0.05);
+        }
+
+        body {
+            background-color: var(--midnight-blue);
+            color: var(--antique-ivory);
+            font-family: 'Noto Sans KR', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        /* 수직 가름끈 디자인 */
+        .bookmark-line {
+            position: fixed;
+            left: 50px;
+            top: 0;
+            width: 1px;
+            height: 100vh;
+            background: linear-gradient(to bottom, transparent, var(--champagne-gold), transparent);
+            z-index: 10;
+            opacity: 0.5;
+        }
+
+        /* 글래스모피즘 카드 */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .glass-card:hover {
+            border-color: var(--champagne-gold);
+            background: rgba(253, 251, 247, 0.08);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        /* 아티클 제목 스타일 */
+        .article-title {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .article-no {
+            color: var(--champagne-gold);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* 탭 시스템 애니메이션 */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 이미지 레이아웃 기반 탭 스타일 */
+        .tab-button {
+            width: 100%;
+            padding: 14px 20px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(253, 251, 247, 0.6);
+            cursor: pointer;
+        }
+
+        .tab-button.active {
+            background: rgba(253, 251, 247, 0.08);
+            border: 2px solid var(--champagne-gold);
+            color: var(--antique-ivory);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            font-weight: 700;
+        }
+
+        /* 섹션 패딩 */
+        section {
+            padding: 100px 5% 100px 100px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 차트 애니메이션 */
+        .bar-grow {
+            transform-origin: left;
+            animation: growRight 1.5s ease-out forwards;
+        }
+
+        @keyframes growRight {
+            from { scale: 0 1; }
+            to { scale: 1 1; }
+        }
+
+        /* 커스텀 스크롤바 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--midnight-blue); }
+        ::-webkit-scrollbar-thumb { background: var(--champagne-gold); border-radius: 3px; }
+
+        .fade-up {
+            animation: fadeUp 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-line {
+            width: 0;
+            height: 2px;
+            background: var(--champagne-gold);
+            margin: 2rem auto;
+            animation: growLine 1.5s ease-out 0.5s forwards;
+        }
+
+        @keyframes growLine {
+            from { width: 0; }
+            to { width: 150px; }
+        }
+
+        /* 아이콘 박스 스타일 */
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(214, 175, 55, 0.1);
+            border: 1px solid rgba(214, 175, 55, 0.3);
+            border-radius: 12px;
+            color: var(--champagne-gold);
+            margin-bottom: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover .icon-box {
+            background: var(--champagne-gold);
+            color: var(--midnight-blue);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bookmark-line"></div>
+
+    <!-- Navigation Dots -->
+    <nav class="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4">
+        <a href="#art1" class="w-3 h-3 rounded-full border border-gold hover:bg-gold transition-colors" title="헤드라인"></a>
+        <a href="#persona" class="w-3 h-3 rounded-full border border-gold hover:bg-gold transition-colors" title="제1조"></a>
+        <a href="#art2" class="w-3 h-3 rounded-full border border-gold hover:bg-gold transition-colors" title="제2조"></a>
+        <a href="#art3" class="w-3 h-3 rounded-full border border-gold hover:bg-gold transition-colors" title="제3조"></a>
+        <a href="#art4" class="w-3 h-3 rounded-full border border-gold hover:bg-gold transition-colors" title="제4조"></a>
+        <a href="#art5" class="w-3 h-3 rounded-full border border-gold hover:bg-gold transition-colors" title="제5조"></a>
+    </nav>
+
+    <!-- Header / Intro -->
+    <header class="fixed top-0 left-0 w-full p-8 flex justify-between items-center z-40 bg-gradient-to-b from-[#0A192F] to-transparent">
+        <div class="text-xl font-bold tracking-tighter serif">PROJECT: <span class="text-[#D4AF37]">CODEX</span></div>
+        <div class="text-sm opacity-60 tracking-widest uppercase">Public Policy Portfolio v1.0</div>
+    </header>
+
+    <!-- Section 1: Hero Headline -->
+    <section id="art1" class="h-screen text-center items-center justify-center overflow-hidden">
+        <div class="fade-up">
+            <span class="article-no block mb-6 opacity-60 tracking-[0.3em]">The Manifesto</span>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold serif leading-tight mb-4">
+                정책이 닿지 않는 곳에,<br>
+                <span class="text-[#D4AF37]">내일은 존재하지 않는다</span>
+            </h1>
+            <div class="hero-line"></div>
+            <p class="serif italic opacity-40 text-lg mt-4 tracking-widest">Digital Lawbook for Public Service</p>
+        </div>
+        
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
+            <p class="text-[10px] tracking-widest uppercase mb-2">Scroll to Open Codex</p>
+            <i class="fas fa-chevron-down text-xl"></i>
+        </div>
+    </section>
+
+    <!-- Section: Persona (My Story) -->
+    <section id="persona" class="bg-white/5">
+        <div class="article-title">
+            <span class="article-no">Art. 01</span>
+            <h2 class="text-4xl font-bold serif">나의 이야기</h2>
+        </div>
+        
+        <div class="flex flex-col gap-8 w-full max-w-6xl mx-auto">
+            <!-- Top Intro Card -->
+            <div class="glass-card p-10 flex flex-col md:flex-row items-center gap-10 text-left" style="opacity: 1; transform: none;">
+                <!-- Profile Placeholder -->
+                <div class="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full border-2 border-[#D4AF37]/30 flex items-center justify-center bg-white/5 overflow-hidden">
+                    <i class="fas fa-user text-4xl opacity-20 text-[#D4AF37]"></i>
+                </div>
+
+                <div class="flex-grow">
+                    <div class="mb-6">
+                        <span class="text-4xl md:text-5xl font-bold serif text-[#D4AF37] block md:inline mr-4">김리원</span>
+                        <span class="text-lg opacity-60 serif">부산대학교 공공정책학부 22학번</span>
+                    </div>
+                    <p class="text-xl leading-[1.8] opacity-90 serif">
+                        "교환학생을 통해 경험한 넓은 세상의 질서와,<br>
+                        본질을 끈질기게 파고드는 분석적 성격을 가졌습니다.<br>
+                        보이지 않는 곳의 문제를 읽어내어<br>
+                        구체적인 변화를 설계하는 사람이 되고 싶습니다."
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Mid Row: Favorite & Strength -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card p-10 flex flex-col items-center" style="opacity: 1; transform: none;">
+                    <h4 class="font-bold uppercase tracking-[0.3em] text-[11px] text-[#D4AF37] mb-12 opacity-70 border-b border-[#D4AF37]/30 pb-2">My Favorite</h4>
+                    <div class="grid grid-cols-2 gap-8 w-full">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="icon-box"><i class="fas fa-baseball-ball text-xl"></i></div>
+                            <h5 class="font-bold mb-3 text-lg text-[#D4AF37]">야구</h5>
+                            <p class="text-xs opacity-70 leading-[1.8] px-1">전략과 수치의 조화를 통해<br>필드 위의 질서를 읽습니다.</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="icon-box"><i class="fas fa-plane text-xl"></i></div>
+                            <h5 class="font-bold mb-3 text-lg text-[#D4AF37]">여행</h5>
+                            <p class="text-xs opacity-70 leading-[1.8] px-1">낯선 질서와의 조우를 통해<br>세상을 보는 눈을 넓힙니다.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-10 flex flex-col items-center" style="opacity: 1; transform: none;">
+                    <h4 class="font-bold uppercase tracking-[0.3em] text-[11px] text-[#D4AF37] mb-12 opacity-70 border-b border-[#D4AF37]/30 pb-2">My Strength</h4>
+                    <div class="grid grid-cols-2 gap-8 w-full">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="icon-box"><i class="fas fa-search text-xl"></i></div>
+                            <h5 class="font-bold mb-3 text-lg text-[#D4AF37]">집요한 탐구력</h5>
+                            <p class="text-xs opacity-70 leading-[1.8] px-1">현상의 뿌리를 찾는 근성으로<br>정책의 실효성을 분석합니다.</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="icon-box"><i class="fas fa-comments text-xl"></i></div>
+                            <h5 class="font-bold mb-3 text-lg text-[#D4AF37]">조정의 소통</h5>
+                            <p class="text-xs opacity-70 leading-[1.8] px-1">유연한 리액션으로 최선의<br>합의점을 도출합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Index Tab UI (Redesigned Based on Uploaded Image) -->
+    <section id="art2" class="relative overflow-hidden">
+        <div class="article-title">
+            <span class="article-no">Art. 02</span>
+            <h2 class="text-4xl font-bold serif">배움의 궤적</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full max-w-7xl mx-auto">
+            <!-- Left Column: Title and Tabs -->
+            <div class="lg:col-span-4 flex flex-col justify-between py-4">
+                <div>
+                    <h3 class="text-5xl font-bold serif text-[#D4AF37] mb-6">공공정책학</h3>
+                    <p class="text-lg opacity-70 leading-relaxed mb-12 serif">
+                        공공정책학은 사회 문제를 진단하고, 한정된 자원을 효율적으로 배분하여 모두를 위한 최선의 대안을 설계하는 학문입니다.
+                    </p>
+                </div>
+                
+                <!-- Tab Buttons (Image Style) -->
+                <div class="flex flex-col w-full max-w-[300px]">
+                    <button class="tab-button active" onclick="showTab('enterprise', this)">공기업</button>
+                    <button class="tab-button" onclick="showTab('servant', this)">공무원</button>
+                    <button class="tab-button" onclick="showTab('lawschool', this)">로스쿨</button>
+                </div>
+            </div>
+
+            <!-- Right Column: Content Card (Image Style) -->
+            <div class="lg:col-span-8">
+                <div class="glass-card p-12 min-h-[500px] flex flex-col justify-between" style="opacity: 1; transform: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                    
+                    <!-- Content Wrapper -->
+                    <div class="w-full">
+                        <div id="enterprise" class="tab-content active">
+                            <h4 class="text-3xl mb-12 serif text-[#D4AF37]">공기업 (Public Enterprise)</h4>
+                            <ul class="space-y-8 text-2xl">
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 공기업론</li>
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 산업융합정책론</li>
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 공공기관적성론</li>
+                            </ul>
+                        </div>
+
+                        <div id="servant" class="tab-content">
+                            <h4 class="text-3xl mb-12 serif text-[#D4AF37]">공무원 (Public Servant)</h4>
+                            <ul class="space-y-8 text-2xl">
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 공직적성론</li>
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 인사정책론</li>
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 지방정부론</li>
+                            </ul>
+                        </div>
+
+                        <div id="lawschool" class="tab-content">
+                            <h4 class="text-3xl mb-12 serif text-[#D4AF37]">로스쿨 (Law School)</h4>
+                            <ul class="space-y-8 text-2xl">
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 헌법 & 행정법</li>
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 형법의 이해</li>
+                                <li class="flex items-center gap-6"><i class="fas fa-check text-sm text-[#D4AF37]"></i> 법학적성론(LEET) 기초</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Description (Italic style from image) -->
+                    <div class="mt-12 pt-8 border-t border-white/5">
+                        <p id="tab-desc" class="text-xl opacity-50 italic serif">
+                            사회적 가치 실현과 효율성의 균형을 탐구합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: AI & Future -->
+    <section id="art3">
+        <div class="article-title">
+            <span class="article-no">Art. 03</span>
+            <h2 class="text-4xl font-bold serif">지능형 정책: AI & Future Convergence</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="space-y-6">
+                <h3 class="text-2xl font-bold border-l-4 border-[#D4AF37] pl-4">전통적 가치와 지능형 기술의 융합</h3>
+                <p class="opacity-80 leading-relaxed">
+                    최근 신설된 <span class="text-[#D4AF37] font-bold">'SW 융합 트랙'</span>은 단순한 코딩 능력을 넘어, 데이터 분석 역량을 갖춘 미래형 정책 전문가를 양성합니다. 
+                    복잡해지는 현대 사회의 문제를 데이터로 진단하고 기술로 해결하는 커리큘럼을 이수하고 있습니다.
+                </p>
+                <div class="glass-card p-6" style="opacity: 1; transform: none;">
+                    <h4 class="font-bold mb-2 uppercase text-sm tracking-widest text-[#D4AF37]">Core Curriculum</h4>
+                    <p class="text-sm">파이썬 데이터 분석, 머신러닝의 공공 적용, 디지털 정부 플랫폼 구축론</p>
+                </div>
+            </div>
+            <div class="glass-card p-8 flex flex-col items-center justify-center" style="opacity: 1; transform: none;">
+                <div class="relative w-48 h-48 mb-6">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(212, 175, 55, 0.2)" stroke-width="8"/>
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="8" stroke-dasharray="210 283" stroke-linecap="round"/>
+                        <text x="50" y="55" text-anchor="middle" fill="#FDFBF7" font-size="12" class="serif">AI Efficiency</text>
+                        <text x="50" y="70" text-anchor="middle" fill="#D4AF37" font-size="10" font-weight="bold">75% UP</text>
+                    </svg>
+                </div>
+                <p class="text-center text-sm opacity-70">"AI를 통한 행정 효율화 및 <br>데이터 기반 맞춤형 정책 수립 현황"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Data Visual -->
+    <section id="art4">
+        <div class="article-title">
+            <span class="article-no">Art. 04</span>
+            <h2 class="text-4xl font-bold serif">실증적 증거: 데이터로 읽는 공공정책</h2>
+        </div>
+        <div class="glass-card p-10" style="opacity: 1; transform: none;">
+            <div class="mb-12">
+                <h3 class="text-xl mb-6 opacity-80">학과 진로 분포도 (2023-2024 가집계)</h3>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2 uppercase tracking-widest">
+                            <span>공기업 및 공공기관</span>
+                            <span>42%</span>
+                        </div>
+                        <div class="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-[#D4AF37] bar-grow" style="width: 42%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2 uppercase tracking-widest">
+                            <span>중앙부처 및 지방직 공무원</span>
+                            <span>35%</span>
+                        </div>
+                        <div class="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-[#D4AF37] opacity-70 bar-grow" style="width: 35%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2 uppercase tracking-widest">
+                            <span>로스쿨 및 민간 연구소</span>
+                            <span>23%</span>
+                        </div>
+                        <div class="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-[#D4AF37] opacity-40 bar-grow" style="width: 23%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-8 border-t border-white/10">
+                <p class="text-2xl serif italic">“우리는 수치로 증명하고, 정책으로 실현합니다.”</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Future Voyage -->
+    <section id="art5" class="bg-[url('https://images.unsplash.com/photo-1436491865332-7a61a109c0f3?auto=format&fit=crop&q=80&w=1920')] bg-cover bg-fixed relative">
+        <div class="absolute inset-0 bg-[#0A192F]/90"></div>
+        <div class="relative z-10 w-full max-w-4xl mx-auto">
+            <div class="article-title justify-center text-center">
+                <span class="article-no">Art. 05</span>
+                <h2 class="text-4xl font-bold serif">미래의 항로: 꿈을 향한 여정</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div class="glass-card p-8 text-center" style="opacity: 1; transform: none;">
+                    <i class="fas fa-building-columns text-3xl mb-4 text-[#D4AF37]"></i>
+                    <h4 class="font-bold text-lg mb-2">한국공항공사</h4>
+                    <p class="text-xs opacity-60">KAC</p>
+                </div>
+                <div class="glass-card p-8 text-center" style="opacity: 1; transform: none;">
+                    <i class="fas fa-plane-departure text-3xl mb-4 text-[#D4AF37]"></i>
+                    <h4 class="font-bold text-lg mb-2">인천공항공사</h4>
+                    <p class="text-xs opacity-60">IIAC</p>
+                </div>
+                <div class="glass-card p-8 text-center" style="opacity: 1; transform: none;">
+                    <i class="fas fa-passport text-3xl mb-4 text-[#D4AF37]"></i>
+                    <h4 class="font-bold text-lg mb-2">출입국관리직</h4>
+                    <p class="text-xs opacity-60">Immigration Service</p>
+                </div>
+            </div>
+
+            <div class="mt-12 glass-card p-10 text-center" style="opacity: 1; transform: none;">
+                <h3 class="text-2xl serif mb-6">스토리북: 국가의 관문을 지키는 눈</h3>
+                <p class="opacity-80 leading-loose max-w-2xl mx-auto">
+                    공항은 한 국가의 첫인상이자 마지막 배웅입니다. 
+                    저는 원활한 이동의 질서와 안전의 가치가 충돌하는 지점에서, 
+                    가장 공정한 공공의 이익을 설계하는 행정 전문가가 되겠습니다.
+                </p>
+                <div class="mt-10">
+                    <p class="text-xl serif text-[#D4AF37]">"세상의 모든 이동과 안전이 시작되는 곳에서, <br>공공의 가치를 실현하겠습니다."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="p-12 text-center border-t border-white/5 opacity-40">
+        <p class="text-xs tracking-[0.2em] uppercase mb-4">Project CODEX - Public Policy Administration</p>
+        <p class="serif italic text-[10px]">"정의는 복잡한 계산 끝에 나오는 가장 단순한 결과다"</p>
+        <div class="mt-8 text-[10px]">© 2024 | All Rights Reserved in the Book of Law</div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        const descriptions = {
+            'enterprise': '사회적 가치 실현과 효율성의 균형을 탐구합니다.',
+            'servant': '국가 행정의 기틀과 공익의 수호에 대해 배웁니다.',
+            'lawschool': '법적 사고력(Legal Mind)을 바탕으로 정의를 구현합니다.'
+        };
+
+        function showTab(tabId, el) {
+            // Update Tab Buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            el.classList.add('active');
+
+            // Update Content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            // Update Description
+            document.getElementById('tab-desc').innerText = descriptions[tabId];
+        }
+
+        const observerOptions = { threshold: 0.2 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('nav a').forEach(a => {
+                        a.classList.remove('bg-[#D4AF37]');
+                        if (a.getAttribute('href') === '#' + id) a.classList.add('bg-[#D4AF37]');
+                    });
+                    
+                    const cards = entry.target.querySelectorAll('.glass-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.opacity = "1";
+                            card.style.transform = "translateY(0)";
+                        }, index * 150);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
