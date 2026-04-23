@@ -654,6 +654,9 @@
             
             <!-- Bottom Interactive Decoder Area -->
             <div class="mt-10 pt-6 border-t border-black/10 flex flex-col sm:flex-row justify-between items-center gap-6">
+                <!-- 가상 오디오 태그 추가 -->
+                <audio id="intelligence-audio" src="./05/podcast.mp3"></audio>
+                
                 <div class="barcode-scanner-box flex items-center gap-6 group" onclick="decryptAudio()">
                     <div class="flex flex-col items-center">
                         <div class="photo-placeholder barcode-icon !w-28 !h-28 !border-2 !border-white shadow-lg transition-all duration-300">
@@ -760,18 +763,29 @@
             document.getElementById(panelId).classList.add('active');
         }
 
+        let isPlaying = false;
         function decryptAudio() {
             const decoderBox = document.querySelector('.barcode-scanner-box');
             const statusDisplay = document.querySelector('.status-display');
+            const audio = document.getElementById('intelligence-audio');
             
-            // 기존 상태 텍스트 제거 및 최종 승인 텍스트로 고정
-            statusDisplay.innerHTML = `<span style="color: #15803d; border-right: 2px solid #15803d; animation: typing 0.5s steps(10, end) forwards;">ACCESS GRANTED</span>`;
+            if (!isPlaying) {
+                // 재생 시작 로직
+                statusDisplay.innerHTML = `<span style="color: #15803d; border-right: 2px solid #15803d; animation: typing 0.5s steps(10, end) forwards;">PLAYING DATA...</span>`;
+                audio.play().catch(e => {
+                    console.error("Audio playback failed:", e);
+                });
+                isPlaying = true;
+            } else {
+                // 일시정지 로직
+                statusDisplay.innerHTML = `<span style="color: #888; border-right: 2px solid #888; animation: typing 0.5s steps(10, end) forwards;">PAUSED</span>`;
+                audio.pause();
+                isPlaying = false;
+            }
             
             // 시각적 효과
             decoderBox.style.transform = "scale(0.98)";
             setTimeout(() => decoderBox.style.transform = "scale(1)", 100);
-
-            alert("DECODING COMPLETE: 음성 데이터(가상)가 인가되었습니다.");
         }
 
         function initChart() {
