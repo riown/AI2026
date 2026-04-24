@@ -246,6 +246,9 @@
             text-decoration: none;
             box-shadow: 0 6px 20px rgba(255, 133, 161, 0.25); 
             font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
         }
         
         .btn-podcast:hover {
@@ -471,10 +474,14 @@
             </div>
 
             <div class="flex justify-center">
-                <a href="./podcasst.mp3" class="btn-podcast">
-                    <i data-lucide="mic" size="22"></i>
-                    통찰을 들려드려요 : 팟캐스트 청취
-                </a>
+                <!-- 팟캐스트 재생 버튼 로직 추가 -->
+                <button onclick="playPodcast()" class="btn-podcast">
+                    <i data-lucide="mic" id="podcast-icon" size="22"></i>
+                    <span id="podcast-text">통찰을 들려드려요 : 팟캐스트 청취</span>
+                </button>
+                <audio id="podcast-audio">
+                    <source src="./podcast.mp3" type="audio/mpeg">
+                </audio>
             </div>
         </div>
     </section>
@@ -536,6 +543,24 @@
     </section>
 
     <script>
+        // Podcast Playback Logic
+        function playPodcast() {
+            const audio = document.getElementById('podcast-audio');
+            const icon = document.getElementById('podcast-icon');
+            const text = document.getElementById('podcast-text');
+            
+            if (audio.paused) {
+                audio.play();
+                text.innerText = "팟캐스트 재생 중...";
+                icon.setAttribute('data-lucide', 'pause');
+            } else {
+                audio.pause();
+                text.innerText = "통찰을 들려드려요 : 팟캐스트 청취";
+                icon.setAttribute('data-lucide', 'mic');
+            }
+            lucide.createIcons();
+        }
+
         // Create moving background circles
         function createBgDecoration() {
             const container = document.getElementById('bg-circles');
