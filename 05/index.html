@@ -24,6 +24,31 @@
             scroll-behavior: smooth;
             margin: 0;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Moving Background Circles */
+        .bg-circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .circle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 133, 161, 0.1) 0%, rgba(255, 133, 161, 0) 70%);
+            border-radius: 50%;
+            animation: move linear infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
         }
 
         .clay-card {
@@ -32,7 +57,13 @@
             border-radius: 45px;
             box-shadow: var(--soft-shadow);
             border: 2px solid white;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Floating Cloud Animation */
+        .clay-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 20px 30px 50px rgba(255, 133, 161, 0.15);
         }
 
         .nav-bar {
@@ -90,9 +121,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
-        /* Profile Section with Synergy Cards */
         .profile-container {
             width: 100%;
             max-width: 1000px;
@@ -136,7 +167,6 @@
         .synergy-card:hover { transform: translateY(-5px); }
         .synergy-icon { color: var(--main-pink); margin-bottom: 12px; }
 
-        /* Major Section Tabs */
         .tab-btn {
             padding: 12px 24px;
             border-radius: 100px;
@@ -174,7 +204,6 @@
             font-weight: 700;
         }
 
-        /* Modal / Overlay for Info Image */
         #info-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
@@ -183,17 +212,18 @@
         }
         #info-overlay img { max-width: 90%; max-height: 90%; border-radius: 20px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
 
-        /* Charts & Career */
         .chart-container { position: relative; height: 220px; width: 100%; margin-bottom: 20px; }
         .badge { background: #FF85A1; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; }
         
         .career-card {
             background: white; padding: 40px 30px; border-radius: 40px; text-align: left; position: relative;
-            border: 1px solid rgba(255,255,255,0.5); transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.5); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .career-card:hover { transform: translateY(-10px); box-shadow: 15px 15px 30px rgba(255, 133, 161, 0.1); }
+        .career-card:hover { 
+            transform: translateY(-20px) scale(1.02); 
+            box-shadow: 20px 30px 50px rgba(255, 133, 161, 0.15); 
+        }
 
-        /* Insight Summary Card */
         .insight-summary {
             background: white;
             border-radius: 25px;
@@ -223,19 +253,48 @@
             background: #ff6b8e;
             box-shadow: 0 10px 25px rgba(255, 133, 161, 0.4);
         }
+
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #f8f8f8;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--inset-shadow);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-placeholder {
+            text-align: center;
+            color: #d1d1d1;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Moving Background Decoration -->
+    <div class="bg-circles" id="bg-circles"></div>
+
     <!-- Info Overlay -->
     <div id="info-overlay" onclick="this.style.display='none'">
-        <img src="./05/info.png" alt="전공 정보" onerror="this.alt='이미지를 불러올 수 없습니다 (./05/info.png)'">
+        <img src="./info.png" alt="전공 정보" onerror="this.alt='이미지를 불러올 수 없습니다 (./info.png)'">
     </div>
 
     <nav class="nav-bar">
         <a href="#profile" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Profile</span></a>
         <a href="#major" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Major</span></a>
         <a href="#insight" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Insight</span></a>
+        <a href="#project" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Project</span></a>
         <a href="#future" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Future</span></a>
     </nav>
 
@@ -248,10 +307,11 @@
 
     <section id="profile">
         <div class="profile-container">
+            <!-- Profile Icon Updated from User to Heart -->
             <div class="photo-slot">
-                <div class="text-pink-200 flex flex-col items-center">
-                    <i data-lucide="user" size="48"></i>
-                    <span class="text-[10px] mt-2 font-bold uppercase tracking-widest">Photo</span>
+                <div class="text-pink-300 flex flex-col items-center">
+                    <i data-lucide="heart" size="48" fill="currentColor"></i>
+                    <span class="text-[10px] mt-2 font-bold uppercase tracking-widest">Profile</span>
                 </div>
             </div>
             <div class="clay-card profile-main-card w-full text-center">
@@ -283,7 +343,7 @@
         </div>
     </section>
 
-    <section id="major" class="bg-[#FFF9F5]">
+    <section id="major" class="bg-[#FFF9F5]/30">
         <div class="max-w-5xl w-full">
             <div class="text-center mb-12">
                 <span class="text-blue-400 font-black text-xs uppercase tracking-[0.3em] mb-2 block">Major Introduction</span>
@@ -296,7 +356,6 @@
             </div>
 
             <div class="clay-card p-8 md:p-12 relative">
-                <!-- Info Button Center Aligned and Re-styled -->
                 <div class="flex justify-center mb-8">
                     <button onclick="document.getElementById('info-overlay').style.display='flex'" class="flex items-center gap-2 px-6 py-3 bg-pink-50 text-pink-400 rounded-full text-sm font-extrabold hover:bg-pink-100 transition-all border border-pink-100 shadow-sm">
                         <i data-lucide="info" size="18"></i>
@@ -377,7 +436,6 @@
                 <p class="text-gray-400 font-medium">데이터를 통해 기술의 이면을 분석하고 정책적 안전망을 고민합니다.</p>
             </div>
             
-            <!-- Charts Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
                 <div class="clay-card p-10 bg-white/60 w-full flex flex-col">
                     <div class="flex justify-between items-start mb-6">
@@ -412,12 +470,38 @@
                 </div>
             </div>
 
-            <!-- Single Centered Podcast Button -->
             <div class="flex justify-center">
-                <a href="./05/podcasst.mp3" class="btn-podcast">
+                <a href="./podcasst.mp3" class="btn-podcast">
                     <i data-lucide="mic" size="22"></i>
                     통찰을 들려드려요 : 팟캐스트 청취
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- UPDATED PROJECT SECTION -->
+    <section id="project" class="bg-[#FDF6F0]/50">
+        <div class="max-w-5xl w-full">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">PROJECT FOCUS</h2>
+                <p class="text-gray-400 font-medium italic">둥실둥실 신공항!<br>공공정책으로 지역 경제를 깨우다</p>
+            </div>
+            
+            <div class="clay-card p-6 md:p-10 bg-white/90">
+                <div class="video-container">
+                    <!-- 영상 소스를 ./video.mp4로 업데이트 -->
+                    <video controls poster="https://placehold.co/1280x720/fff9f5/ff85a1?text=Gadeokdo+Airport+Project">
+                        <source src="./video.mp4" type="video/mp4">
+                        브라우저가 동영상을 지원하지 않습니다.
+                    </video> 
+                </div>
+                
+                <div class="mt-8 flex flex-wrap justify-center gap-2">
+                    <span class="subject-tag">지역균형발전</span>
+                    <span class="subject-tag">동북아 물류허브</span>
+                    <span class="subject-tag">가덕도 신공항</span>
+                    <span class="subject-tag">인프라 행정</span>
+                </div>
             </div>
         </div>
     </section>
@@ -452,6 +536,24 @@
     </section>
 
     <script>
+        // Create moving background circles
+        function createBgDecoration() {
+            const container = document.getElementById('bg-circles');
+            const circleCount = 15;
+            for (let i = 0; i < circleCount; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+                const size = Math.random() * 300 + 100;
+                circle.style.width = size + 'px';
+                circle.style.height = size + 'px';
+                circle.style.left = Math.random() * 100 + '%';
+                circle.style.top = Math.random() * 100 + '%';
+                circle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+                circle.style.animationDelay = (Math.random() * -20) + 's';
+                container.appendChild(circle);
+            }
+        }
+
         function openTrack(evt, trackName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -497,6 +599,7 @@
         window.onload = function() {
             lucide.createIcons();
             initCharts();
+            createBgDecoration();
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
