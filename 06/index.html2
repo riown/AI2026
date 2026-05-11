@@ -71,7 +71,7 @@ h1, h2, h3, .font-heading {
 <p class="text-xl md:text-2xl text-blue-100 font-medium mb-10 max-w-3xl mx-auto leading-relaxed">
 지난 5년간의 기록이 말해주는 우리 아이들의 도로 위 안전 성적표를 분석합니다.
 </p>
-<a href="./06/article.pdf" target="_blank" class="inline-flex items-center space-x-2 bg-white text-blue-700 hover:bg-blue-50 transition-colors border border-white shadow-lg rounded-full px-10 py-4 text-lg font-bold">
+<a href=".06/article.pdf" target="_blank" class="inline-flex items-center space-x-2 bg-white text-blue-700 hover:bg-blue-50 transition-colors border border-white shadow-lg rounded-full px-10 py-4 text-lg font-bold">
     <span>기사 보기</span>
     <span class="text-blue-400">➔</span>
 </a>
