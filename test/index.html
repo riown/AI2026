@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삶의 만족도 & 자살률 상관관계 분석 대시보드</title>
+    <meta name="description" content="대한민국 시도별 삶의 만족도와 인구 10만명당 자살률 데이터를 연계하여 종합적인 상관관계를 분석한 대시보드형 발표 웹페이지입니다.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Glow Elements -->
+    <div class="bg-gradient-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-title">
+                <h1>삶의 만족도와 자살률 상관관계 분석</h1>
+                <p>대한민국 17개 시도별 5개년 누적 데이터 분석 (2020 ~ 2024)</p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <a href="https://riown.github.io/AI2026/" class="btn-home">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    홈으로
+                </a>
+                <a href="보고서_삶의만족도_자살률_상관관계.pdf" download id="downloadPdfBtn" class="btn-download">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    PDF 보고서 다운로드
+                </a>
+            </div>
+        </header>
+
+        <!-- Stats Card Grid -->
+        <div class="stats-grid">
+            <div class="stat-card danger" id="stat-high-suicide">
+                <label>최고 자살률 지역 (5년 평균)</label>
+                <div class="value-group">
+                    <span class="value" data-target="34.3">0</span>
+                    <span class="unit">명 / 10만명</span>
+                </div>
+                <span class="region">충청남도</span>
+            </div>
+            <div class="stat-card primary" id="stat-low-suicide">
+                <label>최저 자살률 지역 (5년 평균)</label>
+                <div class="value-group">
+                    <span class="value" data-target="20.7">0</span>
+                    <span class="unit">명 / 10만명</span>
+                </div>
+                <span class="region">세종특별자치시</span>
+            </div>
+            <div class="stat-card secondary" id="stat-high-sat">
+                <label>최고 삶의 만족도 (5년 평균)</label>
+                <div class="value-group">
+                    <span class="value" data-target="3.52">0</span>
+                    <span class="unit">점 / 5점</span>
+                </div>
+                <span class="region">세종특별자치시</span>
+            </div>
+            <div class="stat-card primary" id="stat-low-sat">
+                <label>최저 삶의 만족도 (5년 평균)</label>
+                <div class="value-group">
+                    <span class="value" data-target="3.25">0</span>
+                    <span class="unit">점 / 5점</span>
+                </div>
+                <span class="region">대구광역시</span>
+            </div>
+        </div>
+
+        <!-- Two-column Layout -->
+        <div class="dashboard-content">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li class="active" id="nav-summary"><a onclick="scrollToSection('summary')">1. 분석 요약</a></li>
+                    <li id="nav-methodology"><a onclick="scrollToSection('methodology')">2. 데이터 및 방법론</a></li>
+                    <li id="nav-table"><a onclick="scrollToSection('table-sec')">3. 시도별 상세 비교</a></li>
+                    <li id="nav-trends"><a onclick="scrollToSection('trends')">4. 시간적 추이 분석</a></li>
+                    <li id="nav-visuals"><a onclick="scrollToSection('visuals')">5. 상관관계 시각화 갤러리</a></li>
+                    <li id="nav-conclusion"><a onclick="scrollToSection('conclusion')">6. 결론 및 정책 시사점</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main>
+                <!-- Section 1: Summary -->
+                <section id="summary">
+                    <h2><span class="section-icon">📋</span>1. 분석 요약 (Executive Summary)</h2>
+                    <p>본 대시보드는 2020년부터 2024년까지의 대한민국 17개 시도별 삶의 만족도 및 자살률 통계를 정밀 결합하여 상관성을 다차원적으로 검토했습니다.</p>
+                    
+                    <div class="callout">
+                        <div class="callout-title">💡 상관관계 핵심 발견 (Pearson r = -0.0477)</div>
+                        5개년 통합 데이터 분석 결과, 주관적 정서 지표인 삶의 만족도 지수와 실질 보건 지표인 자살률 간의 <strong>직접적인 선형적 인과/상관관계는 매우 약하게 관찰</strong>되었습니다. 이는 개인이 지각하는 주관적 삶의 질이 양호하더라도 노령 인구 비중, 사회적 고립 상태, 의료 접근성 등 복합적인 지역 환경 요인이 자살률에 더욱 중대하고 독립적으로 기여함을 시사합니다.
+                    </div>
+                    
+                    <div class="callout danger">
+                        <div class="callout-title">⚠️ 코로나19 팬데믹 초기(2020년)의 유의미성</div>
+                        연도별 개별 회귀 분석 시 <strong>2020년에는 뚜렷한 유의적 음의 상관관계(r = -0.5135, p = 0.0350)</strong>가 나타났습니다. 즉, 코로나19 충격 첫해에는 지역 사회의 높은 삶의 만족도가 자살을 방지하는 일종의 '정신적 방어벽' 역할을 하였으나, 장기적인 경기 침체 및 격리 만성화를 겪은 2021년 이후에는 이러한 심리 지표의 방어 효과가 상실된 것으로 분석됩니다.
+                    </div>
+                </section>
+
+                <!-- Section 2: Methodology -->
+                <section id="methodology">
+                    <h2><span class="section-icon">🔬</span>2. 데이터 정의 및 방법론</h2>
+                    <p>사용된 원본 데이터는 다음과 같은 통계청 공식 공개 통계표에서 가공되었습니다.</p>
+                    <div style="margin-left: 20px; color: var(--text-secondary); margin-bottom: 20px;">
+                        <p>🔹 <strong>삶의 만족도</strong>: 사회조사(2020~2024). "현재 삶에 얼마나 만족하십니까?" 5점 척도 가중 합산 지수 산출.</p>
+                        <p>🔹 <strong>자살률</strong>: 사망원인통계(2020~2024). 연간 인구 10만 명당 자살 사망자 수.</p>
+                    </div>
+                    
+                    <div class="callout">
+                        <div class="callout-title">📝 삶의 만족도 지수 가중치 공식</div>
+                        만족도 지수 = [(매우 만족 % × 5) + (약간 만족 % × 4) + (보통 % × 3) + (약간 불만족 % × 2) + (매우 불만족 % × 1)] / 100
+                    </div>
+                </section>
+
+                <!-- Section 3: Interactive Table -->
+                <section id="table-sec">
+                    <h2><span class="section-icon">📊</span>3. 시도별 5개년 평균 데이터 비교</h2>
+                    <p>아래 표는 17개 시도별 5개년 평균 수치입니다. 열 제목을 클릭하여 원하는 지표 순서대로 데이터를 실시간 **정렬**할 수 있습니다.</p>
+                    
+                    <div class="table-container">
+                        <table id="regions-table">
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable(0)" id="th-name">행정구역 <span class="sort-icon">▲</span></th>
+                                    <th onclick="sortTable(1)" id="th-index">만족도 지수 (5점 만점) <span class="sort-icon">▼</span></th>
+                                    <th onclick="sortTable(2)" id="th-sat">만족율 (%) <span class="sort-icon">▼</span></th>
+                                    <th onclick="sortTable(3)" id="th-unsat">불만족율 (%) <span class="sort-icon">▼</span></th>
+                                    <th onclick="sortTable(4)" id="th-suicide">평균 자살률 (10만명당) <span class="sort-icon">▼</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- JS will fill this data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="font-size:12px; color:var(--text-secondary);">※ 세종시는 자살률이 최저이며 만족도가 가장 높은 우수한 아웃라이어이며, 충청남도는 높은 만족도에도 불구하고 자살률이 최고인 디커플링 아웃라이어입니다.</p>
+                </section>
+
+                <!-- Section 4: Temporal Trends -->
+                <section id="trends">
+                    <h2><span class="section-icon">📈</span>4. 시간적 추이 분석</h2>
+                    <p>전국 평균 지표의 5개년 흐름을 통해 최근 대한민국의 자살 고위험 경향을 포착했습니다.</p>
+                    
+                    <div class="callout danger">
+                        <div class="callout-title">🚨 전국 자살률 역주행 현상 (2022~2024)</div>
+                        2021년 팬데믹 고점 통과 시점에 삶의 만족도 전국 지수는 <strong>3.161점(만족율 34.0%)</strong>으로 급격히 저점을 기록한 뒤 점진적으로 회복하여 2024년 <strong>3.367점(40.1%)</strong>을 보였습니다.<br>
+                        반면, 전국 자살률은 2022년 <strong>25.2명</strong>에서 2023년 <strong>27.3명</strong>, 2024년 <strong>29.1명</strong>으로 급격한 연쇄 상승세를 보여 만족도 지표 안정과 실질 자살 고위험층의 분리 현상이 명확히 진단되었습니다. 이는 거시경제 스트레스(물가, 금리) 가중이 심리적 회복력을 넘어서 극단적인 행동을 유발하는 실질 원인임을 시사합니다.
+                    </div>
+                </section>
+
+                <!-- Section 5: Interactive Chart Gallery -->
+                <section id="visuals">
+                    <h2><span class="section-icon">🖼️</span>5. 상관관계 시각화 갤러리</h2>
+                    <p>분석 과정에서 생성된 6종의 다각적 시각화 그래프를 아래 탭에서 선택해 확대 및 분석 설명과 함께 감상할 수 있습니다. 이미지를 클릭하면 고해상도 전체화면 보기(라이트박스)가 활성화됩니다.</p>
+                    
+                    <div class="gallery-container">
+                        <div class="gallery-tabs" id="galleryTabs">
+                            <button class="gallery-tab active" onclick="switchChart(0)">1. 성별 산점도 및 회귀선</button>
+                            <button class="gallery-tab" onclick="switchChart(1)">2. 상세 항목 Heatmap</button>
+                            <button class="gallery-tab" onclick="switchChart(2)">3. 남녀 성별 비교</button>
+                            <button class="gallery-tab" onclick="switchChart(3)">4. 17개 시도별 이중축</button>
+                            <button class="gallery-tab" onclick="switchChart(4)">5. 전국 연도별 추이</button>
+                            <button class="gallery-tab" onclick="switchChart(5)">6. 주요 특징 시도 추이</button>
+                        </div>
+                        
+                        <div class="gallery-display">
+                            <div class="gallery-image-wrapper" onclick="openLightbox()">
+                                <img id="galleryImage" src="plots/1_satisfaction_suicide_scatter.png" alt="성별 산점도 및 회귀선">
+                            </div>
+                            <div class="gallery-caption" id="galleryCaption">그림 1: 삶의 만족도 지수와 자살률 간의 성별 산점도 및 회귀선 (시도별 2020~2024)</div>
+                            <div class="gallery-desc" id="galleryDesc">설명 로딩 중...</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6: Conclusion -->
+                <section id="conclusion">
+                    <h2><span class="section-icon">📢</span>6. 결론 및 정책 시사점</h2>
+                    <p>상관분석 및 시계열 흐름을 통해 다음과 같은 정책적 해결책을 도출할 수 있습니다.</p>
+                    
+                    <div class="policy-grid">
+                        <div class="policy-card">
+                            <h3><span>📍</span>주관 정서와 예방 인프라 분리</h3>
+                            <p>주민들의 만족도 평균이 높다 하여(예: 충남 3.44점) 자살 예방 안전망 투자를 감축하는 과오를 경계해야 합니다. 주관적 평가는 실질 고위험군(소외 노인층, 빈곤 가구)의 지표를 상쇄시키는 평균 편향이 있으므로 복지 밀착 지도 수립이 필요합니다.</p>
+                        </div>
+                        <div class="policy-card">
+                            <h3><span>📍</span>남성 위기 대응책 다각화</h3>
+                            <p>남성의 자살 사망률은 여성에 비해 2.33배 높으나 주관 만족감 차이는 0.01점에 불과합니다. 남성들의 위기 신호 표출 방식 및 자조 집단 활성화 지원, 그리고 우울증 조기진단 연계 방식을 맞춤형으로 개설할 시점입니다.</p>
+                        </div>
+                        <div class="policy-card">
+                            <h3><span>📍</span>최근 자살 급증 추세 긴급 중재</h3>
+                            <p>2022~2024년 전국 평균 자살률의 폭발적 증가(25.2명 $\rightarrow$ 29.1명)는 거시경제 지표 악화와 연계될 확률이 큽니다. 지방정부와 복지재단이 결합하여 생계형 독촉 제한, 자영업 폐업층 특별 심리 상담망 운영 등 다이렉트 긴급 개입 정책이 병행되어야 합니다.</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2026 삶의 만족도 & 자살률 상관분석 프로젝트. 데이터 출처: 대한민국 통계청(KOSIS).</p>
+        </footer>
+    </div>
+
+    <!-- Lightbox for Image Zoom -->
+    <div class="lightbox" id="imageLightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightboxImg" src="" alt="확대 보기">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript code -->
+    <script>
+        // Region data (5-year averages)
+        const regionData = [
+            { name: "충청남도", index: 3.4444, satRate: 43.32, unsatRate: 11.14, suicide: 34.28 },
+            { name: "강원특별자치도", index: 3.4096, satRate: 43.64, unsatRate: 13.54, suicide: 33.60 },
+            { name: "충청북도", index: 3.3592, satRate: 40.92, unsatRate: 14.44, suicide: 30.60 },
+            { name: "전라남도", index: 3.3760, satRate: 41.06, unsatRate: 13.44, suicide: 29.80 },
+            { name: "제주특별자치도", index: 3.4306, satRate: 44.54, unsatRate: 12.82, suicide: 29.78 },
+            { name: "경상북도", index: 3.2784, satRate: 36.94, unsatRate: 16.02, suicide: 29.30 },
+            { name: "울산광역시", index: 3.3370, satRate: 40.16, unsatRate: 15.70, suicide: 28.62 },
+            { name: "부산광역시", index: 3.2888, satRate: 38.04, unsatRate: 16.36, suicide: 28.36 },
+            { name: "전북특별자치도", index: 3.3652, satRate: 43.00, unsatRate: 14.64, suicide: 28.06 },
+            { name: "대전광역시", index: 3.4354, satRate: 45.70, unsatRate: 13.42, suicide: 27.96 },
+            { name: "인천광역시", index: 3.2868, satRate: 36.12, unsatRate: 15.64, suicide: 27.64 },
+            { name: "대구광역시", index: 3.2504, satRate: 35.82, unsatRate: 18.52, suicide: 27.38 },
+            { name: "경상남도", index: 3.3582, satRate: 41.68, unsatRate: 14.24, suicide: 27.06 },
+            { name: "광주광역시", index: 3.3942, satRate: 42.28, unsatRate: 13.24, suicide: 26.24 },
+            { name: "경기도", index: 3.3198, satRate: 39.44, unsatRate: 16.24, suicide: 24.74 },
+            { name: "서울특별시", index: 3.3548, satRate: 42.38, unsatRate: 15.70, suicide: 22.80 },
+            { name: "세종특별자치시", index: 3.5240, satRate: 50.74, unsatRate: 14.10, suicide: 20.74 },
+            { name: "전국 평균", index: 3.3410, satRate: 40.46, unsatRate: 15.34, suicide: 26.66 }
+        ];
+
+        // Current sort state
+        let currentSortCol = 4; // Default sort by suicide rate
+        let currentSortAsc = false; // Descending default
+
+        // Render Table Data
+        function renderTable() {
+            const tbody = document.getElementById("table-body");
+            tbody.innerHTML = "";
+            
+            regionData.forEach(item => {
+                const tr = document.createElement("tr");
+                if (item.name === "세종특별자치시") tr.className = "highlight-sejong";
+                if (item.name === "충청남도") tr.className = "highlight-chungnam";
+                if (item.name === "전국 평균") tr.style.fontWeight = "bold";
+                
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.index.toFixed(4)}</td>
+                    <td>${item.satRate.toFixed(2)}%</td>
+                    <td>${item.unsatRate.toFixed(2)}%</td>
+                    <td style="color: ${item.name === '전국 평균' ? 'var(--text-primary)' : 'var(--danger)'}; font-weight:600;">${item.suicide.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            updateSortIndicators();
+        }
+
+        // Sort table data
+        function sortTable(colIndex) {
+            if (currentSortCol === colIndex) {
+                currentSortAsc = !currentSortAsc;
+            } else {
+                currentSortCol = colIndex;
+                currentSortAsc = colIndex === 0; // default ascending for name, descending for stats
+            }
+            
+            regionData.sort((a, b) => {
+                let valA, valB;
+                switch(colIndex) {
+                    case 0: valA = a.name; valB = b.name; break;
+                    case 1: valA = a.index; valB = b.index; break;
+                    case 2: valA = a.satRate; valB = b.satRate; break;
+                    case 3: valA = a.unsatRate; valB = b.unsatRate; break;
+                    case 4: valA = a.suicide; valB = b.suicide; break;
+                }
+                
+                // Keep "전국 평균" always at the bottom
+                if (a.name === "전국 평균") return 1;
+                if (b.name === "전국 평균") return -1;
+                
+                if (valA < valB) return currentSortAsc ? -1 : 1;
+                if (valA > valB) return currentSortAsc ? 1 : -1;
+                return 0;
+            });
+            
+            renderTable();
+        }
+
+        // Update Sorting Indicators (arrows)
+        function updateSortIndicators() {
+            const thIds = ["th-name", "th-index", "th-sat", "th-unsat", "th-suicide"];
+            thIds.forEach((id, idx) => {
+                const th = document.getElementById(id);
+                if (!th) return;
+                const baseText = th.innerText.split(" ")[0];
+                if (idx === currentSortCol) {
+                    th.innerHTML = `${baseText} <span class="sort-icon">${currentSortAsc ? '▲' : '▼'}</span>`;
+                    th.style.color = "var(--secondary)";
+                } else {
+                    th.innerHTML = `${baseText} <span class="sort-icon">▼</span>`;
+                    th.style.color = "#fff";
+                }
+            });
+        }
+
+        // Smooth scroll to sections
+        function scrollToSection(id) {
+            const target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Active State Scrollspy
+        window.addEventListener('scroll', () => {
+            const sections = ['summary', 'methodology', 'table-sec', 'trends', 'visuals', 'conclusion'];
+            const navIds = ['nav-summary', 'nav-methodology', 'nav-table', 'nav-trends', 'nav-visuals', 'nav-conclusion'];
+            
+            let current = '';
+            const scrollPos = window.scrollY + 100;
+            
+            sections.forEach(secId => {
+                const sec = document.getElementById(secId);
+                if (sec && sec.offsetTop <= scrollPos) {
+                    current = secId;
+                }
+            });
+            
+            navIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.classList.remove('active');
+                if (id === `nav-${current === 'table-sec' ? 'table' : current}`) {
+                    el.classList.add('active');
+                }
+            });
+        });
+
+        // Chart gallery switching data
+        const chartData = [
+            {
+                img: "plots/1_satisfaction_suicide_scatter.png",
+                caption: "그림 1: 삶의 만족도 지수와 자살률 간의 성별 산점도 및 회귀선 (시도별 2020~2024)",
+                desc: "남성과 여성, 전체 성별 데이터를 5개년 누적하여 표현한 산점도입니다. 회귀선의 기울기가 매우 완만하며 피어슨 상관계수(r)가 0에 가까워, 전체 기간 통합 시 주관적 만족도와 자살률 사이에는 통계적으로 유의미한 단순 선형 관계가 확인되지 않았음을 증명합니다."
+            },
+            {
+                img: "plots/2_correlation_heatmap.png",
+                caption: "그림 2: 삶의 만족도 상세 설문 항목 및 종합 지수와 자살률 간의 상관관계 히트맵",
+                desc: "삶의 만족도 설문의 5가지 세부 등급(매우 만족 ~ 매우 불만족 비율) 및 파생 지표와 자살률 간의 상관관계를 시각화했습니다. 자살률은 만족율(r = -0.170) 및 불만족율(r = -0.177) 모두와 아주 미약한 음의 선형 경향성을 띠고 있습니다."
+            },
+            {
+                img: "plots/3_gender_comparison.png",
+                caption: "그림 3: 남녀 성별 자살률 및 삶의 만족도 지수 비교 바 차트",
+                desc: "남성과 여성의 5개년 누적 평균 지표 비교입니다. 주관적 만족도는 남성(3.348점)과 여성(3.335점)이 거의 동일한 수준을 나타내는 반면, 실제 자살률은 남성(37.36명)이 여성(16.06명)에 비해 약 2.33배 높은 압도적인 차이를 보입니다."
+            },
+            {
+                img: "plots/4_regional_comparison.png",
+                caption: "그림 4: 17개 시도별 평균 자살률과 삶의 만족도 지수 비교 차트 (이중축)",
+                desc: "17개 시도의 자살률(빨간색 막대, 좌측 축)과 만족도 지수(초록색 점선, 우측 축)를 정렬한 차트입니다. 최저 자살률과 최고 만족도를 보이는 세종시의 모범적 사례와 달리, 충남 및 강원은 만족도가 평균 이상으로 높음에도 자살률이 독보적 최고치를 기록하는 지표의 불일치를 시각화합니다."
+            },
+            {
+                img: "plots/5_temporal_trends_dual_axis.png",
+                caption: "그림 5: 전국 연도별 삶의 만족도 지수 및 자살률 추이 비교 (이중축)",
+                desc: "2020년부터 2024년까지의 전국 평균 추이입니다. 2021년 팬데믹 한복판에서 삶의 만족도가 급락한 흔적이 뚜렷하나 이후 지표는 회복 및 유지되었습니다. 그러나 자살률은 2022년(25.2명) 이후 최근 2년간(2024년 29.1명) 급속도로 수직 상승하고 있는 심각한 위험 신호를 나타냅니다."
+            },
+            {
+                img: "plots/6_key_regions_trends.png",
+                caption: "그림 6: 주요 특징적 시도들의 지표별 5개년 추이 비교 그래프",
+                desc: "이상치를 나타내는 주요 시도(세종, 충남, 대구 등)의 5개년 개별 연도 흐름입니다. 충남은 자살률이 고공행진 중이며 만족도 변화가 심한 편이며, 세종시는 높은 만족도 속에서 자살률이 안정적으로 낮게 유지되어 상호 대조적인 궤적을 그립니다."
+            }
+        ];
+
+        // Switch Chart in Gallery
+        function switchChart(idx) {
+            // Update tabs active state
+            const tabs = document.querySelectorAll(".gallery-tab");
+            tabs.forEach((tab, i) => {
+                tab.classList.remove("active");
+                if (i === idx) tab.classList.add("active");
+            });
+            
+            // Fade effect
+            const img = document.getElementById("galleryImage");
+            img.style.opacity = 0;
+            
+            setTimeout(() => {
+                img.src = chartData[idx].img;
+                img.alt = chartData[idx].caption;
+                document.getElementById("galleryCaption").innerText = chartData[idx].caption;
+                document.getElementById("galleryDesc").innerText = chartData[idx].desc;
+                img.style.opacity = 1;
+            }, 150);
+        }
+
+        // Lightbox Functions
+        function openLightbox() {
+            const lightbox = document.getElementById("imageLightbox");
+            const lightboxImg = document.getElementById("lightboxImg");
+            const lightboxCaption = document.getElementById("lightboxCaption");
+            const activeImg = document.getElementById("galleryImage");
+            const activeCaption = document.getElementById("galleryCaption");
+            
+            lightboxImg.src = activeImg.src;
+            lightboxCaption.innerText = activeCaption.innerText;
+            lightbox.classList.add("active");
+        }
+
+        function closeLightbox() {
+            document.getElementById("imageLightbox").classList.remove("active");
+        }
+
+        // Count Up Animation for Stats
+        function animateCounters() {
+            const counters = [
+                { id: "stat-high-suicide", target: 34.28 },
+                { id: "stat-low-suicide", target: 20.74 },
+                { id: "stat-high-sat", target: 3.52 },
+                { id: "stat-low-sat", target: 3.25 }
+            ];
+            
+            counters.forEach(c => {
+                const el = document.querySelector(`#${c.id} .value`);
+                if (!el) return;
+                
+                let current = 0;
+                const increment = c.target / 30; // speed
+                const decimals = c.target % 1 === 0 ? 0 : (c.target.toString().split('.')[1] || '').length;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= c.target) {
+                        current = c.target;
+                        clearInterval(timer);
+                    }
+                    el.innerText = current.toFixed(decimals > 2 ? 2 : decimals);
+                }, 20);
+            });
+        }
+
+        // Initialize Page
+        window.onload = function() {
+            // Initial sort of table data
+            regionData.sort((a, b) => {
+                if (a.name === "전국 평균") return 1;
+                if (b.name === "전국 평균") return -1;
+                return b.suicide - a.suicide; // Sort by suicide rate desc
+            });
+            renderTable();
+            switchChart(0); // Load first chart details
+            animateCounters(); // Animate statistics cards
+        }
+    </script>
+</body>
+</html>
