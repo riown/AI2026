@@ -4,65 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>웹 기술의 이해: 건축 비유로 배우는 웹</title>
+    <!-- Tailwind CSS, FontAwesome, Pretendard 폰트 불러오기 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    
     <style>
-        /* 가독성이 극대화된 고급 서체 SUIT 고딕 적용 */
-        @import url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/static/woff2/SUIT.css');
-        
         body {
-            font-family: 'SUIT', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             font-weight: 500;
             scroll-behavior: smooth;
             background-color: #FDF6F0; /* 따뜻한 아이보리 베이스 */
             overflow-x: hidden;
-            letter-spacing: -0.02em; /* 세련된 자간 조절 */
+            letter-spacing: -0.02em; /* 세련된 타이포 자간 조절 */
         }
 
-        /* 핑크빛 원형 그래디언트 클라우드 애니메이션 */
-        @keyframes float-slow {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-40px) scale(1.15); }
+        /* 몽환적인 원형 구체(Blob)의 천천히 움직이는 애니메이션 */
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(60px, -80px) scale(1.15) rotate(120deg); }
+            66% { transform: translate(-40px, 40px) scale(0.9) rotate(240deg); }
+            100% { transform: translate(0, 0) scale(1) rotate(360deg); }
         }
-        @keyframes float-reverse {
-            0%, 100% { transform: translateY(0px) scale(1.1); }
-            50% { transform: translateY(40px) scale(0.9); }
+        @keyframes floatAroundReverse {
+            0% { transform: translate(0, 0) scale(1) rotate(360deg); }
+            50% { transform: translate(-60px, 80px) scale(1.2) rotate(180deg); }
+            100% { transform: translate(0, 0) scale(1) rotate(0deg); }
         }
 
         .bg-blob-1 {
-            animation: float-slow 15s infinite ease-in-out;
-            background: radial-gradient(circle, rgba(254,205,211,0.6) 0%, rgba(253,246,240,0) 70%);
+            animation: floatAround 25s infinite ease-in-out;
+            background: radial-gradient(circle, rgba(255, 179, 179, 0.55) 0%, rgba(253, 246, 240, 0) 70%);
         }
         .bg-blob-2 {
-            animation: float-reverse 18s infinite ease-in-out;
-            background: radial-gradient(circle, rgba(254,226,226,0.5) 0%, rgba(253,246,240,0) 70%);
+            animation: floatAroundReverse 28s infinite ease-in-out;
+            background: radial-gradient(circle, rgba(177, 175, 255, 0.45) 0%, rgba(253, 246, 240, 0) 70%);
         }
         .bg-blob-3 {
-            animation: float-slow 22s infinite ease-in-out;
-            background: radial-gradient(circle, rgba(255,228,230,0.5) 0%, rgba(253,246,240,0) 70%);
+            animation: floatAround 32s infinite ease-in-out;
+            background: radial-gradient(circle, rgba(255, 228, 230, 0.5) 0%, rgba(253, 246, 240, 0) 70%);
+        }
+        .bg-blob-4 {
+            animation: floatAroundReverse 35s infinite ease-in-out;
+            background: radial-gradient(circle, rgba(254, 226, 226, 0.5) 0%, rgba(253, 246, 240, 0) 70%);
         }
 
-        /* 클레이모피즘 카드 스타일 */
+        /* 정밀 다중 섀도우가 조합된 프리미엄 클레이모피즘 카드 */
         .clay-card {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.9);
             border-radius: 45px;
             box-shadow:
-                12px 12px 28px rgba(244, 63, 94, 0.06),
+                12px 12px 28px rgba(224, 189, 189, 0.35),
                 -12px -12px 28px rgba(255, 255, 255, 0.9),
-                inset 6px 6px 12px rgba(255, 255, 255, 0.8),
-                inset -6px -6px 12px rgba(244, 63, 94, 0.03);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                inset 4px 4px 10px rgba(255, 255, 255, 0.8),
+                inset -4px -4px 10px rgba(224, 189, 189, 0.15);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .clay-card:hover {
             transform: translateY(-8px);
             box-shadow:
-                16px 16px 36px rgba(244, 63, 94, 0.1),
+                16px 16px 36px rgba(224, 189, 189, 0.45),
                 -16px -16px 36px rgba(255, 255, 255, 0.95),
-                inset 8px 8px 16px rgba(255, 255, 255, 0.9),
-                inset -8px -8px 16px rgba(244, 63, 94, 0.05);
+                inset 6px 6px 12px rgba(255, 255, 255, 0.9),
+                inset -6px -6px 12px rgba(224, 189, 189, 0.2);
         }
 
         /* 클레이모피즘 버튼 공통 스타일 */
@@ -70,32 +77,32 @@
             background: rgba(255, 255, 255, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.9);
             box-shadow:
-                4px 4px 10px rgba(244, 63, 94, 0.05),
+                4px 4px 10px rgba(224, 189, 189, 0.2),
                 -4px -4px 10px rgba(255, 255, 255, 0.9),
                 inset 2px 2px 5px rgba(255, 255, 255, 0.8),
-                inset -2px -2px 5px rgba(244, 63, 94, 0.02);
+                inset -2px -2px 5px rgba(224, 189, 189, 0.1);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
         }
         .clay-btn:hover {
-            background: #FFF0F0;
             transform: scale(1.03);
             box-shadow:
-                6px 6px 14px rgba(244, 63, 94, 0.08),
+                6px 6px 14px rgba(224, 189, 189, 0.25),
                 -6px -6px 14px rgba(255, 255, 255, 0.95),
                 inset 3px 3px 6px rgba(255, 255, 255, 0.9),
-                inset -3px -3px 6px rgba(244, 63, 94, 0.04);
+                inset -3px -3px 6px rgba(224, 189, 189, 0.15);
         }
 
-        /* 액티브 버튼 스타일 */
+        /* 액티브 버튼 스타일 - 부드러운 파스텔 핑크 */
         .clay-btn-active {
-            background: #FFE4E6 !important;
+            background: #FFB3B3 !important;
+            color: white !important;
             border: 1px solid rgba(255, 255, 255, 0.5) !important;
             box-shadow:
-                inset 3px 3px 6px rgba(244, 63, 94, 0.08),
-                inset -3px -3px 6px rgba(255, 255, 255, 0.8) !important;
+                inset 3px 3px 6px rgba(244, 63, 94, 0.15),
+                inset -3px -3px 6px rgba(255, 255, 255, 0.4) !important;
         }
 
-        /* 탭 페이드인 효과 */
+        /* 탭 페이드인 애니메이션 */
         .fade-in-section {
             animation: fadeIn 0.5s ease-out forwards;
         }
@@ -107,32 +114,41 @@
 </head>
 <body class="relative min-h-screen">
 
-    <!-- Floating Cloud Background Objects -->
-    <div class="fixed top-20 left-10 w-[500px] h-[500px] bg-blob-1 rounded-full pointer-events-none z-0"></div>
-    <div class="fixed bottom-20 right-10 w-[600px] h-[600px] bg-blob-2 rounded-full pointer-events-none z-0"></div>
-    <div class="fixed top-[40%] left-[50%] -translate-x-1/2 w-[450px] h-[450px] bg-blob-3 rounded-full pointer-events-none z-0"></div>
+    <!-- Floating Cloud Background Layers -->
+    <div class="fixed top-10 left-10 w-[600px] h-[600px] bg-blob-1 rounded-full pointer-events-none z-0 filter blur-[80px]"></div>
+    <div class="fixed bottom-10 right-10 w-[700px] h-[700px] bg-blob-2 rounded-full pointer-events-none z-0 filter blur-[80px]"></div>
+    <div class="fixed top-[30%] left-[40%] -translate-x-1/2 w-[500px] h-[500px] bg-blob-3 rounded-full pointer-events-none z-0 filter blur-[80px]"></div>
+    <div class="fixed bottom-[20%] left-[10%] w-[550px] h-[550px] bg-blob-4 rounded-full pointer-events-none z-0 filter blur-[80px]"></div>
 
     <!-- Home Button (Top-Left Home Icon linked to ../index.html) -->
     <div class="fixed top-6 left-6 z-50">
-        <a href="../index.html" class="flex items-center justify-center w-14 h-14 bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(244,63,94,0.08)] rounded-full hover:scale-110 active:scale-95 transition-all text-rose-500 hover:text-rose-600 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)]" title="홈으로 이동">
+        <a href="../index.html" class="flex items-center justify-center w-14 h-14 bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(224,189,189,0.15)] rounded-full hover:scale-110 active:scale-95 transition-all text-[#FF8E8F] shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)]" title="홈으로 이동">
             <i class="fas fa-home text-lg"></i>
         </a>
     </div>
 
-    <!-- Navigation (Interactive pill-shape navigation - optimized hover width) -->
+    <!-- Navigation (Unified Pill-Shape Navigation Bar) -->
     <div class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-        <nav class="group flex items-center justify-between w-14 h-14 hover:w-[360px] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(244,63,94,0.08)] rounded-full overflow-hidden transition-all duration-500 ease-in-out p-1 pointer-events-auto">
-            <!-- Icon/Heart Logo always visible -->
-            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-100 text-rose-500 shrink-0 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)]">
+        <nav class="group flex items-center justify-between w-14 h-14 hover:w-[450px] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_rgba(224,189,189,0.15)] rounded-full overflow-hidden transition-all duration-500 ease-in-out p-1 pointer-events-auto">
+            <!-- Left Logo/Icon: Heart Icon with pulse effect -->
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#FFE4E6] text-[#FF8E8F] shrink-0 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)]">
                 <i class="fas fa-heart text-lg animate-pulse"></i>
             </div>
             
-            <!-- Hidden links that slide/reveal on hover -->
-            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 whitespace-nowrap pr-3">
-                <a href="#intro" class="px-3 py-2 text-sm font-bold text-rose-600/80 hover:text-rose-600 rounded-full hover:bg-rose-50/50 transition-all">도입</a>
-                <a href="#core" class="px-3 py-2 text-sm font-bold text-rose-600/80 hover:text-rose-600 rounded-full hover:bg-rose-50/50 transition-all">3대 기술</a>
-                <a href="#rendering" class="px-3 py-2 text-sm font-bold text-rose-600/80 hover:text-rose-600 rounded-full hover:bg-rose-50/50 transition-all">렌더링</a>
-                <a href="#future" class="px-3 py-2 text-sm font-bold text-rose-600/80 hover:text-rose-600 rounded-full hover:bg-rose-50/50 transition-all">미래</a>
+            <!-- Right Navigation menu (Expands on hover) -->
+            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 whitespace-nowrap pr-4">
+                <a href="#intro" class="px-3 py-2 text-sm font-bold text-[#8A7573] hover:text-[#FF8E8F] rounded-full hover:bg-white/50 transition-all flex items-center space-x-1">
+                    <i class="fas fa-star text-xs"></i><span>도입</span>
+                </a>
+                <a href="#core" class="px-3 py-2 text-sm font-bold text-[#8A7573] hover:text-[#FF8E8F] rounded-full hover:bg-white/50 transition-all flex items-center space-x-1">
+                    <i class="fas fa-layer-group text-xs"></i><span>3대 기술</span>
+                </a>
+                <a href="#rendering" class="px-3 py-2 text-sm font-bold text-[#8A7573] hover:text-[#FF8E8F] rounded-full hover:bg-white/50 transition-all flex items-center space-x-1">
+                    <i class="fas fa-cogs text-xs"></i><span>렌더링</span>
+                </a>
+                <a href="#future" class="px-3 py-2 text-sm font-bold text-[#8A7573] hover:text-[#FF8E8F] rounded-full hover:bg-white/50 transition-all flex items-center space-x-1">
+                    <i class="fas fa-road text-xs"></i><span>미래</span>
+                </a>
             </div>
         </nav>
     </div>
@@ -141,49 +157,49 @@
     <section id="intro" class="relative pt-36 pb-20 px-4 z-10">
         <div class="max-w-4xl mx-auto text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-slate-800 tracking-tight">
-                웹을 만드는 <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">세 가지 마법</span>
+                웹을 만드는 <span class="bg-gradient-to-r from-[#FF8E8F] to-[#B1AFFF] bg-clip-text text-transparent">세 가지 마법</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-600/90 mb-12 leading-relaxed">
-                웹 페이지를 구축하는 과정은 하나의 건축물을 올리는 과정과 흡사합니다.<br class="hidden md:block">
+            <p class="text-lg md:text-xl text-[#8A7573] mb-12 leading-relaxed font-semibold">
+                웹 페이지를 구축하는 과정은 하나의 건축물을 올리는 과정과 매우 흡사합니다.<br class="hidden md:block">
                 튼튼한 골조 위에 아름다운 디자인과 지능적인 로직이 더해지는 여정을 시작해 보세요.
             </p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                 <!-- HTML Clay Card -->
                 <div class="p-8 clay-card text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-200/50 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-[inset_2px_2px_5px_rgba(255,255,255,0.8)]">
-                        <i class="fas fa-building text-orange-500 text-2xl"></i>
+                    <div class="w-16 h-16 bg-gradient-to-br from-[#FFE4D6] to-orange-200/50 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-[inset_2px_2px_5px_rgba(255,255,255,0.8)]">
+                        <i class="fas fa-building text-orange-400 text-2xl"></i>
                     </div>
                     <h3 class="font-extrabold text-xl mb-3 text-slate-800">HTML (뼈대)</h3>
-                    <p class="text-sm text-slate-500/90 leading-relaxed font-semibold">정보의 구조와 용도를 정의하는 골조 공사</p>
+                    <p class="text-sm text-[#8A7573]/90 leading-relaxed font-semibold">정보의 구조와 용도를 정의하는 골조 공사</p>
                 </div>
                 <!-- CSS Clay Card -->
                 <div class="p-8 clay-card text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-rose-100 to-pink-200/50 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-[inset_2px_2px_5px_rgba(255,255,255,0.8)]">
-                        <i class="fas fa-paint-roller text-rose-500 text-2xl"></i>
+                    <div class="w-16 h-16 bg-gradient-to-br from-[#FFE4E6] to-rose-200/50 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-[inset_2px_2px_5px_rgba(255,255,255,0.8)]">
+                        <i class="fas fa-paint-roller text-[#FF8E8F] text-2xl"></i>
                     </div>
                     <h3 class="font-extrabold text-xl mb-3 text-slate-800">CSS (인테리어)</h3>
-                    <p class="text-sm text-slate-500/90 leading-relaxed font-semibold">심미적 가치와 레이아웃을 입히는 공간 설계</p>
+                    <p class="text-sm text-[#8A7573]/90 leading-relaxed font-semibold">심미적 가치와 레이아웃을 입히는 공간 설계</p>
                 </div>
                 <!-- JS Clay Card -->
                 <div class="p-8 clay-card text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-100 to-yellow-200/50 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-[inset_2px_2px_5px_rgba(255,255,255,0.8)]">
-                        <i class="fas fa-microchip text-yellow-500 text-2xl"></i>
+                    <div class="w-16 h-16 bg-gradient-to-br from-[#E8D3FF] to-yellow-200/50 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-[inset_2px_2px_5px_rgba(255,255,255,0.8)]">
+                        <i class="fas fa-microchip text-violet-500 text-2xl"></i>
                     </div>
                     <h3 class="font-extrabold text-xl mb-3 text-slate-800">JS (기계 설비)</h3>
-                    <p class="text-sm text-slate-500/90 leading-relaxed font-semibold">동적인 생명력과 지능을 부여하는 두뇌</p>
+                    <p class="text-sm text-[#8A7573]/90 leading-relaxed font-semibold">동적인 생명력과 지능을 부여하는 두뇌</p>
                 </div>
             </div>
             
             <!-- Button Group Section with Claymorphism -->
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-2xl mx-auto">
                 <!-- Infographic Button -->
-                <a href="./info.png" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-bold rounded-full transition-all shadow-[0_8px_20px_rgba(244,63,94,0.2),inset_3px_3px_8px_rgba(255,255,255,0.3)] hover:scale-[1.03] active:scale-[0.98] group">
+                <a href="./info.png" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#FF8E8F] to-[#FFB3B3] text-white font-bold rounded-full transition-all shadow-[0_8px_20px_rgba(255,142,143,0.3),inset_3px_3px_8px_rgba(255,255,255,0.3)] hover:scale-[1.03] active:scale-[0.98] group">
                     <i class="fas fa-image mr-2 group-hover:scale-110 transition-transform"></i>
                     인포그래픽 보기
                 </a>
                 <!-- Slide Button -->
-                <a href="./webtec_ppt.pdf" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white/70 backdrop-blur-md border border-white/90 hover:border-rose-400/50 text-rose-600/90 font-bold rounded-full transition-all shadow-[0_6px_15px_rgba(244,63,94,0.05),inset_2px_2px_5px_rgba(255,255,255,0.8)] hover:scale-[1.03] active:scale-[0.98] group">
+                <a href="./webtec_ppt.pdf" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white/70 backdrop-blur-md border border-white/90 hover:border-[#FFB3B3]/50 text-[#FF8E8F] font-bold rounded-full transition-all shadow-[0_6px_15px_rgba(224,189,189,0.1),inset_2px_2px_5px_rgba(255,255,255,0.8)] hover:scale-[1.03] active:scale-[0.98] group">
                     <i class="fas fa-file-pdf mr-2 group-hover:scale-110 transition-transform"></i>
                     슬라이드 보기
                 </a>
@@ -196,7 +212,7 @@
         </div>
     </section>
 
-    <!-- HTML Section -->
+    <!-- HTML & CSS & JS Core Section -->
     <section id="core" class="py-24 relative z-10">
         <div class="max-w-5xl mx-auto px-4">
             
@@ -205,20 +221,20 @@
                 <div class="flex-1">
                     <span class="inline-block px-4 py-1.5 bg-orange-100 text-orange-600 text-xs font-bold rounded-full mb-4 shadow-[inset_1px_1px_3px_rgba(255,255,255,0.6)]">STRUCTURE</span>
                     <h2 class="text-3xl font-extrabold mb-6 text-slate-800 tracking-tight">🧱 HTML: 건물의 뼈대를 세우는 '구조 정의'</h2>
-                    <p class="text-slate-600/90 mb-6 leading-relaxed">
+                    <p class="text-slate-600/90 mb-6 leading-relaxed font-semibold">
                         HTML은 정보의 성격을 규정하는 <strong>마크업 언어</strong>입니다. 단순히 텍스트를 나열하는 것이 아니라, 브라우저에게 문서의 각 부분이 어떤 의미를 갖는지 정확히 안내합니다.
                     </p>
                     <div class="bg-white/50 backdrop-blur-md p-6 rounded-[30px] border border-white/80 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.8)] border-l-4 border-l-orange-400">
                         <h4 class="font-bold text-slate-800 mb-2 flex items-center">
                             <i class="fas fa-lightbulb text-orange-400 mr-2"></i> 통찰: 시맨틱 마크업
                         </h4>
-                        <p class="text-sm text-slate-500 leading-relaxed font-semibold">
+                        <p class="text-sm text-[#8A7573] leading-relaxed font-semibold">
                             검색 엔진 최적화(SEO)와 웹 접근성(A11y)의 핵심입니다. 태그 자체가 의미를 갖게 하여 기계와 사람 모두에게 아름답고 정확한 정보를 전달합니다.
                         </p>
                     </div>
                 </div>
                 <div class="flex-1 w-full">
-                    <div class="overflow-hidden rounded-[35px] border border-white/80 bg-white/40 backdrop-blur-md shadow-[0_10px_30px_rgba(244,63,94,0.03)]">
+                    <div class="overflow-hidden rounded-[35px] border border-white/80 bg-white/40 backdrop-blur-md shadow-[0_10px_30px_rgba(224,189,189,0.1)]">
                         <table class="w-full text-sm text-left">
                             <thead class="bg-orange-50/50 text-slate-700 font-bold border-b border-white">
                                 <tr>
@@ -226,7 +242,7 @@
                                     <th class="px-6 py-4">용도 및 특징</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-white/50 text-slate-600 font-medium">
+                            <tbody class="divide-y divide-white/50 text-slate-600 font-semibold">
                                 <tr>
                                     <td class="px-6 py-4 font-mono text-orange-500 font-extrabold">&lt;h1&gt;~&lt;h6&gt;</td>
                                     <td class="px-6 py-4">문서의 계층적 구조 정의 (SEO 필수 요소)</td>
@@ -252,18 +268,18 @@
             <!-- CSS Section -->
             <div class="flex flex-col lg:flex-row-reverse items-center gap-12 mb-24">
                 <div class="flex-1">
-                    <span class="inline-block px-4 py-1.5 bg-rose-100 text-rose-600 text-xs font-bold rounded-full mb-4 shadow-[inset_1px_1px_3px_rgba(255,255,255,0.6)]">STYLE</span>
+                    <span class="inline-block px-4 py-1.5 bg-rose-100 text-[#FF8E8F] text-xs font-bold rounded-full mb-4 shadow-[inset_1px_1px_3px_rgba(255,255,255,0.6)]">STYLE</span>
                     <h2 class="text-3xl font-extrabold mb-6 text-slate-800 tracking-tight">🎨 CSS: 시각적 가치를 더하는 '디자인의 마법'</h2>
-                    <p class="text-slate-600/90 mb-6 leading-relaxed">
+                    <p class="text-slate-600/90 mb-6 leading-relaxed font-semibold">
                         내용과 디자인을 완벽히 분리하여 유지보수 능력을 극대화합니다. <strong>캐스케이딩(Cascading)</strong> 원칙을 통해 스타일의 우선순위를 결정하며, 현대 웹에서는 Flexbox와 Grid를 사용해 정교한 화면 배치를 구성합니다.
                     </p>
                     <div class="space-y-4">
-                        <div class="flex items-start space-x-3 text-slate-600">
-                            <div class="w-5 h-5 bg-rose-100 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs text-rose-500">✓</div>
+                        <div class="flex items-start space-x-3 text-slate-600 font-semibold">
+                            <div class="w-5 h-5 bg-rose-100 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs text-[#FF8E8F]">✓</div>
                             <span><strong>Flexbox:</strong> 1차원 정렬 시스템 (메뉴바, 버튼 그룹 내 정렬에 특화)</span>
                         </div>
-                        <div class="flex items-start space-x-3 text-slate-600">
-                            <div class="w-5 h-5 bg-rose-100 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs text-rose-500">✓</div>
+                        <div class="flex items-start space-x-3 text-slate-600 font-semibold">
+                            <div class="w-5 h-5 bg-rose-100 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs text-[#FF8E8F]">✓</div>
                             <span><strong>CSS Grid:</strong> 2차원 격자 레이아웃 (전체 레이아웃 및 대시보드)</span>
                         </div>
                     </div>
@@ -277,11 +293,11 @@
                     <p class="mb-2"><span class="text-pink-400">.clay-card</span> {</p>
                     <p class="ml-4 text-slate-300">display: <span class="text-yellow-200">flex</span>;</p>
                     <p class="ml-4 text-slate-300">border-radius: <span class="text-yellow-200">45px</span>;</p>
-                    <p class="ml-4 text-slate-300">background: <span class="text-yellow-200">rgba(255,255,255,0.6)</span>;</p>
-                    <p class="ml-4 text-slate-300">backdrop-filter: <span class="text-yellow-200">blur(20px)</span>;</p>
+                    <p class="ml-4 text-slate-300">background: <span class="text-yellow-200">rgba(255,255,255,0.75)</span>;</p>
+                    <p class="ml-4 text-slate-300">backdrop-filter: <span class="text-yellow-200">blur(12px)</span>;</p>
                     <p class="ml-4 text-slate-300">box-shadow: <span class="text-rose-400/90">soft-pink-clay</span>;</p>
                     <p class="mb-2">}</p>
-                    <p class="text-slate-500 mt-4">// Tailwind CSS가 전폭적인 인기를 끄는 현대 트렌드</p>
+                    <p class="text-slate-500 mt-4">// Tailwind CSS를 필두로 한 유틸리티 클래스 최적화</p>
                 </div>
             </div>
 
@@ -290,27 +306,27 @@
                 <div class="flex-1">
                     <span class="inline-block px-4 py-1.5 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full mb-4 shadow-[inset_1px_1px_3px_rgba(255,255,255,0.6)]">INTELLIGENCE</span>
                     <h2 class="text-3xl font-extrabold mb-6 text-slate-800 tracking-tight">🧠 JavaScript: 건물에 생명력을 불어넣는 '지능'</h2>
-                    <p class="text-slate-600/90 mb-6 leading-relaxed">
+                    <p class="text-slate-600/90 mb-6 leading-relaxed font-semibold">
                         사용자와의 다이내믹한 상호작용을 제어하는 논리 스위치입니다. DOM 조작을 통해 실시간으로 화면 구성을 바꾸고, 비동기 통신을 활용하여 부드러운 SPA(단일 페이지 애플리케이션) 생태계를 구축합니다.
                     </p>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="p-5 bg-white/60 backdrop-blur-sm rounded-[25px] border border-white/80 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)]">
                             <h5 class="font-extrabold text-sm mb-1 text-slate-800">DOM 조작 API</h5>
-                            <p class="text-xs text-slate-500 font-medium">트리 구조에 접근해 요소를 능동적 변경</p>
+                            <p class="text-xs text-[#8A7573] font-semibold">트리 구조에 접근해 요소를 능동적 변경</p>
                         </div>
                         <div class="p-5 bg-white/60 backdrop-blur-sm rounded-[25px] border border-white/80 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)]">
                             <h5 class="font-extrabold text-sm mb-1 text-slate-800">비동기 Async / Await</h5>
-                            <p class="text-xs text-slate-500 font-medium">깜빡임 현상 없이 최신 데이터 동기화</p>
+                            <p class="text-xs text-[#8A7573] font-semibold">깜빡임 현상 없이 최신 데이터 동기화</p>
                         </div>
                     </div>
                 </div>
                 <div class="flex-1 w-full text-center">
                     <div class="relative inline-block">
-                        <div class="w-48 h-48 bg-gradient-to-tr from-yellow-100 to-yellow-200 rounded-[50px] flex items-center justify-center animate-pulse shadow-2xl shadow-yellow-200/50 border-4 border-white/80">
-                            <i class="fab fa-js text-6xl text-slate-800"></i>
+                        <div class="w-48 h-48 bg-gradient-to-tr from-[#E8D3FF] to-rose-200 rounded-[50px] flex items-center justify-center animate-pulse shadow-2xl shadow-rose-200/50 border-4 border-white/80">
+                            <i class="fab fa-js text-6xl text-violet-600"></i>
                         </div>
                         <div class="absolute -top-4 -right-4 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-lg border border-white/80">
-                            <p class="text-xs font-extrabold text-slate-800">V8 Engine High Perf</p>
+                            <p class="text-xs font-extrabold text-[#FF8E8F]">V8 Engine High Perf</p>
                         </div>
                     </div>
                 </div>
@@ -322,27 +338,29 @@
     <section id="rendering" class="py-24 relative z-10">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <h2 class="text-3xl font-extrabold mb-4 text-slate-800 tracking-tight">⚙️ 브라우저 렌더링 경로</h2>
-            <p class="text-slate-600/90 mb-12">코드가 픽셀로 환산되기까지, 브라우저가 화면을 그리는 5단계 여정</p>
+            <p class="text-[#8A7573] mb-12 font-semibold">코드가 픽셀로 환산되기까지, 브라우저가 화면을 그리는 5단계 여정</p>
             
             <!-- Pill Shape Tabs with Claymorphism style -->
             <div class="flex flex-wrap justify-center gap-3 mb-10 max-w-3xl mx-auto p-2 bg-white/40 backdrop-blur-md rounded-[35px] border border-white/80 shadow-inner">
-                <button onclick="showStep(1)" class="step-btn clay-btn clay-btn-active px-5 py-3 rounded-full text-sm font-bold text-slate-700" id="btn-1">1. DOM 생성</button>
-                <button onclick="showStep(2)" class="step-btn clay-btn px-5 py-3 rounded-full text-sm font-bold text-slate-700" id="btn-2">2. 렌더 트리</button>
-                <button onclick="showStep(3)" class="step-btn clay-btn px-5 py-3 rounded-full text-sm font-bold text-slate-700" id="btn-3">3. 레이아웃</button>
-                <button onclick="showStep(4)" class="step-btn clay-btn px-5 py-3 rounded-full text-sm font-bold text-slate-700" id="btn-4">4. 페인트</button>
-                <button onclick="showStep(5)" class="step-btn clay-btn px-5 py-3 rounded-full text-sm font-bold text-slate-700" id="btn-5">5. 합성</button>
+                <button onclick="showStep(1)" class="step-btn clay-btn clay-btn-active px-5 py-3 rounded-full text-sm font-bold" id="btn-1">1. DOM 생성</button>
+                <button onclick="showStep(2)" class="step-btn clay-btn px-5 py-3 rounded-full text-sm font-bold text-[#8A7573]" id="btn-2">2. 렌더 트리</button>
+                <button onclick="showStep(3)" class="step-btn clay-btn px-5 py-3 rounded-full text-sm font-bold text-[#8A7573]" id="btn-3">3. 레이아웃</button>
+                <button onclick="showStep(4)" class="step-btn clay-btn px-5 py-3 rounded-full text-sm font-bold text-[#8A7573]" id="btn-4">4. 페인트</button>
+                <button onclick="showStep(5)" class="step-btn clay-btn px-5 py-3 rounded-full text-sm font-bold text-[#8A7573]" id="btn-5">5. 합성</button>
             </div>
 
             <!-- Content Area with claymorphism & animation class -->
             <div id="step-container" class="p-8 md:p-12 clay-card min-h-[250px] flex flex-col justify-center items-center text-center">
                 <div id="step-content" class="fade-in-section">
-                    <h3 id="step-title" class="text-2xl font-extrabold mb-4 text-rose-500">${steps[0].title}</h3>
-                    <p id="step-desc" class="text-slate-600 leading-relaxed max-w-xl text-base font-semibold">${steps[0].desc}</p>
+                    <h3 id="step-title" class="text-2xl font-extrabold mb-4 text-[#FF8E8F]">1. DOM 및 CSSOM 생성</h3>
+                    <p id="step-desc" class="text-[#8A7573] leading-relaxed max-w-xl text-base font-semibold">
+                        서버로부터 받은 바이트 데이터를 파싱하여 HTML은 DOM 트리로, CSS는 CSSOM 트리로 변환합니다. 문서의 의미를 파악하는 첫 단계입니다.
+                    </p>
                 </div>
             </div>
 
-            <div class="mt-10 inline-flex items-center px-6 py-4 bg-rose-50/70 backdrop-blur-sm text-rose-700 rounded-[25px] border border-rose-100 shadow-sm text-sm font-semibold">
-                <i class="fas fa-bolt mr-3 text-rose-500"></i>
+            <div class="mt-10 inline-flex items-center px-6 py-4 bg-rose-50/70 backdrop-blur-sm text-[#FF8E8F] rounded-[25px] border border-rose-100 shadow-sm text-sm font-bold">
+                <i class="fas fa-bolt mr-3 text-[#FF8E8F]"></i>
                 <span><strong>성능 팁:</strong> 레이아웃 단계가 스킵되는 <code>transform</code>을 활용해 극상의 애니메이션 성능을 확보해 보세요!</span>
             </div>
         </div>
@@ -357,29 +375,29 @@
                 <!-- AI era description -->
                 <div class="p-8 md:p-10 clay-card">
                     <h3 class="text-xl font-bold mb-8 flex items-center text-slate-800">
-                        <span class="w-10 h-10 bg-gradient-to-tr from-pink-100 to-rose-200 text-rose-600 rounded-2xl flex items-center justify-center mr-4 shadow-sm">AI</span>
+                        <span class="w-10 h-10 bg-gradient-to-tr from-pink-100 to-rose-200 text-[#FF8E8F] rounded-2xl flex items-center justify-center mr-4 shadow-sm">AI</span>
                         2025년 웹의 새로운 패러다임
                     </h3>
                     <div class="space-y-8">
                         <div class="flex gap-4">
-                            <div class="text-rose-400 font-extrabold text-lg">01</div>
+                            <div class="text-[#FF8E8F] font-extrabold text-lg">01</div>
                             <div>
                                 <p class="font-extrabold mb-1 text-slate-800">AI 탑재 개발 도구</p>
-                                <p class="text-sm text-slate-500/90 leading-relaxed font-semibold">Cursor 등의 차세대 AI 에디터가 대화형 프롬프트를 완벽한 코드로 치환</p>
+                                <p class="text-sm text-[#8A7573]/90 leading-relaxed font-semibold">Cursor 등의 차세대 AI 에디터가 대화형 프롬프트를 완벽한 코드로 치환</p>
                             </div>
                         </div>
                         <div class="flex gap-4">
-                            <div class="text-rose-400 font-extrabold text-lg">02</div>
+                            <div class="text-[#FF8E8F] font-extrabold text-lg">02</div>
                             <div>
                                 <p class="font-extrabold mb-1 text-slate-800">WebAssembly (Wasm)</p>
-                                <p class="text-sm text-slate-500/90 leading-relaxed font-semibold">웹 브라우저의 한계를 넘는 고성능 애플리케이션 및 모듈 연동</p>
+                                <p class="text-sm text-[#8A7573]/90 leading-relaxed font-semibold">웹 브라우저의 한계를 넘는 고성능 애플리케이션 및 모듈 연동</p>
                             </div>
                         </div>
                         <div class="flex gap-4">
-                            <div class="text-rose-400 font-extrabold text-lg">03</div>
+                            <div class="text-[#FF8E8F] font-extrabold text-lg">03</div>
                             <div>
                                 <p class="font-extrabold mb-1 text-slate-800">멀티모달 인터페이스</p>
-                                <p class="text-sm text-slate-500/90 leading-relaxed font-semibold">음성 인식이 더해진 다차원적 사용자 경험 설계</p>
+                                <p class="text-sm text-[#8A7573]/90 leading-relaxed font-semibold">음성 인식이 더해진 다차원적 사용자 경험 설계</p>
                             </div>
                         </div>
                     </div>
@@ -387,7 +405,7 @@
                 
                 <!-- Success Roadmap -->
                 <div class="p-8 md:p-10 clay-card bg-rose-50/30">
-                    <h3 class="text-xl font-extrabold mb-8 italic text-rose-500">Developer Roadmap</h3>
+                    <h3 class="text-xl font-extrabold mb-8 italic text-[#FF8E8F]">Developer Roadmap</h3>
                     <div class="flex flex-col space-y-4">
                         <div class="flex items-center">
                             <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-rose-100 font-bold mr-4 text-slate-700 shadow-sm">1</div>
@@ -400,12 +418,12 @@
                         </div>
                         <div class="w-1 h-6 bg-rose-200/50 ml-6"></div>
                         <div class="flex items-center">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-rose-400 to-pink-500 text-white flex items-center justify-center font-bold mr-4 shadow-md shadow-rose-200">3</div>
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#FF8E8F] to-[#FFB3B3] text-white flex items-center justify-center font-bold mr-4 shadow-md shadow-rose-200">3</div>
                             <span class="text-slate-800 font-extrabold">Project-Driven Learning & Feedback</span>
                         </div>
                     </div>
                     <div class="mt-8 p-5 bg-white/70 rounded-[25px] border border-white/90">
-                        <p class="text-sm text-slate-600 leading-relaxed font-extrabold italic text-center">
+                        <p class="text-sm text-[#8A7573] leading-relaxed font-extrabold italic text-center">
                             "작은 계산기라도 직접 만들며 실패하고 배우는 과정이 백 권의 이론서보다 훨씬 뛰어난 가치입니다."
                         </p>
                     </div>
@@ -417,11 +435,11 @@
     <!-- Footer -->
     <footer class="py-16 bg-white/50 backdrop-blur-md border-t border-white/80 relative z-10">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <p class="text-slate-600 text-sm mb-4 font-semibold">
+            <p class="text-[#8A7573] text-sm mb-4 font-semibold">
                 웹의 본질은 언제나 <strong>정보의 평등한 접근성</strong>과 <strong>사용자 중심 가치</strong>에 존재합니다.
             </p>
             <p class="text-slate-400 text-xs font-semibold">
-                &copy; 2026 Web Technology Guide. Beautifully redesigned with Claymorphism.
+                &copy; 2026 Web Technology Guide. Beautifully redesigned with Claymorphism & Glassmorphism.
             </p>
         </div>
     </footer>
@@ -457,8 +475,8 @@
             // Apply Fade Out animation first
             container.innerHTML = `
                 <div id="step-content" class="fade-in-section">
-                    <h3 id="step-title" class="text-2xl font-extrabold mb-4 text-rose-500">${content.title}</h3>
-                    <p id="step-desc" class="text-slate-600 leading-relaxed max-w-xl text-base font-semibold">${content.desc}</p>
+                    <h3 id="step-title" class="text-2xl font-extrabold mb-4 text-[#FF8E8F]">${content.title}</h3>
+                    <p id="step-desc" class="text-[#8A7573] leading-relaxed max-w-xl text-base font-semibold">${content.desc}</p>
                 </div>
             `;
             
@@ -466,8 +484,10 @@
             document.querySelectorAll('.step-btn').forEach((btn, i) => {
                 if (i === idx - 1) {
                     btn.classList.add('clay-btn-active');
+                    btn.classList.remove('text-[#8A7573]');
                 } else {
                     btn.classList.remove('clay-btn-active');
+                    btn.classList.add('text-[#8A7573]');
                 }
             });
         }
