@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>부산광역시 인구 및 고령화 실태 - 클레이모피즘 대시보드</title>
+<title>부산광역시 인구 구조 변화 및 고령화 실태 분석 대시보드</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -133,17 +133,17 @@ body {
 <header class="pt-32 pb-16 px-4">
     <div class="max-w-4xl mx-auto text-center space-y-6">
         <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/60 border border-white shadow-[inset_1px_1px_4px_rgba(255,255,255,0.8),2px_4px_10px_rgba(224,189,189,0.15)] text-[#FF8E8F] text-xs font-bold uppercase tracking-widest">
-            <i class="fa-solid fa-chart-line animate-pulse"></i> 부산광역시 인구 구조 통계 포트폴리오
+            <i class="fa-solid fa-chart-line animate-pulse"></i> 등록센서스 인구총조사 기초 분석
         </div>
         <h1 class="text-4xl md:text-6xl font-black text-[#5C4B49] leading-tight drop-shadow-sm">
-            감성을 더한 <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8E8F] to-[#B1AFFF]">인구 구조 시각화</span>
+            부산광역시 인구 구조 급변과<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8E8F] to-[#B1AFFF]">초고령사회 인구 실태 진단</span>
         </h1>
         <p class="text-base md:text-lg text-[#8A7573] max-w-2xl mx-auto font-medium leading-relaxed">
-            부산의 지난 10년간 전체 인구 변화 추이와 최근 5년간 100만 명을 돌파하며 깊어진 고령화 실태를 클레이모피즘 미니멀 디자인으로 선보입니다.
+            지난 10년간 장기화된 총인구 감소 추이와 최근 5년간 60세 이상 고령 인구가 100만 명을 돌파하며 가속화되는 인구 고령화 및 지역 소멸 위기 현황을 심층 분석합니다.
         </p>
         <div class="pt-2">
             <button onclick="openVideoModal()" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FFB3B3] hover:bg-[#FF8E8F] text-white font-extrabold text-sm shadow-[inset_-2px_-2px_6px_rgba(0,0,0,0.1),2px_4px_12px_rgba(255,179,179,0.4)] transition-all active:scale-95">
-                <i class="fa-solid fa-circle-play text-lg"></i> 영상 보기
+                <i class="fa-solid fa-circle-play text-lg"></i> 통계 브리핑 영상
             </button>
         </div>
     </div>
@@ -154,39 +154,39 @@ body {
     <section id="overview" class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="clay-card p-8 flex flex-col justify-between h-[230px]">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-[#8A7573] tracking-wide">2024년 부산 총인구</span>
+                <span class="text-xs font-bold text-[#8A7573] tracking-wide">2024년 기준 총인구 규모</span>
                 <span class="w-8 h-8 rounded-full bg-cyan-100 text-cyan-500 flex items-center justify-center text-sm"><i class="fa-solid fa-users"></i></span>
             </div>
             <div class="mt-4">
                 <div class="text-3xl font-black text-[#5C4B49]">325.7 <span class="text-lg font-bold text-[#8A7573]">만 명</span></div>
                 <p class="text-xs font-bold text-rose-500 mt-2 bg-rose-50/70 border border-rose-100 rounded-full px-3 py-1 inline-flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-trend-down"></i> 10년간 약 19.2만 명 감소
+                    <i class="fa-solid fa-arrow-trend-down"></i> 10개년 연속 감소 (총 19.2만 명 감소)
                 </p>
             </div>
         </div>
 
         <div class="clay-card p-8 flex flex-col justify-between h-[230px]">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-[#8A7573] tracking-wide">60세 이상 고령자</span>
+                <span class="text-xs font-bold text-[#8A7573] tracking-wide">60세 이상 고령자 수</span>
                 <span class="w-8 h-8 rounded-full bg-orange-100 text-[#FF8E8F] flex items-center justify-center text-sm"><i class="fa-solid fa-user-clock"></i></span>
             </div>
             <div class="mt-4">
                 <div class="text-3xl font-black text-[#FF8E8F]">102.1 <span class="text-lg font-bold text-[#8A7573]">만 명</span></div>
                 <p class="text-xs font-bold text-[#FF8E8F] mt-2 bg-orange-50/70 border border-orange-100 rounded-full px-3 py-1 inline-flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-trend-up"></i> 4년 만에 14.4% 급증
+                    <i class="fa-solid fa-arrow-trend-up"></i> 최근 4개년 고령 인구 14.4% 급증
                 </p>
             </div>
         </div>
 
         <div class="clay-card p-8 flex flex-col justify-between h-[230px]">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-[#8A7573] tracking-wide">2024년 고령화 비율</span>
+                <span class="text-xs font-bold text-[#8A7573] tracking-wide">전체 인구 대비 고령층 비중</span>
                 <span class="w-8 h-8 rounded-full bg-violet-100 text-[#B1AFFF] flex items-center justify-center text-sm"><i class="fa-solid fa-percent"></i></span>
             </div>
             <div class="mt-4">
                 <div class="text-3xl font-black text-[#B1AFFF]">31.3 <span class="text-lg font-bold text-[#8A7573]">%</span></div>
                 <p class="text-xs font-bold text-[#8A7573] mt-2 bg-violet-50/70 border border-violet-100 rounded-full px-3 py-1 inline-flex items-center gap-1">
-                    <i class="fa-solid fa-circle-exclamation"></i> 시민 3명 중 1명 고령 인구
+                    <i class="fa-solid fa-circle-exclamation"></i> 부산 시민 3명 중 1명 고령 인구
                 </p>
             </div>
         </div>
@@ -195,15 +195,15 @@ body {
     <section id="analytical-hub" class="clay-card p-8 md:p-12 space-y-8">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-4 border-b border-white/50">
             <div>
-                <h2 class="text-2xl font-bold text-[#5C4B49]">실태 데이터 분석 허브</h2>
-                <p class="text-sm font-semibold text-[#8A7573] mt-1">알약 탭을 클릭하여 각 인구 실태의 깊이 있는 흐름을 확인하세요.</p>
+                <h2 class="text-2xl font-bold text-[#5C4B49]">인구통계 정밀 분석 지표</h2>
+                <p class="text-sm font-semibold text-[#8A7573] mt-1">분석 탭을 이동하여 총인구 추이, 연령대 팽창, 행정구역별 격차 데이터를 확인하세요.</p>
             </div>
             <div class="flex gap-2 bg-white/50 backdrop-blur-md p-1.5 rounded-full border border-white shadow-inner">
                 <button onclick="switchTab('tab-decline')" id="btn-tab-decline" class="px-5 py-2.5 rounded-full text-xs font-black transition-all shadow-[inset_1px_1px_2px_rgba(255,255,255,0.8)] focus:outline-none bg-[#FFB3B3] text-white">
                     <i class="fa-solid fa-person-falling mr-1"></i> 총인구 감소 추이
                 </button>
                 <button onclick="switchTab('tab-aging')" id="btn-tab-aging" class="px-5 py-2.5 rounded-full text-xs font-black transition-all shadow-[inset_1px_1px_2px_rgba(255,255,255,0.8)] focus:outline-none text-[#8A7573] hover:bg-white/40">
-                    <i class="fa-solid fa-cake-candles mr-1"></i> 고령자 인구 증가
+                    <i class="fa-solid fa-cake-candles mr-1"></i> 고령층 인구 증가
                 </button>
                 <button onclick="switchTab('tab-regional')" id="btn-tab-regional" class="px-5 py-2.5 rounded-full text-xs font-black transition-all shadow-[inset_1px_1px_2px_rgba(255,255,255,0.8)] focus:outline-none text-[#8A7573] hover:bg-white/40">
                     <i class="fa-solid fa-map-location-dot mr-1"></i> 지역간 격차 비교
@@ -214,17 +214,17 @@ body {
         <div id="tab-decline" class="tab-pane active space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-5 space-y-4">
-                    <h3 class="text-xl font-bold text-[#5C4B49]"><i class="fa-solid fa-chart-line text-[#FF8E8F] mr-2"></i>10년 연속 총인구 감소 곡선</h3>
+                    <h3 class="text-xl font-bold text-[#5C4B49]"><i class="fa-solid fa-chart-line text-[#FF8E8F] mr-2"></i>10년 연속 총인구 감소 현황</h3>
                     <p class="text-sm font-medium text-[#8A7573] leading-relaxed">
-                        부산광역시의 인구 추이는 연도별로 한 차례의 회복도 없이 완연한 하락 곡선을 가리킵니다. 매해 평균적으로 2만 명 안팎의 중소형 도시 1개급 인구가 유출 또는 자연 감소 등으로 부산을 떠나고 있어 대책이 절실한 실정입니다.
+                        부산광역시의 총인구는 2015년 약 344.9만 명에서 단 한 차례의 반등 없이 매년 하강하여, 2024년에는 약 325.7만 명으로 줄어들었습니다. 해마다 평균 2만 명 안팎의 인구가 지속적으로 감소하고 있으며, 청년 인구의 유출과 저출생 현상의 심화가 주된 원인으로 지목됩니다.
                     </p>
                     <div class="clay-inner-card p-4 space-y-2">
                         <div class="flex justify-between text-xs font-bold text-[#8A7573]">
-                            <span>2015년 최고인구</span>
+                            <span>2015년 총인구</span>
                             <span>344.9만 명</span>
                         </div>
                         <div class="flex justify-between text-xs font-bold text-rose-500">
-                            <span>2024년 최저인구</span>
+                            <span>2024년 총인구</span>
                             <span>325.7만 명</span>
                         </div>
                     </div>
@@ -240,17 +240,17 @@ body {
         <div id="tab-aging" class="tab-pane space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-5 space-y-4">
-                    <h3 class="text-xl font-bold text-[#5C4B49]"><i class="fa-solid fa-person-walking-with-cane text-[#FF8E8F] mr-2"></i>고령층 폭발과 100만 돌파</h3>
+                    <h3 class="text-xl font-bold text-[#5C4B49]"><i class="fa-solid fa-person-walking-with-cane text-[#FF8E8F] mr-2"></i>60세 이상 고령자 인구의 양적 팽창</h3>
                     <p class="text-sm font-medium text-[#8A7573] leading-relaxed">
-                        전체 인구 볼륨이 급감하는 상황에 발맞춰 60세 이상의 고령 세대는 유래를 찾아보기 힘들 정도로 빠르게 수직 상승하고 있습니다. 2024년에 마침내 고령층 통계에서 102만 명을 돌파하며 도시 전방위 복지 및 정주 환경의 재설계가 중요해졌습니다.
+                        전체 인구 볼륨이 매해 축소되는 상황 속에서도 60세 이상 고령 세대는 유례가 없을 정도로 빠른 급증세를 기록하고 있습니다. 2020년 89.2만 명 수준이던 고령 인구는 2024년 102.1만 명을 통과해, 사회보장 비용 부담 증가 및 맞춤형 노인 정주 인프라 확충에 대한 신속한 정책적 대응을 필요로 하고 있습니다.
                     </p>
                     <div class="clay-inner-card p-4 space-y-2">
                         <div class="flex justify-between text-xs font-bold text-[#8A7573]">
-                            <span>2020년 고령인구</span>
+                            <span>2020년 고령 인구</span>
                             <span>89.2만 명</span>
                         </div>
                         <div class="flex justify-between text-xs font-bold text-[#FF8E8F]">
-                            <span>2024년 고령인구</span>
+                            <span>2024년 고령 인구</span>
                             <span>102.1만 명</span>
                         </div>
                     </div>
@@ -266,17 +266,17 @@ body {
         <div id="tab-regional" class="tab-pane space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-5 space-y-4">
-                    <h3 class="text-xl font-bold text-[#5C4B49]"><i class="fa-solid fa-scale-unbalanced text-[#FF8E8F] mr-2"></i>극과 극: 원도심 VS 신도시</h3>
+                    <h3 class="text-xl font-bold text-[#5C4B49]"><i class="fa-solid fa-scale-unbalanced text-[#FF8E8F] mr-2"></i>구·군별 인구 불균형 및 양극화</h3>
                     <p class="text-sm font-medium text-[#8A7573] leading-relaxed">
-                        구군별 편차를 보면 원도심 지대인 영도구(41.6%), 중구, 동구 지역의 소멸 및 공동화 위기는 깊어지고 있습니다. 반면, 신도시 개발이 활발한 강서구 지역은 10%대 중후반 수준을 보여 지역 균형 발전 정책의 조율이 반드시 요구됩니다.
+                        부산시 내 각 자치구의 고령화 격차는 심각한 수준입니다. 대표적 원도심인 영도구(41.6%), 중구(37.8%), 동구(37.0%)는 인구 유출과 극단적인 초고령화를 겪고 있는 반면, 신공항 및 신도시 개발 수혜 지역인 강서구는 고령 인구 비중이 17.5%에 불과하여 지역 내 인구 분포의 양극화가 뚜렷합니다.
                     </p>
                     <div class="clay-inner-card p-4 space-y-2">
                         <div class="flex justify-between text-xs font-bold text-rose-500">
-                            <span>소멸 고위험군 (영도구)</span>
+                            <span>원도심 초고령지대 (영도구)</span>
                             <span>41.6 %</span>
                         </div>
                         <div class="flex justify-between text-xs font-bold text-teal-600">
-                            <span>신흥 활력지대 (강서구)</span>
+                            <span>신흥 가구유입지대 (강서구)</span>
                             <span>17.5 %</span>
                         </div>
                     </div>
@@ -293,9 +293,9 @@ body {
     <section id="conclusion" class="clay-card p-8 md:p-12 space-y-8">
         <div class="border-b border-white/50 pb-4">
             <h2 class="text-2xl font-bold text-[#5C4B49] flex items-center gap-2">
-                <i class="fa-solid fa-lightbulb text-[#FF8E8F]"></i> 시사점
+                <i class="fa-solid fa-lightbulb text-[#FF8E8F]"></i> 정책적 시사점과 극복 과제
             </h2>
-            <p class="text-sm font-semibold text-[#8A7573] mt-1">인구 데이터 실태 분석을 바탕으로 이끌어낸 핵심 결과와 정책적 방향성입니다.</p>
+            <p class="text-sm font-semibold text-[#8A7573] mt-1">지속 가능한 부산의 성장을 위해 분석 데이터를 기반으로 도출한 긴급 현안 과제입니다.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -304,9 +304,9 @@ body {
                     <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center text-lg shadow-inner">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-[#5C4B49]">데드크로스 가속화</h3>
+                    <h3 class="text-lg font-bold text-[#5C4B49]">인구 데드크로스 고착화</h3>
                     <p class="text-sm text-[#8A7573] leading-relaxed">
-                        전체 인구는 급감하는데 고령 인구는 100만 명을 돌파하며 '초고령 사회'를 넘어선 인구 구조의 불균형이 심화되고 있습니다.
+                        생산연령인구의 이탈과 자연 감소가 중첩되는 가운데 고령 인구만 100만 명을 돌파하여, 도시 전반의 부양 부담 가중과 장기 성장 잠재력 약화가 심화되고 있습니다.
                     </p>
                 </div>
             </div>
@@ -316,9 +316,9 @@ body {
                     <div class="w-10 h-10 rounded-full bg-violet-100 text-violet-500 flex items-center justify-center text-lg shadow-inner">
                         <i class="fa-solid fa-city"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-[#5C4B49]">원도심 위기</h3>
+                    <h3 class="text-lg font-bold text-[#5C4B49]">원도심 공동화 및 존립 위기</h3>
                     <p class="text-sm text-[#8A7573] leading-relaxed">
-                        중구, 동구, 영도구 등 원도심 지역의 인구 유출과 고령화 비중이 극심하여 지역 활력 저하가 우려됩니다.
+                        중구, 동구, 영도구 등 핵심 원도심의 청장년 유출 현상이 정점에 도달함에 따라 주거 환경 노후화 및 상권 붕괴, 지역 공동체 기능 약화 우려가 현실화되고 있습니다.
                     </p>
                 </div>
             </div>
@@ -328,15 +328,15 @@ body {
                     <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-500 flex items-center justify-center text-lg shadow-inner">
                         <i class="fa-solid fa-clipboard-question"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-[#5C4B49]">맞춤형 정책 필요</h3>
+                    <h3 class="text-lg font-bold text-[#5C4B49]">투트랙 정주 정책 수립</h3>
                     <div class="space-y-3 pt-1">
                         <div class="bg-white/40 p-2.5 rounded-xl border border-white/40 text-xs">
-                            <span class="font-extrabold text-[#5C4B49] block mb-1">👵 고령층</span>
-                            <span class="text-[#8A7573] leading-normal">100만 명에 달하는 고령 인구를 위한 복지, 일자리, 의료 서비스 확충이 필수적입니다.</span>
+                            <span class="font-extrabold text-[#5C4B49] block mb-1">👵 고령 가구 안전망</span>
+                            <span class="text-[#8A7573] leading-normal">100만 명을 넘어선 고령층의 안정적 삶을 위한 보건·의료 체계 강화 및 고령 일자리, 생활 케어 복지 확충이 필수적입니다.</span>
                         </div>
                         <div class="bg-white/40 p-2.5 rounded-xl border border-white/40 text-xs">
-                            <span class="font-extrabold text-[#5C4B49] block mb-1">👦 청년층</span>
-                            <span class="text-[#8A7573] leading-normal">인구 감소의 주원인인 청년 유출을 막기 위해 강서구와 같은 젊은 층 유입 사례를 분석하고 정주 여건을 개선해야 합니다.</span>
+                            <span class="font-extrabold text-[#5C4B49] block mb-1">👦 청년 정착 기반 조성</span>
+                            <span class="text-[#8A7573] leading-normal">강서구의 성공적 유입 통계를 바탕으로 양질의 일자리 공급과 주거, 보육 여건 개선을 통한 정주 중심의 청년 정착 정책을 병행해야 합니다.</span>
                         </div>
                     </div>
                 </div>
@@ -358,8 +358,8 @@ body {
 </div>
 
 <footer class="mt-20 border-t border-white/50 pt-10 text-center text-xs font-semibold text-[#8A7573] space-y-2">
-    <p>© 2026 UI/UX Portfolio Landing Page - Busan Demographic Analysis.</p>
-    <p>본 페이지는 클레이모피즘 스타일 디자인 실험과 함께 데이터 통계의 감성 가치를 전합니다.</p>
+    <p>© 2026 부산광역시 등록센서스 기반 인구 구조 정밀 통계 데이터분석 시스템</p>
+    <p>본 페이지는 인구 감소 실태 규명과 세대 불균형 해소를 선제적으로 대처하기 위해 정책 시사점을 통합 안내합니다.</p>
 </footer>
 
 <script>
