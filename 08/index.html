@@ -7,224 +7,392 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome CDN (아기자기한 플랫 아이콘용) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- 웹폰트 설정 (Pretendard) -->
+  <!-- 웹폰트 설정 (Pretendard) 및 입체적 디자인 커스텀 스타일 -->
   <style>
+    @import url('https://cdn.tailwindcss.com');
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
-    .font-pretendard {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-    }
+    
     body {
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: #FDF6F0; /* 따뜻하고 편안한 아이보리 베이스 */
+      overflow-x: hidden;
+    }
+
+    /* 1. Background Animation: Floating Clouds */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: -1;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .blob-pink {
+      background: #FFB3B3;
+      width: 450px;
+      height: 450px;
+      top: -10%;
+      left: -5%;
+      animation: floatAround1 25s infinite alternate ease-in-out;
+    }
+    .blob-violet {
+      background: #E8D3FF;
+      width: 500px;
+      height: 500px;
+      bottom: -10%;
+      right: -10%;
+      animation: floatAround2 30s infinite alternate ease-in-out;
+    }
+    .blob-apricot {
+      background: #FFE3D8;
+      width: 400px;
+      height: 400px;
+      top: 40%;
+      left: 60%;
+      animation: floatAround3 28s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatAround1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(80px, 50px) scale(1.15); }
+    }
+    @keyframes floatAround2 {
+      0% { transform: translate(0, 0) scale(1.1); }
+      100% { transform: translate(-100px, -60px) scale(0.9); }
+    }
+    @keyframes floatAround3 {
+      0% { transform: translate(0, 0) scale(0.95); }
+      100% { transform: translate(-50px, 80px) scale(1.1); }
+    }
+
+    /* 2. Claymorphism Card Styles */
+    .clay-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      /* 이중 바깥 그림자 + 이중 안쪽 그림자(inset shadow) 구성 */
+      box-shadow: 
+        12px 12px 28px rgba(224, 189, 189, 0.35), 
+        -12px -12px 28px rgba(255, 255, 255, 0.9),
+        inset 4px 4px 10px rgba(255, 255, 255, 0.8), 
+        inset -4px -4px 10px rgba(224, 189, 189, 0.15);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .clay-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 
+        18px 18px 36px rgba(224, 189, 189, 0.45), 
+        -18px -18px 36px rgba(255, 255, 255, 0.95),
+        inset 6px 6px 12px rgba(255, 255, 255, 0.85), 
+        inset -6px -6px 12px rgba(224, 189, 189, 0.1);
+    }
+
+    /* 3. Clay Inner Card (옴목한 음각 효과) */
+    .clay-inner {
+      background: rgba(240, 246, 240, 0.35);
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 
+        inset 4px 4px 10px rgba(224, 189, 189, 0.2), 
+        inset -4px -4px 10px rgba(255, 255, 255, 0.9);
+    }
+
+    /* 4. Clay Pill-shape (알약형 컴포넌트) */
+    .clay-pill {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 
+        6px 6px 16px rgba(224, 189, 189, 0.25), 
+        -6px -6px 16px rgba(255, 255, 255, 0.9),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.7), 
+        inset -3px -3px 6px rgba(224, 189, 189, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    /* 5. Active & Inactive Buttons */
+    .clay-btn-active {
+      background: #FFB3B3 !important; /* 소프트 파스텔 핑크 */
+      color: white !important;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 
+        inset 3px 3px 8px rgba(255, 255, 255, 0.5),
+        inset -3px -3px 8px rgba(138, 117, 115, 0.2);
+    }
+    .clay-btn-inactive {
+      background: rgba(255, 255, 255, 0.5);
+      color: #8A7573 !important; /* 은은한 브라운 텍스트 */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 
+        inset 2px 2px 5px rgba(255, 255, 255, 0.8),
+        inset -2px -2px 5px rgba(224, 189, 189, 0.1);
+    }
+
+    /* 독자적인 고정형 홈 버튼 전용 스타일 */
+    .clay-home-btn {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 
+        4px 4px 12px rgba(224, 189, 189, 0.3), 
+        -4px -4px 12px rgba(255, 255, 255, 0.95),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.9), 
+        inset -3px -3px 6px rgba(224, 189, 189, 0.1);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .clay-home-btn:hover {
+      transform: scale(1.1) rotate(-5deg);
+      background-color: #FFF0F0;
+      color: #FF5A5F;
+      box-shadow: 
+        6px 6px 16px rgba(224, 189, 189, 0.4), 
+        -6px -6px 16px rgba(255, 255, 255, 1),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.95), 
+        inset -3px -3px 6px rgba(224, 189, 189, 0.05);
+    }
+
+    /* Scrollbar Style */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(253, 246, 240, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FFB3B3;
+      border-radius: 9999px;
     }
   </style>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900 leading-relaxed font-pretendard">
+<body class="min-h-screen text-slate-800 leading-relaxed">
 
-  <!-- GNB (헤더) -->
-  <header class="sticky top-0 z-50 bg-slate-900 text-white backdrop-blur-md bg-opacity-95 border-b border-slate-800 shadow-sm transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <span class="text-2xl font-black bg-gradient-to-r from-blue-400 via-teal-400 to-indigo-400 bg-clip-text text-transparent">
+  <!-- Floating Cloud Background Blobs -->
+  <div class="blob blob-pink"></div>
+  <div class="blob blob-violet"></div>
+  <div class="blob blob-apricot"></div>
+
+  <!-- [독립형 홈 버튼] 배너와 완벽분리 고정 (모바일 및 데스크톱 스케일 완벽 대응) -->
+  <a href="../index.html" class="fixed top-4 left-4 md:top-5 md:left-5 z-50 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-[#FF8E8F] clay-home-btn group" title="메인 홈으로 돌아가기">
+    <i class="fa-solid fa-house text-sm md:text-lg group-hover:scale-110 transition-transform"></i>
+  </a>
+
+  <!-- GNB (상단 알약 배너 - 홈 버튼과의 중복/겹침 회피를 위해 너비 대폭 축소 및 콤팩트화) -->
+  <div class="w-full flex justify-end md:justify-center sticky top-4 z-40 px-4 pl-16 md:pl-24 lg:pl-4">
+    <header class="w-full max-w-[340px] xs:max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl h-16 flex items-center justify-between px-3 md:px-6 clay-pill">
+      <div class="flex items-center space-x-1.5 md:space-x-3 shrink-0">
+        <!-- 브랜드 데코 심볼 마크 (정찰 및 상징 전용) -->
+        <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-pink-100 text-[#FF8E8F] flex items-center justify-center shadow-sm shrink-0">
+          <i class="fa-solid fa-anchor text-[10px] md:text-base"></i>
+        </div>
+        <span class="text-[11px] md:text-sm lg:text-base font-black bg-gradient-to-r from-[#FF8E8F] via-[#B1AFFF] to-indigo-400 bg-clip-text text-transparent tracking-tight shrink-0">
           BUSAN 1T-TOURISM
         </span>
-        <span class="hidden sm:inline-block px-2.5 py-0.5 text-xs font-semibold bg-blue-500 bg-opacity-20 text-blue-300 rounded-full border border-blue-500 border-opacity-30 tracking-wide">
-          지속가능 정책 제안 플랫폼
-        </span>
       </div>
-      <nav class="flex space-x-6 text-sm font-semibold text-slate-300">
-        <a href="#stats" class="hover:text-blue-400 transition-colors">실적 대시보드</a>
-        <a href="#voices" class="hover:text-blue-400 transition-colors">시민의 소리</a>
-        <a href="#proposals" class="hover:text-blue-400 transition-colors">5대 정책안</a>
-        <a href="#vote" class="hover:text-blue-400 transition-colors">시민의결/제안</a>
+      <!-- 메뉴 텍스트 및 간격 최소화하여 가로 밀림 완벽 차단 -->
+      <nav class="flex space-x-2 md:space-x-5 text-[10px] md:text-xs lg:text-sm font-bold text-[#8A7573] shrink-0">
+        <a href="#stats" class="hover:text-[#FF8E8F] transition-colors"><i class="fa-solid fa-chart-line mr-0.5"></i>실적</a>
+        <a href="#voices" class="hover:text-[#FF8E8F] transition-colors"><i class="fa-solid fa-comments mr-0.5"></i>시민소리</a>
+        <a href="#proposals" class="hover:text-[#FF8E8F] transition-colors"><i class="fa-solid fa-lightbulb mr-0.5"></i>5대안</a>
+        <a href="#vote" class="hover:text-[#FF8E8F] transition-colors"><i class="fa-solid fa-square-poll-vertical mr-0.5"></i>의결</a>
       </nav>
-    </div>
-  </header>
+    </header>
+  </div>
 
   <!-- Hero Section -->
-  <section class="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-white py-16 sm:py-24">
-    <div class="absolute inset-0 opacity-10 pointer-events-none">
-      <svg class="absolute bottom-0 w-full" viewBox="0 0 1440 320" fill="none">
-        <path fill="#0284c7" d="M0,224L48,197.3C96,171,192,117,288,112C384,107,480,149,576,170.7C672,192,768,192,864,170.7C960,149,1056,107,1152,101.3C1248,96,1344,128,1392,144L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-      </svg>
-    </div>
-
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-slate-800 text-blue-300 text-xs font-semibold tracking-wider uppercase mb-6 border border-slate-700">
+  <section class="relative py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="relative z-10">
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white bg-opacity-70 text-[#FF8E8F] text-xs font-bold tracking-wider mb-6 shadow-sm border border-white border-opacity-60">
         <span>🎉 외국인 지출액 1조 원 시대 최초 돌파</span>
       </div>
-      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+      
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 leading-tight">
         시민이 자부하고,<br />
-        <span class="bg-gradient-to-r from-blue-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">
+        <span class="bg-gradient-to-r from-[#FF8E8F] via-[#B1AFFF] to-pink-500 bg-clip-text text-transparent">
           관광객이 다시 찾는 상생 부산
         </span>
       </h1>
       
-      <div class="max-w-4xl mx-auto text-base sm:text-lg text-slate-400 mb-8 leading-relaxed font-normal">
-        <p class="block">KBS 특집 보도에서 집중 조명된 부산의 글로벌 성장을 시민의 실제 여론(518건) 데이터로 매핑했습니다.</p>
-        <p class="block">현장의 생생한 의견과 쓴소리, 그리고 <strong>공공정책학</strong>적 관점의 환류(Feedback) 제도를 통해 도출된 핵심 정책을 투표해 주세요!</p>
+      <div class="max-w-3xl mx-auto text-sm sm:text-base text-slate-600 mb-10 leading-relaxed font-semibold">
+        <p class="mb-2">KBS 특집 보도에서 집중 조명된 부산의 글로벌 성장을 시민의 실제 여론(518건) 데이터로 매핑했습니다.</p>
+        <p>현장의 생생한 의견과 쓴소리, 그리고 <strong class="text-purple-600">공공정책학</strong>적 관점의 환류(Feedback) 제도를 통해 도출된 핵심 정책에 투표해 주세요!</p>
       </div>
 
       <div class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
-        <a href="#proposals" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          5대 제안 검토하기
+        <a href="#proposals" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-white bg-gradient-to-r from-[#FF8E8F] to-pink-500 rounded-2xl hover:scale-105 transition-all shadow-md">
+          <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>5대 제안 검토하기
         </a>
-        <a href="#vote" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-slate-300 bg-slate-800 rounded-lg hover:bg-slate-700 transition-all hover:text-white border border-slate-700">
-          투표 및 한 줄 의견 쓰기
+        <a href="#vote" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-[#8A7573] bg-white bg-opacity-80 rounded-2xl hover:bg-[#FDF6F0] border border-white hover:scale-105 transition-all shadow-sm">
+          <i class="fa-solid fa-vote-yea mr-2"></i>투표 및 의견쓰기
         </a>
       </div>
     </div>
   </section>
 
   <!-- Stats Dashboard Section -->
-  <section id="stats" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="stats" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
-      <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">실적 및 여론 핵심 요약</h2>
-      <p class="mt-3 max-w-2xl mx-auto text-sm sm:text-base text-slate-500 font-normal">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800"><i class="fa-solid fa-chart-pie text-[#FF8E8F] mr-2"></i>실적 및 여론 핵심 요약</h2>
+      <p class="mt-2 text-xs sm:text-sm text-slate-500 font-semibold">
         외국인 지출 현황과 유튜브 분석 518건 데이터를 기반으로 재구성한 정량적 실태입니다.
       </p>
     </div>
 
     <!-- Key Metrics Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md">
-        <span class="text-xs font-bold text-slate-400 tracking-wide uppercase">외국인 연간 지출액</span>
-        <div class="flex items-baseline space-x-2 mt-2">
-          <span class="text-3xl font-extrabold text-blue-600 tracking-tight">1조 원 +</span>
-          <span class="text-xs font-bold text-green-600">전년비 32.4% ↑</span>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="clay-card p-6 flex flex-col justify-between">
+        <div>
+          <span class="text-[10px] font-bold text-slate-400 tracking-wide uppercase"><i class="fa-solid fa-won-sign mr-1"></i>외국인 연간 지출액</span>
+          <div class="flex items-baseline space-x-2 mt-2">
+            <span class="text-2xl font-black text-[#FF8E8F] tracking-tight">1조 원 +</span>
+            <span class="text-[10px] font-bold text-green-500"><i class="fa-solid fa-caret-up"></i> 32.4%</span>
+          </div>
         </div>
-        <p class="text-xs text-slate-400 mt-2 font-medium">인천 추월, 전국 2위 달성</p>
+        <p class="text-xs text-slate-500 mt-4 font-semibold">인천 추월, 전국 2위 달성</p>
       </div>
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md">
-        <span class="text-xs font-bold text-slate-400 tracking-wide uppercase">외국인 관광객 수</span>
-        <div class="flex items-baseline space-x-2 mt-2">
-          <span class="text-3xl font-extrabold text-teal-600 tracking-tight">302만 명</span>
-          <span class="text-xs font-bold text-teal-600">사상 최대치</span>
+      
+      <div class="clay-card p-6 flex flex-col justify-between">
+        <div>
+          <span class="text-[10px] font-bold text-slate-400 tracking-wide uppercase"><i class="fa-solid fa-plane-arrival mr-1"></i>외국인 관광객 수</span>
+          <div class="flex items-baseline space-x-2 mt-2">
+            <span class="text-2xl font-black text-[#B1AFFF] tracking-tight">302만 명</span>
+            <span class="text-[10px] font-bold text-indigo-500">사상 최대치</span>
+          </div>
         </div>
-        <p class="text-xs text-slate-400 mt-2 font-medium">대만 관광객 비중 20% 차지</p>
+        <p class="text-xs text-slate-500 mt-4 font-semibold">대만 관광객 비중 20% 차지</p>
       </div>
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md">
-        <span class="text-xs font-bold text-slate-400 tracking-wide uppercase">여론 총 샘플 규모</span>
-        <div class="flex items-baseline space-x-2 mt-2">
-          <span class="text-3xl font-extrabold text-indigo-600 tracking-tight">518 건</span>
-          <span class="text-xs font-bold text-indigo-500">유튜브 분석 데이터</span>
+
+      <div class="clay-card p-6 flex flex-col justify-between">
+        <div>
+          <span class="text-[10px] font-bold text-slate-400 tracking-wide uppercase"><i class="fa-solid fa-database mr-1"></i>여론 총 샘플 규모</span>
+          <div class="flex items-baseline space-x-2 mt-2">
+            <span class="text-2xl font-black text-amber-500 tracking-tight">518 건</span>
+            <span class="text-[10px] font-bold text-amber-500">유튜브 데이터</span>
+          </div>
         </div>
-        <p class="text-xs text-slate-400 mt-2 font-medium">KBS 보도 영상 분석</p>
+        <p class="text-xs text-slate-500 mt-4 font-semibold">KBS 보도 영상 분석 결과</p>
       </div>
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md">
-        <span class="text-xs font-bold text-slate-400 tracking-wide uppercase">핵심 대외 인지도</span>
-        <div class="flex items-baseline space-x-2 mt-2">
-          <span class="text-3xl font-extrabold text-purple-600 tracking-tight">3 위</span>
-          <span class="text-xs font-bold text-purple-500">전국 워케이션 순위</span>
+
+      <div class="clay-card p-6 flex flex-col justify-between">
+        <div>
+          <span class="text-[10px] font-bold text-slate-400 tracking-wide uppercase"><i class="fa-solid fa-map-location-dot mr-1"></i>핵심 대외 인지도</span>
+          <div class="flex items-baseline space-x-2 mt-2">
+            <span class="text-2xl font-black text-pink-500 tracking-tight">3 위</span>
+            <span class="text-[10px] font-bold text-pink-500">워케이션 순위</span>
+          </div>
         </div>
-        <p class="text-xs text-slate-400 mt-2 font-medium">잠깐 들르는 곳에서 오래 체류하는 곳으로</p>
+        <p class="text-xs text-slate-500 mt-4 font-semibold">잠깐 들르는 곳에서 오래 머무는 곳으로</p>
       </div>
     </div>
 
     <!-- Interactive Chart & Insight Card -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- Chart Card -->
-      <div class="lg:col-span-2 bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
-        <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
-          <span class="w-1.5 h-6 bg-blue-500 rounded-full mr-2"></span>
+      <div class="lg:col-span-2 clay-card p-6 sm:p-8">
+        <h3 class="text-md sm:text-lg font-bold text-slate-800 mb-6 flex items-center">
+          <span class="w-1.5 h-6 bg-[#FFB3B3] rounded-full mr-2"></span>
           시민 댓글 여론 주제별 분포 (단위: 건)
         </h3>
         
-        <div class="space-y-4 font-medium">
+        <div class="space-y-4 font-semibold text-xs sm:text-sm">
           <div>
-            <div class="flex justify-between text-sm mb-1.5">
-              <span class="font-semibold text-slate-700">지역 자부심 💙 (67.4%)</span>
+            <div class="flex justify-between mb-1">
+              <span class="text-slate-700">지역 자부심 💙 (67.4%)</span>
               <span class="text-slate-500">349건</span>
             </div>
-            <div class="w-full bg-slate-100 h-6 rounded-full overflow-hidden">
-              <div class="bg-blue-500 h-full rounded-full transition-all duration-1000" style="width: 67.4%;"></div>
+            <div class="w-full clay-inner h-5 rounded-full overflow-hidden relative">
+              <div class="bg-gradient-to-r from-[#FFB3B3] to-[#FF8E8F] h-full rounded-full transition-all duration-1000 shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)]" style="width: 67.4%;"></div>
             </div>
           </div>
 
           <div>
-            <div class="flex justify-between text-sm mb-1.5">
-              <span class="font-semibold text-slate-700">경제효과 📈 (9.1%)</span>
+            <div class="flex justify-between mb-1">
+              <span class="text-slate-700">경제효과 📈 (9.1%)</span>
               <span class="text-slate-500">47건</span>
             </div>
-            <div class="w-full bg-slate-100 h-6 rounded-full overflow-hidden">
-              <div class="bg-teal-500 h-full rounded-full transition-all duration-1000" style="width: 9.1%;"></div>
+            <div class="w-full clay-inner h-5 rounded-full overflow-hidden relative">
+              <div class="bg-gradient-to-r from-[#E8D3FF] to-[#B1AFFF] h-full rounded-full transition-all duration-1000" style="width: 9.1%;"></div>
             </div>
           </div>
 
           <div>
-            <div class="flex justify-between text-sm mb-1.5">
-              <span class="font-semibold text-slate-700">숙박·물가 우려 ⚠️ (9.1%)</span>
+            <div class="flex justify-between mb-1">
+              <span class="text-slate-700">숙박·물가 우려 ⚠️ (9.1%)</span>
               <span class="text-slate-500">47건</span>
             </div>
-            <div class="w-full bg-slate-100 h-6 rounded-full overflow-hidden">
-              <div class="bg-amber-500 h-full rounded-full transition-all duration-1000" style="width: 9.1%;"></div>
+            <div class="w-full clay-inner h-5 rounded-full overflow-hidden relative">
+              <div class="bg-gradient-to-r from-amber-200 to-amber-400 h-full rounded-full transition-all duration-1000" style="width: 9.1%;"></div>
             </div>
           </div>
 
           <div>
-            <div class="flex justify-between text-sm mb-1.5">
-              <span class="font-semibold text-slate-700">외국인 호감 인식 🌏 (8.7%)</span>
+            <div class="flex justify-between mb-1">
+              <span class="text-slate-700">외국인 호감 인식 🌏 (8.7%)</span>
               <span class="text-slate-500">45건</span>
             </div>
-            <div class="w-full bg-slate-100 h-6 rounded-full overflow-hidden">
-              <div class="bg-indigo-500 h-full rounded-full transition-all duration-1000" style="width: 8.7%;"></div>
+            <div class="w-full clay-inner h-5 rounded-full overflow-hidden relative">
+              <div class="bg-gradient-to-r from-teal-200 to-teal-400 h-full rounded-full transition-all duration-1000" style="width: 8.7%;"></div>
             </div>
           </div>
 
           <div>
-            <div class="flex justify-between text-sm mb-1.5">
-              <span class="font-semibold text-slate-700">교통 문제 우려 🚗 (3.9%)</span>
+            <div class="flex justify-between mb-1">
+              <span class="text-slate-700">교통 문제 우려 🚗 (3.9%)</span>
               <span class="text-slate-500">20건</span>
             </div>
-            <div class="w-full bg-slate-100 h-6 rounded-full overflow-hidden">
-              <div class="bg-red-400 h-full rounded-full transition-all duration-1000" style="width: 3.9%;"></div>
+            <div class="w-full clay-inner h-5 rounded-full overflow-hidden relative">
+              <div class="bg-gradient-to-r from-rose-300 to-rose-400 h-full rounded-full transition-all duration-1000" style="width: 3.9%;"></div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Key Insight Card -->
-      <div class="bg-slate-900 text-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-800">
+      <div class="clay-card p-6 sm:p-8 flex flex-col justify-between border-2 border-[#E8D3FF]">
         <div>
-          <div class="p-2.5 bg-blue-500 bg-opacity-20 border border-blue-500 border-opacity-30 rounded-lg inline-block text-blue-300 mb-6">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div class="p-2.5 bg-pink-100 text-[#FF8E8F] rounded-2xl inline-block mb-6 shadow-sm">
+            <i class="fa-solid fa-circle-nodes text-xl"></i>
           </div>
-          <h4 class="text-xl font-bold mb-4 tracking-tight">여론 정밀 분석 결과</h4>
-          <p class="text-sm text-slate-300 leading-relaxed mb-6 font-normal">
+          <h4 class="text-lg font-bold mb-3 tracking-tight">여론 정밀 분석 결과</h4>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6 font-semibold">
             시민들은 부산의 도약에 매우 환호하고 자긍심을 느끼고 있으나, 관광 인프라에 숨겨진 불안 요인을 정확히 감지했습니다. 
-            특히 <strong>물가(바가지요금)</strong>와 <strong>대중교통 체증</strong>이 상승세를 제한하는 주요 위험군 요소로 도출되었습니다.
+            특히 <strong class="text-[#FF8E8F]">물가(바가지요금)</strong>와 <strong class="text-purple-600">대중교통 체증</strong>이 상승세를 제한하는 주요 위험군 요소로 도출되었습니다.
           </p>
         </div>
-        <div class="border-t border-slate-800 pt-4 text-xs text-slate-500 flex justify-between items-center font-semibold">
+        <div class="border-t border-slate-200 pt-4 text-[10px] text-slate-400 flex justify-between items-center font-bold">
           <span>소스: KBS 뉴스 보도 댓글 518건</span>
-          <span class="underline cursor-pointer text-slate-400 hover:text-white transition-colors">자료 더보기</span>
+          <span class="underline cursor-pointer text-slate-500 hover:text-[#FF8E8F]">자료 더보기 <i class="fa-solid fa-angle-right"></i></span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Citizens' Voices Section -->
-  <section id="voices" class="py-16 bg-slate-100 border-t border-b border-slate-200">
+  <section id="voices" class="py-16 bg-white bg-opacity-40 border-t border-b border-white border-opacity-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10">
         <div>
-          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">현장의 목소리 (시민 여론 분석기)</h2>
-          <p class="mt-2 text-sm sm:text-base text-slate-500 font-normal">실제 보도 영상 댓글 속 시민들의 소망과 비판적 여론을 카테고리별로 정독해 보세요.</p>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight"><i class="fa-regular fa-comment-dots text-[#FF8E8F] mr-2"></i>현장의 목소리 (시민 여론 분석기)</h2>
+          <p class="mt-2 text-xs sm:text-sm text-slate-500 font-semibold">실제 보도 영상 댓글 속 시민들의 소망과 비판적 여론을 카테고리별로 정독해 보세요.</p>
         </div>
-        <!-- Filter Buttons -->
-        <div id="voice-filters" class="mt-4 md:mt-0 flex flex-wrap gap-2">
-          <button data-filter="all" class="px-4 py-2.5 text-xs font-bold rounded-lg transition-all bg-slate-900 text-white shadow-sm">전체</button>
-          <button data-filter="pride" class="px-4 py-2.5 text-xs font-bold rounded-lg transition-all bg-white text-slate-600 hover:bg-slate-200">지역 자부심 💙</button>
-          <button data-filter="price" class="px-4 py-2.5 text-xs font-bold rounded-lg transition-all bg-white text-slate-600 hover:bg-slate-200">물가 우려 ⚠️</button>
-          <button data-filter="traffic" class="px-4 py-2.5 text-xs font-bold rounded-lg transition-all bg-white text-slate-600 hover:bg-slate-200">교통 대책 🚗</button>
+        
+        <!-- Filter Buttons (Clay Pills) -->
+        <div id="voice-filters" class="mt-5 md:mt-0 flex flex-wrap gap-2">
+          <button data-filter="all" class="px-4 py-2 text-xs font-black rounded-full transition-all clay-btn-active">전체</button>
+          <button data-filter="pride" class="px-4 py-2 text-xs font-black rounded-full transition-all clay-btn-inactive">지역 자부심 💙</button>
+          <button data-filter="price" class="px-4 py-2 text-xs font-black rounded-full transition-all clay-btn-inactive">물가 우려 ⚠️</button>
+          <button data-filter="traffic" class="px-4 py-2 text-xs font-black rounded-full transition-all clay-btn-inactive">교통 대책 🚗</button>
         </div>
       </div>
 
       <!-- Testimonial Grid -->
       <div id="voice-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Rendered dynamically via JS -->
+        <!-- JS에 의해 클레이 카드로 동적 생성됨 -->
       </div>
     </div>
   </section>
@@ -232,108 +400,123 @@
   <!-- 5 Great Proposals Section -->
   <section id="proposals" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
-      <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl tracking-tight">외국인 1조 원 소비를 지속할 5대 핵심 정책 방안</h2>
-      <p class="mt-3 max-w-3xl mx-auto text-sm sm:text-base text-slate-500 font-normal">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight"><i class="fa-solid fa-lightbulb text-amber-400 mr-2"></i>외국인 1조 원 소비를 지속할 5대 핵심 정책</h2>
+      <p class="mt-3 max-w-2xl mx-auto text-xs sm:text-sm text-slate-500 font-semibold">
         시민이 가장 걱정하는 실질적인 문제점(Pain Point)을 선제 타격하고, 공공정책학 관점의 거버넌스를 결합한 해결 대안입니다.
       </p>
     </div>
 
-    <!-- Tab Buttons -->
+    <!-- Tab Buttons (Clay Pill-shape Container) -->
     <div id="proposals-tabs" class="flex flex-wrap justify-center gap-2 mb-12">
-      <!-- Rendered dynamically via JS -->
+      <!-- JS로 입체 탭 버튼 동적 렌더링 -->
     </div>
 
     <!-- Tab Content Display -->
-    <div id="proposals-content">
-      <!-- Rendered dynamically via JS -->
+    <div id="proposals-content" class="transition-all duration-300">
+      <!-- JS로 동적 상세 렌더링 -->
     </div>
   </section>
 
   <!-- Timeline Section -->
-  <section class="py-16 bg-slate-900 text-white border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-extrabold tracking-tight">정책 도입 로드맵</h2>
-        <p class="mt-2 text-slate-400 text-sm font-normal">현실성 있고 강력한 3단계 안심 연계 계획입니다.</p>
+  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight"><i class="fa-solid fa-route text-[#B1AFFF] mr-2"></i>정책 도입 로드맵</h2>
+      <p class="mt-2 text-xs sm:text-sm text-slate-500 font-semibold">현실성 있고 강력한 3단계 안심 연계 계획입니다.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative font-semibold">
+      <!-- 1단계 -->
+      <div class="clay-card p-8 relative pt-12">
+        <span class="absolute -top-4 left-6 bg-gradient-to-r from-[#FF8E8F] to-pink-500 text-white font-bold px-4 py-1.5 rounded-full text-[10px] tracking-wide shadow-sm">
+          1단계: 즉시 ~ 6개월
+        </span>
+        <h4 class="text-lg font-bold text-slate-800 flex items-center">
+          <i class="fa-solid fa-shield-halved text-[#FF8E8F] mr-2"></i>불안 요인 전면 차단
+        </h4>
+        <p class="text-xs text-slate-500 mt-4 leading-relaxed font-semibold">
+          전통시장 가격 정찰제 및 해외 모바일 간편결제 통합 단말기 무상 보급을 즉각 시행하여 외국인 소비의 지장을 초래하는 결제 수단을 최선책으로 정비합니다.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative font-medium">
-        <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700 relative">
-          <span class="absolute -top-4 left-6 bg-blue-600 text-white font-bold px-3 py-1 rounded-lg text-[11px] tracking-wide">1단계: 즉시 ~ 6개월</span>
-          <h4 class="text-lg font-bold mt-2 text-blue-400">불안 요인 전면 차단</h4>
-          <p class="text-xs text-slate-300 mt-2.5 leading-relaxed font-normal">
-            전통시장 가격 정찰제 및 해외 모바일 간편결제 통합 단말기 무상 보급을 즉각 시행하여 외국인 소비의 지장을 초래하는 결제 수단을 최선책으로 정비합니다.
-          </p>
-        </div>
-        <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700 relative">
-          <span class="absolute -top-4 left-6 bg-teal-600 text-white font-bold px-3 py-1 rounded-lg text-[11px] tracking-wide">2단계: 6개월 ~ 1년</span>
-          <h4 class="text-lg font-bold mt-2 text-teal-400">인프라 연계 및 브랜딩</h4>
-          <p class="text-xs text-slate-300 mt-2.5 leading-relaxed font-normal">
-            부산 소통 캐릭터 '부기' 콜라보 한정판 상품 개발 및 주요 게이트웨이 상설 숍 런칭, 관광 전용 대형 수요응답 모빌리티 실증 운행을 가동합니다.
-          </p>
-        </div>
-        <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700 relative">
-          <span class="absolute -top-4 left-6 bg-purple-600 text-white font-bold px-3 py-1 rounded-lg text-[11px] tracking-wide">3단계: 1년 ~ 2년</span>
-          <h4 class="text-lg font-bold mt-2 text-purple-400">공간적 가치 다변화</h4>
-          <p class="text-xs text-slate-300 mt-2.5 leading-relaxed font-normal">
-            동부산권 쏠림 타파를 위한 서부산 투어 리워드 패키지 신설과 원도심 주민 주도적 체류형 체험형 생활형 관광 프로젝트, 그리고 세수 환류 기금 조례를 정격 제정합니다.
-          </p>
-        </div>
+      <!-- 2단계 -->
+      <div class="clay-card p-8 relative pt-12">
+        <span class="absolute -top-4 left-6 bg-gradient-to-r from-[#B1AFFF] to-indigo-400 text-white font-bold px-4 py-1.5 rounded-full text-[10px] tracking-wide shadow-sm">
+          2단계: 6개월 ~ 1년
+        </span>
+        <h4 class="text-lg font-bold text-slate-800 flex items-center">
+          <i class="fa-solid fa-tags text-indigo-400 mr-2"></i>인프라 연계 및 브랜딩
+        </h4>
+        <p class="text-xs text-slate-500 mt-4 leading-relaxed font-semibold">
+          부산 소통 캐릭터 '부기' 콜라보 한정판 상품 개발 및 주요 게이트웨이 상설 숍 런칭, 관광 전용 대형 수요응답 모빌리티 실증 운행을 가동합니다.
+        </p>
+      </div>
+
+      <!-- 3단계 -->
+      <div class="clay-card p-8 relative pt-12">
+        <span class="absolute -top-4 left-6 bg-gradient-to-r from-purple-400 to-indigo-500 text-white font-bold px-4 py-1.5 rounded-full text-[10px] tracking-wide shadow-sm">
+          3단계: 1년 ~ 2년
+        </span>
+        <h4 class="text-lg font-bold text-slate-800 flex items-center">
+          <i class="fa-solid fa-map-location-dot text-purple-400 mr-2"></i>공간적 가치 다변화
+        </h4>
+        <p class="text-xs text-slate-500 mt-4 leading-relaxed font-semibold">
+          동부산권 쏠림 타파를 위한 서부산 투어 리워드 패키지 신설과 원도심 주민 주도적 체류형 체험형 생활형 관광 프로젝트, 그리고 세수 환류 기금 조례를 정격 제정합니다.
+        </p>
       </div>
     </div>
   </section>
 
   <!-- Citizen Participation Section (Voting & Custom Suggestions) -->
-  <section id="vote" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="vote" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       
       <!-- Urgency Poll Card -->
-      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+      <div class="clay-card p-6 sm:p-8 flex flex-col justify-between">
         <div>
-          <span class="px-3 py-1 bg-rose-100 text-rose-800 text-xs font-semibold rounded-full border border-rose-200">
-            시민 실시간 참여 투표소
+          <span class="px-3 py-1 bg-pink-100 text-pink-700 text-xs font-bold rounded-full border border-white">
+            <i class="fa-solid fa-square-poll-vertical mr-1"></i>시민 실시간 참여 투표소
           </span>
-          <h3 class="text-2xl font-bold text-slate-900 mt-4 tracking-tight">어떤 분야 정책이 가장 시급하다고 생각하십니까?</h3>
-          <p class="text-slate-500 text-xs mt-2 font-normal">의결해 주시면 즉각 시 예산 배정 분석 기획에 귀중한 지표로 활용됩니다.</p>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-800 mt-4 tracking-tight">어떤 분야 정책이 가장 시급하다고 생각하십니까?</h3>
+          <p class="text-slate-500 text-[11px] mt-2 font-semibold">의결해 주시면 즉각 시 예산 배정 분석 기획에 귀중한 지표로 활용됩니다.</p>
 
           <!-- Vote options container -->
-          <div id="poll-options-container" class="space-y-3 mt-8 font-semibold">
-            <!-- Rendered dynamically via JS -->
+          <div id="poll-options-container" class="space-y-4 mt-8 font-semibold">
+            <!-- JS에 의해 입체적 디자인 옵션들이 동적 생성됨 -->
           </div>
         </div>
 
         <!-- Success Message -->
-        <div id="poll-success-message" class="hidden mt-6 p-4 bg-green-50 text-green-800 text-xs font-bold rounded-xl border border-green-200 text-center animate-fade-in">
-          ✔️ 투표에 참여해 주셔서 감사합니다! 소중한 의견이 정상 수렴되었습니다.
+        <div id="poll-success-message" class="hidden mt-6 p-4 bg-green-50 text-green-700 text-xs font-bold rounded-2xl border border-green-200 text-center animate-fade-in">
+          <i class="fa-solid fa-circle-check mr-1"></i> 투표해 주셔서 감사합니다! 소중한 시민 의견이 정책에 반영됩니다.
         </div>
       </div>
 
       <!-- Custom Suggestion Box -->
-      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+      <div class="clay-card p-6 sm:p-8 flex flex-col justify-between">
         <div>
-          <span class="px-3 py-1 bg-teal-100 text-teal-800 text-xs font-semibold rounded-full border border-teal-200">
-            시민 한 줄 정책 제안함
+          <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full border border-white">
+            <i class="fa-regular fa-paper-plane mr-1"></i>시민 한 줄 정책 제안함
           </span>
-          <h3 class="text-2xl font-bold text-slate-900 mt-4 tracking-tight">부산 관광을 위한 굿 아이디어가 있으신가요?</h3>
-          <p class="text-slate-500 text-xs mt-2 font-normal">공감수가 높은 실효성 있는 아이디어는 부산광역시의 실제 검토 안건으로 발탁됩니다.</p>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-800 mt-4 tracking-tight">부산 관광을 위한 굿 아이디어가 있으신가요?</h3>
+          <p class="text-slate-500 text-[11px] mt-2 font-semibold">공감수가 높은 실효성 있는 아이디어는 부산광역시의 실제 검토 안건으로 발탁됩니다.</p>
 
-          <!-- Form -->
+          <!-- Form (Clay Input + Cute Button) -->
           <form id="suggestion-form" class="mt-6 flex gap-2">
             <input
               id="suggestion-input"
               type="text"
-              placeholder="예) 관광 지역 세금을 활용해 해당 주거민 공영주차장 요금을 대폭 감면해주세요."
-              class="w-full px-4 py-3.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all font-medium"
+              placeholder="예) 관광지 주거민에게 공영주차장 우선 이용 권한을 주어 피해를 환류해주세요."
+              class="w-full px-4 py-3.5 text-xs sm:text-sm bg-white bg-opacity-70 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:bg-white transition-all font-semibold text-slate-700 shadow-inner"
               required
             />
-            <button type="submit" class="px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-bold shrink-0 transition-colors">
+            <button type="submit" class="px-6 py-3.5 bg-gradient-to-r from-[#FF8E8F] to-pink-500 hover:opacity-90 text-white rounded-2xl text-xs sm:text-sm font-black shrink-0 transition-transform hover:scale-105 shadow-md">
               등록
             </button>
           </form>
 
           <!-- Suggestions List -->
           <div id="suggestions-list" class="mt-6 space-y-3 max-h-[220px] overflow-y-auto pr-1">
-            <!-- Rendered dynamically via JS -->
+            <!-- JS로 로드됨 -->
           </div>
         </div>
       </div>
@@ -342,27 +525,27 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-slate-900 text-white border-t border-slate-800 py-12 text-sm font-semibold">
+  <footer class="mt-20 bg-white bg-opacity-35 backdrop-blur-md border-t border-white border-opacity-40 py-12 text-sm font-bold text-slate-600">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
       <div class="text-center sm:text-left">
-        <span class="text-xl font-black bg-gradient-to-r from-blue-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">
+        <span class="text-xl font-black bg-gradient-to-r from-[#FF8E8F] via-[#B1AFFF] to-indigo-400 bg-clip-text text-transparent">
           BUSAN 1T-TOURISM
         </span>
-        <p class="text-xs text-slate-500 mt-2 font-medium">
+        <p class="text-[10px] text-slate-400 mt-2 font-semibold">
           © 2026 부산광역시 지속가능 관광 정책제안 플랫폼. All Rights Reserved.
         </p>
       </div>
-      <div class="flex space-x-6 text-xs text-slate-400 mt-6 sm:space-y-0 sm:mt-0 font-medium">
-        <a href="#" class="hover:underline hover:text-white">개인정보처리방침</a>
-        <a href="#" class="hover:underline hover:text-white">이용약관</a>
-        <a href="#" class="hover:underline hover:text-white">부산시청 관광마이스국 바로가기</a>
+      <div class="flex space-x-6 text-[11px] text-slate-500 mt-6 sm:mt-0 font-bold">
+        <a href="#" class="hover:text-[#FF8E8F] transition-colors">개인정보처리방침</a>
+        <a href="#" class="hover:text-[#FF8E8F] transition-colors">이용약관</a>
+        <a href="#" class="hover:text-[#FF8E8F] transition-colors">부산시청 관광마이스국 바로가기</a>
       </div>
     </div>
   </footer>
 
   <!-- ==================== JavaScript Code ==================== -->
   <script>
-    // 1. 데이터 소스 선언
+    // 1. 시민 여론 원본 데이터
     const CITIZEN_VOICES = [
       { id: 1, category: 'pride', text: "부산 돼지국밥이 대만인들 입맛까지 사로잡다니 정말 뿌듯합니다. 부산 갈매기 '부기'도 너무 자랑스러워요!", author: "시민A", date: "2026-05-18", sentiment: "positive" },
       { id: 2, category: 'pride', text: "외국인 지출 1조 원 돌파라니 대단하네요. 이제 부산은 확실히 글로벌 관광 허브 도시로 성장했습니다.", author: "시민B", date: "2026-05-19", sentiment: "positive" },
@@ -374,18 +557,19 @@
       { id: 8, category: 'economy', text: "전통시장이 다시 부활하는 계기가 되어 상인분들에게 큰 힘이 되고 있어 다행입니다.", author: "시민H", date: "2026-05-22", sentiment: "positive" }
     ];
 
+    // 5대 정책 디테일 (파스텔 테마에 맞추어 색상 톤 보정)
     const POLICY_FIELDS = [
       {
         id: 'field1',
         title: '로컬 미식 세계화 & 상거래 안심 브랜드',
-        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>`,
+        icon: `<i class="fa-solid fa-utensils text-lg"></i>`,
         badge: '물가·미식',
-        color: 'from-emerald-500 to-teal-600',
-        bgColor: 'bg-emerald-50',
+        color: 'from-emerald-300 via-teal-300 to-teal-400',
+        bgColor: 'bg-emerald-50/70',
         borderColor: 'border-emerald-200',
         textColor: 'text-emerald-800',
         urgency: 'SS 등급',
-        urgencyColor: 'bg-rose-600 text-white',
+        urgencyColor: 'bg-rose-400 text-white',
         urgencyDesc: '시민 지적 우려 최상위 (즉각 대응 필요)',
         problem: {
           stat: '66.2%',
@@ -400,14 +584,14 @@
       {
         id: 'field2',
         title: '관광 패스 시너지 & 시민 상생 교통 혁신',
-        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>`,
+        icon: `<i class="fa-solid fa-bus text-lg"></i>`,
         badge: '교통·이동성',
-        color: 'from-blue-500 to-indigo-600',
-        bgColor: 'bg-blue-50',
+        color: 'from-blue-300 via-indigo-300 to-indigo-400',
+        bgColor: 'bg-blue-50/70',
         borderColor: 'border-blue-200',
         textColor: 'text-blue-800',
         urgency: 'S 등급',
-        urgencyColor: 'bg-orange-500 text-white',
+        urgencyColor: 'bg-orange-400 text-white',
         urgencyDesc: '정주민 피해 밀접 (단기 조치 목표)',
         problem: {
           stat: '28.2%',
@@ -422,14 +606,14 @@
       {
         id: 'field3',
         title: '로컬 라이프스타일 중심 공간 가치 분산',
-        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`,
+        icon: `<i class="fa-solid fa-map-pin text-lg"></i>`,
         badge: '균형발전·분산',
-        color: 'from-purple-500 to-pink-600',
-        bgColor: 'bg-purple-50',
+        color: 'from-purple-300 via-pink-300 to-pink-400',
+        bgColor: 'bg-purple-50/70',
         borderColor: 'border-purple-200',
         textColor: 'text-purple-800',
         urgency: 'A 등급',
-        urgencyColor: 'bg-blue-500 text-white',
+        urgencyColor: 'bg-blue-400 text-white',
         urgencyDesc: '지역 격차 해소 과제 (중기 분산 유도)',
         problem: {
           stat: '53.0%',
@@ -444,14 +628,14 @@
       {
         id: 'field4',
         title: "소통 캐릭터 '부기' 글로벌 자산화 및 인프라 구축",
-        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+        icon: `<i class="fa-solid fa-face-smile text-lg"></i>`,
         badge: '인프라·콘텐츠',
-        color: 'from-amber-500 to-orange-600',
-        bgColor: 'bg-amber-50',
+        color: 'from-amber-300 via-orange-300 to-orange-400',
+        bgColor: 'bg-amber-50/70',
         borderColor: 'border-amber-200',
         textColor: 'text-amber-800',
         urgency: 'B 등급',
-        urgencyColor: 'bg-slate-400 text-slate-900',
+        urgencyColor: 'bg-slate-400 text-white',
         urgencyDesc: '글로벌 브랜드 자산화 (중장기 부가가치 창출)',
         problem: {
           stat: '8.7%',
@@ -466,14 +650,14 @@
       {
         id: 'field5',
         title: '공공정책학 관점: 디지털 거버넌스 & 정주 지원 환류제',
-        icon: `<svg class="w-6 h-6 text-yellow-300" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.246.588 1.81l-3.974 2.887a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118L2.05 10.1c-.773-.565-.373-1.81.588-1.81h4.907a1 1 0 00.95-.69l1.519-4.674z" /></svg>`,
+        icon: `<i class="fa-solid fa-graduation-cap text-lg text-amber-500"></i>`,
         badge: '핵심 정책',
-        color: 'from-indigo-950 via-slate-900 to-amber-950',
-        bgColor: 'bg-amber-50/70',
+        color: 'from-violet-400 via-purple-300 to-amber-300',
+        bgColor: 'bg-amber-50/50',
         borderColor: 'border-amber-300',
         textColor: 'text-amber-900',
         urgency: 'A+ 등급',
-        urgencyColor: 'bg-yellow-500 text-slate-900',
+        urgencyColor: 'bg-yellow-400 text-slate-800',
         urgencyDesc: '제도적 환류 프레임워크 (기반 조례 입법)',
         problem: {
           stat: '1.2%',
@@ -519,7 +703,7 @@
 
     // 4. 컴포넌트 렌더러 함수들
     
-    // 시민 여론 카드 렌더링
+    // 시민 여론 카드 렌더링 (아기자기한 클레이형 카드 레이아웃)
     function renderVoices() {
       const container = document.getElementById('voice-cards-container');
       const filteredVoices = state.voiceFilter === 'all'
@@ -527,19 +711,19 @@
         : CITIZEN_VOICES.filter(voice => voice.category === state.voiceFilter);
 
       container.innerHTML = filteredVoices.map(voice => `
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between transition-all hover:-translate-y-1">
+        <div class="clay-card p-6 flex flex-col justify-between h-56">
           <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-bold text-slate-400">${escapeHtml(voice.author)}</span>
-              <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full ${voice.sentiment === 'positive' ? 'bg-green-100 text-green-800' : 'bg-rose-100 text-rose-800'}">
+            <div class="flex items-center justify-between mb-4 text-xs">
+              <span class="font-bold text-slate-400"><i class="fa-regular fa-user mr-1"></i>${escapeHtml(voice.author)}</span>
+              <span class="px-2.5 py-0.5 text-[9px] font-black rounded-full ${voice.sentiment === 'positive' ? 'bg-green-100 text-green-700' : 'bg-rose-100 text-rose-700'} border border-white">
                 ${voice.sentiment === 'positive' ? '안정/공감' : '우려/개선필요'}
               </span>
             </div>
-            <p class="text-sm text-slate-600 leading-relaxed font-normal italic">
+            <p class="text-[12px] text-slate-600 leading-relaxed font-semibold italic">
               "${escapeHtml(voice.text)}"
             </p>
           </div>
-          <div class="border-t border-slate-100 pt-4 mt-4 flex justify-between text-xs text-slate-400 font-semibold">
+          <div class="border-t border-slate-100 pt-4 flex justify-between text-[11px] text-slate-400 font-bold">
             <span>
               ${voice.category === 'pride' ? '💙 자부심' : ''}
               ${voice.category === 'price' ? '⚠️ 물가' : ''}
@@ -547,28 +731,26 @@
               ${voice.category === 'crowding' ? '📍 과밀' : ''}
               ${voice.category === 'economy' ? '📈 경제' : ''}
             </span>
-            <span>${voice.date}</span>
+            <span><i class="fa-regular fa-clock mr-1"></i>${voice.date}</span>
           </div>
         </div>
       `).join('');
     }
 
-    // 5대 핵심 정책 탭 & 콘텐츠 렌더링
+    // 5대 핵심 정책 탭 & 콘텐츠 렌더링 (클레이모피즘 이너/아웃터 조합)
     function renderProposals() {
       const tabsContainer = document.getElementById('proposals-tabs');
       const contentContainer = document.getElementById('proposals-content');
 
-      // 탭 버튼들 생성
+      // 탭 버튼들 생성 (클레이 필버튼 활성화/비활성화 처리)
       tabsContainer.innerHTML = POLICY_FIELDS.map(field => {
         const isActive = state.activePolicyTab === field.id;
-        const activeClasses = isActive
-          ? 'bg-slate-900 text-white border-slate-900 shadow-md'
-          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50';
+        const activeClasses = isActive ? 'clay-btn-active scale-105' : 'clay-btn-inactive';
         
         return `
           <button
             data-policy-id="${field.id}"
-            class="policy-tab-btn flex items-center space-x-2 px-5 py-3.5 text-xs sm:text-sm font-bold rounded-xl transition-all border ${activeClasses}"
+            class="policy-tab-btn flex items-center space-x-2 px-5 py-3 text-xs sm:text-sm font-bold rounded-full transition-all border ${activeClasses}"
           >
             ${field.icon}
             <span>${field.badge}</span>
@@ -581,39 +763,39 @@
       if (!field) return;
 
       contentContainer.innerHTML = `
-        <div class="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden transition-all duration-300">
-          <!-- Header Banner -->
-          <div class="p-6 sm:p-10 bg-gradient-to-r ${field.color} text-white flex flex-col md:flex-row justify-between items-start md:items-center">
+        <div class="clay-card overflow-hidden">
+          <!-- Header Banner (클레이 카드 상단 그라데이션 커버) -->
+          <div class="p-6 sm:p-10 bg-gradient-to-r ${field.color} text-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white border-opacity-40">
             <div>
-              <span class="px-3.5 py-1 bg-white bg-opacity-20 text-white text-[11px] font-bold rounded-full border border-white border-opacity-30 tracking-wider">
+              <span class="px-3.5 py-1 bg-white bg-opacity-40 text-slate-700 text-[10px] font-black rounded-full border border-white tracking-wider">
                 분야 정책 제안
               </span>
-              <h3 class="text-2xl sm:text-3xl font-extrabold mt-3 tracking-tight">${field.title}</h3>
+              <h3 class="text-xl sm:text-2xl font-black mt-3 tracking-tight">${field.title}</h3>
             </div>
             <div class="mt-4 md:mt-0 flex flex-col items-start md:items-end space-y-1">
               <div class="flex items-center space-x-2">
-                <span class="text-xs font-semibold opacity-80">우선 시급 등급:</span>
-                <span class="px-3 py-1 text-xs font-extrabold rounded-lg ${field.urgencyColor} tracking-wide">
+                <span class="text-xs font-bold opacity-80">우선 시급 등급:</span>
+                <span class="px-3 py-1 text-xs font-black rounded-xl ${field.urgencyColor} tracking-wide shadow-sm">
                   ${field.urgency}
                 </span>
               </div>
-              <span class="text-[11px] opacity-75 font-medium">${field.urgencyDesc}</span>
+              <span class="text-[10px] opacity-80 font-black">${field.urgencyDesc}</span>
             </div>
           </div>
 
           <!-- Content Body -->
           <div class="p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <!-- Left Column: Problem Case -->
+            <!-- Left Column: Problem Case (옴목한 음각 카드 적용) -->
             <div class="space-y-6">
-              <div class="p-6 rounded-2xl ${field.bgColor} border ${field.borderColor}">
-                <div class="flex items-baseline space-x-3 mb-3">
+              <div class="p-6 rounded-3xl ${field.bgColor} border ${field.borderColor} shadow-inner">
+                <div class="flex items-baseline space-x-3 mb-4">
                   <span class="text-4xl font-black tracking-tight ${field.textColor}">${field.problem.stat}</span>
-                  <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">${field.problem.statLabel}</span>
+                  <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">${field.problem.statLabel}</span>
                 </div>
-                <h4 class="text-lg font-bold text-slate-800 mb-2.5 flex items-center tracking-tight">
-                  <span class="mr-2 text-base">⚠️</span> 현장의 목소리: 무엇이 문제인가?
+                <h4 class="text-base font-black text-slate-800 mb-2.5 flex items-center tracking-tight">
+                  <span class="mr-2">⚠️</span> 현장의 목소리: 무엇이 문제인가?
                 </h4>
-                <p class="text-sm text-slate-600 leading-relaxed font-normal">
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-semibold">
                   ${field.problem.desc}
                 </p>
               </div>
@@ -621,20 +803,20 @@
 
             <!-- Right Column: Policy Suggestions -->
             <div class="space-y-6">
-              <h4 class="text-lg font-bold text-slate-800 flex items-center tracking-tight">
-                <span class="mr-2 text-base">💡</span> 정책 제안: 어떻게 해결할 것인가?
+              <h4 class="text-base font-black text-slate-800 flex items-center tracking-tight">
+                <span class="mr-2">💡</span> 정책 제안: 어떻게 해결할 것인가?
               </h4>
               
               <div class="space-y-4">
                 ${field.solutions.map((sol, index) => `
-                  <div class="p-5 bg-slate-50 rounded-xl border border-slate-100 hover:border-blue-200 transition-colors">
+                  <div class="p-5 clay-inner hover:border-[#FFB3B3] transition-colors">
                     <div class="flex items-start space-x-3">
-                      <span class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold shrink-0 mt-0.5">
+                      <span class="flex items-center justify-center w-6 h-6 rounded-full bg-[#FF8E8F] text-white text-[11px] font-black shrink-0 mt-0.5">
                         ${index + 1}
                       </span>
                       <div>
-                        <h5 class="font-bold text-slate-800 text-base tracking-tight">${sol.title}</h5>
-                        <p class="text-xs text-slate-500 mt-1.5 leading-relaxed font-normal">
+                        <h5 class="font-bold text-slate-800 text-sm tracking-tight">${sol.title}</h5>
+                        <p class="text-[11px] text-slate-500 mt-1.5 leading-relaxed font-semibold">
                           ${sol.desc}
                         </p>
                       </div>
@@ -662,30 +844,30 @@
         const buttonDisabled = state.voted ? 'disabled' : '';
         const buttonHoverClasses = state.voted 
           ? 'cursor-default border-slate-200' 
-          : 'border-slate-200 hover:border-blue-400 hover:bg-slate-50';
+          : 'border-slate-200 hover:border-[#FFB3B3] hover:bg-slate-50';
 
         return `
           <button
             data-vote-id="${field.id}"
             ${buttonDisabled}
-            class="poll-option-btn w-full text-left p-4 rounded-xl border transition-all relative overflow-hidden group ${buttonHoverClasses}"
+            class="poll-option-btn w-full text-left p-4 rounded-2xl border transition-all relative overflow-hidden group ${buttonHoverClasses} bg-white bg-opacity-70"
           >
-            <!-- 투표 후 채워지는 퍼센트 배경 바 -->
+            <!-- 투표 후 채워지는 파스텔 핑크 퍼센트 배경 바 -->
             ${state.voted ? `
               <div
-                class="absolute inset-y-0 left-0 bg-blue-50 transition-all duration-1000"
+                class="absolute inset-y-0 left-0 bg-[#FFE3D8] transition-all duration-1000"
                 style="width: ${percent}%"
               ></div>
             ` : ''}
 
-            <div class="relative flex justify-between items-center z-10 text-sm">
+            <div class="relative flex justify-between items-center z-10 text-xs sm:text-sm">
               <div class="flex items-center space-x-3">
-                <span class="text-slate-400 group-hover:text-blue-500 transition-colors">${field.icon}</span>
-                <span class="font-bold text-slate-800">${field.badge}</span>
+                <span class="text-slate-400 group-hover:text-[#FF8E8F] transition-colors">${field.icon}</span>
+                <span class="font-black text-slate-800">${field.badge}</span>
               </div>
               <div class="flex items-center space-x-2">
-                ${state.voted ? `<span class="text-xs text-slate-400 font-semibold">(${votes}표)</span>` : ''}
-                <span class="font-extrabold ${state.voted ? 'text-blue-600' : 'text-slate-400'}">
+                ${state.voted ? `<span class="text-[10px] text-slate-400 font-bold">(${votes}표)</span>` : ''}
+                <span class="font-black ${state.voted ? 'text-[#FF8E8F]' : 'text-slate-400'}">
                   ${state.voted ? `${percent}%` : '투표하기'}
                 </span>
               </div>
@@ -707,14 +889,14 @@
       const container = document.getElementById('suggestions-list');
 
       container.innerHTML = state.customSuggestions.map(item => `
-        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-start font-medium">
+        <div class="p-4 clay-inner flex justify-between items-start font-bold">
           <div class="space-y-1">
-            <p class="text-xs text-slate-600 font-semibold leading-relaxed">"${escapeHtml(item.text)}"</p>
-            <span class="text-[10px] text-slate-400 font-bold">제안자: ${escapeHtml(item.author)}</span>
+            <p class="text-[11px] sm:text-xs text-slate-600 font-semibold leading-relaxed">"${escapeHtml(item.text)}"</p>
+            <span class="text-[10px] text-slate-400 font-black"><i class="fa-solid fa-user-pen mr-1"></i>제안자: ${escapeHtml(item.author)}</span>
           </div>
           <button
             data-like-id="${item.id}"
-            class="like-btn flex items-center space-x-1.5 px-2.5 py-1 bg-white hover:bg-blue-50 hover:text-blue-600 text-[11px] font-bold text-slate-500 border border-slate-200 rounded-lg transition-colors shrink-0"
+            class="like-btn flex items-center space-x-1 px-2 py-1 bg-white bg-opacity-80 hover:bg-[#FFE3D8] hover:text-[#FF8E8F] text-[10px] font-black text-slate-500 border border-slate-200 rounded-lg transition-colors shrink-0 shadow-sm"
           >
             <span>👍</span>
             <span>${item.likes}</span>
@@ -726,25 +908,20 @@
     // 5. 이벤트 리스너 및 핸들러 등록
     function initEventListeners() {
       
-      // A. 여론 필터 버튼 바인딩
+      // A. 여론 필터 버튼 바인딩 (활성화 버튼 스타일 전환)
       const filterButtons = document.querySelectorAll('#voice-filters button');
       filterButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
           const filter = btn.getAttribute('data-filter');
           state.voiceFilter = filter;
 
-          // 모든 필터 버튼 기본 스타일로 환원
+          // 모든 필터 버튼 기본 비활성화 스타일로 환원
           filterButtons.forEach(b => {
-            b.className = 'px-4 py-2.5 text-xs font-bold rounded-lg transition-all bg-white text-slate-600 hover:bg-slate-200';
+            b.className = 'px-4 py-2 text-xs font-black rounded-full transition-all clay-btn-inactive';
           });
 
-          // 현재 활성화된 필터 버튼 색상 하이라이트
-          let activeClass = 'bg-slate-900 text-white shadow-sm';
-          if (filter === 'pride') activeClass = 'bg-blue-600 text-white shadow-sm';
-          if (filter === 'price') activeClass = 'bg-amber-600 text-white shadow-sm';
-          if (filter === 'traffic') activeClass = 'bg-red-500 text-white shadow-sm';
-
-          btn.className = `px-4 py-2.5 text-xs font-bold rounded-lg transition-all ${activeClass}`;
+          // 현재 활성화된 필터 버튼을 clay-btn-active로 변경
+          btn.className = `px-4 py-2 text-xs font-black rounded-full transition-all clay-btn-active`;
 
           renderVoices();
         });
