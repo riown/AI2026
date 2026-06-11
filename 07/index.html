@@ -4,258 +4,438 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Busan Originality Project | 부산 오리지널리티</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.umd.min.js"></script>
+    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        /* Pretendard 폰트 적용 */
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background-color: #FDF6F0;
+            color: #5D4A48;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* 개선된 히어로 섹션 배경: 부산 광안대교/바다 느낌의 역동적인 이미지와 그라데이션 */
-        .hero-section {
-            position: relative;
-            background-image: url('https://images.unsplash.com/photo-1570191913384-633005a76741?q=80&w=2000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        /* 1. 배경 애니메이션 (Floating Cloud 효과) */
+        .blobs-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
         }
 
-        .hero-overlay {
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7) 0%, rgba(30, 58, 138, 0.5) 50%, rgba(249, 250, 251, 1) 100%);
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.55;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .blob-pink {
+            background-color: #FFB3B3;
+            width: 500px;
+            height: 500px;
+            top: -10%;
+            left: -10%;
+            animation: floatAround1 25s infinite alternate ease-in-out;
+        }
+
+        .blob-purple {
+            background-color: #E8D3FF;
+            width: 450px;
+            height: 450px;
+            bottom: -5%;
+            right: -5%;
+            animation: floatAround2 22s infinite alternate ease-in-out;
+        }
+
+        .blob-apricot {
+            background-color: #FFE5D9;
+            width: 400px;
+            height: 400px;
+            top: 40%;
+            left: 35%;
+            animation: floatAround3 28s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatAround1 {
+            0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+            50% { transform: translate(60px, 80px) scale(1.15) rotate(90deg); }
+            100% { transform: translate(-30px, 40px) scale(0.9) rotate(180deg); }
+        }
+
+        @keyframes floatAround2 {
+            0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+            50% { transform: translate(-80px, -60px) scale(0.85) rotate(-120deg); }
+            100% { transform: translate(40px, 30px) scale(1.1) rotate(60deg); }
+        }
+
+        @keyframes floatAround3 {
+            0% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(-50px, 90px) scale(1.2); }
+            100% { transform: translate(60px, -40px) scale(0.95); }
+        }
+
+        /* 2. 클레이 카드(Clay Card) 스타일 컴포넌트 */
+        .clay-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 45px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            
+            /* 이중 바깥 그림자 + 이중 안쪽 그림자 조합 */
+            box-shadow: 
+                12px 12px 28px rgba(224, 189, 189, 0.35), 
+                -12px -12px 28px rgba(255, 255, 255, 0.9),
+                inset 4px 4px 10px rgba(255, 255, 255, 0.8), 
+                inset -4px -4px 10px rgba(224, 189, 189, 0.15);
+                
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .clay-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                16px 16px 36px rgba(224, 189, 189, 0.45), 
+                -16px -16px 36px rgba(255, 255, 255, 0.95),
+                inset 6px 6px 12px rgba(255, 255, 255, 0.9), 
+                inset -6px -6px 12px rgba(224, 189, 189, 0.2);
+        }
+
+        /* 4. 클레이 이너 카드(Clay Inner Card) */
+        .clay-inner-card {
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                inset 4px 4px 10px rgba(255, 255, 255, 0.7), 
+                inset -4px -4px 10px rgba(224, 189, 189, 0.15);
+            border-radius: 30px;
+        }
+
+        /* 알약형 탭 버튼 기본 */
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.5);
+            color: #8A7573;
+            box-shadow: 
+                4px 4px 10px rgba(224, 189, 189, 0.15), 
+                -4px -4px 10px rgba(255, 255, 255, 0.8),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.5);
             transition: all 0.3s ease;
         }
 
-        .glass-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        .tab-btn.active {
+            background-color: #FFB3B3;
+            color: #FFFFFF;
+            box-shadow: 
+                inset 3px 3px 6px rgba(0, 0, 0, 0.08),
+                4px 4px 12px rgba(255, 179, 179, 0.35);
         }
 
-        .section-title {
-            position: relative;
-            display: inline-block;
+        /* 세련된 버튼 스타일링 */
+        .clay-action-btn {
+            background: #FF8E8F;
+            color: white;
+            box-shadow: 
+                6px 6px 15px rgba(255, 142, 143, 0.3), 
+                -6px -6px 15px rgba(255, 255, 255, 0.9),
+                inset 3px 3px 8px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 4px;
-            background: #2563eb;
-            border-radius: 2px;
+        .clay-action-btn:hover {
+            background: #FFB3B3;
+            transform: scale(1.05);
+            box-shadow: 
+                8px 8px 20px rgba(255, 142, 143, 0.4), 
+                -8px -8px 20px rgba(255, 255, 255, 0.95);
         }
 
+        /* 애니메이션 효과 */
         .floating {
-            animation: floating 3s ease-in-out infinite;
+            animation: floating 3.5s ease-in-out infinite;
         }
 
         @keyframes floating {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-12px); }
             100% { transform: translateY(0px); }
         }
 
-        .text-glow {
-            text-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+        .glow-soft-pink {
+            filter: drop-shadow(0 0 15px rgba(255, 142, 143, 0.35));
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="relative">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/70 backdrop-blur-lg border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex-shrink-0 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center rotate-3 shadow-lg">
-                        <span class="text-white font-black text-xl">B</span>
-                    </div>
-                    <div class="flex flex-col leading-none">
-                        <span class="text-xl font-black text-slate-800 tracking-tight">BUSAN</span>
-                        <span class="text-[10px] font-bold text-blue-600 tracking-widest">ORIGINALITY</span>
-                    </div>
-                </div>
-                <div class="hidden md:flex space-x-10 text-sm font-bold text-slate-600">
-                    <a href="#about" class="hover:text-blue-600 transition-colors uppercase tracking-wider">About</a>
-                    <a href="#contents" class="hover:text-blue-600 transition-colors uppercase tracking-wider">Contents</a>
-                    <a href="#trust" class="hover:text-blue-600 transition-colors uppercase tracking-wider">Trust</a>
-                    <a href="busan.pdf" download="busan.pdf" class="bg-blue-600 text-white px-6 py-2.5 rounded-full hover:bg-blue-700 transition shadow-lg shadow-blue-200">기획서 다운로드</a>
-                </div>
+    <!-- 1. 배경 애니메이션 (Floating Blobs) -->
+    <div class="blobs-container">
+        <div class="blob blob-pink"></div>
+        <div class="blob blob-purple"></div>
+        <div class="blob blob-apricot"></div>
+    </div>
+
+    <!-- 3. 상단 내비게이션 바 (Pill-shape) -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl">
+        <div class="nav-pill flex items-center justify-between bg-white/55 backdrop-blur-xl border border-white/60 rounded-full px-5 py-3 shadow-lg">
+            <!-- 왼쪽 홈 원형 아이콘 버튼 -->
+            <a href="#" class="w-10 h-10 bg-[#FFB3B3] hover:bg-[#FF8E8F] text-white rounded-full flex items-center justify-center shadow-md hover:scale-105 transition-all duration-300">
+                <i class="fa-solid fa-house text-sm"></i>
+            </a>
+            
+            <!-- 오른쪽 세련된 메뉴들 -->
+            <div class="flex items-center gap-6 md:gap-8 font-bold text-xs tracking-wider text-[#8A7573]">
+                <a href="#about" class="hover:text-[#FF8E8F] flex items-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-leaf text-xs"></i> ABOUT
+                </a>
+                <a href="#contents" class="hover:text-[#FF8E8F] flex items-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-map-location-dot text-xs"></i> CONTENTS
+                </a>
+                <a href="#trust" class="hover:text-[#FF8E8F] flex items-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-circle-check text-xs"></i> TRUST
+                </a>
+                <a href="busan.pdf" download="busan.pdf" class="bg-[#B1AFFF] hover:bg-[#FF8E8F] text-white px-4 py-2 rounded-full shadow-inner hover:scale-105 transition-all duration-300">
+                    <i class="fa-solid fa-download text-[10px]"></i> PDF
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="hero-section h-screen flex items-center justify-center text-center">
-        <div class="absolute inset-0 hero-overlay"></div>
-        <div class="relative z-10 px-4 max-w-5xl">
-            <div class="inline-block px-4 py-1.5 mb-8 border border-blue-400/30 bg-blue-500/10 backdrop-blur-md rounded-full">
-                <p class="text-blue-300 font-bold text-xs md:text-sm tracking-[0.3em] uppercase">Dynamic Busan Originality</p>
+    <!-- 히어로 섹션 (Hero) -->
+    <header class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-24">
+        <div class="relative z-10 max-w-4xl">
+            <!-- 감성 배지 -->
+            <div class="inline-flex items-center gap-2 px-5 py-2 mb-8 border border-[#FFB3B3]/40 bg-white/45 backdrop-blur-md rounded-full shadow-sm">
+                <i class="fa-solid fa-compass text-[#FF8E8F] animate-spin-slow"></i>
+                <p class="text-[#FF8E8F] font-bold text-xs tracking-widest uppercase">Dynamic Busan Originality</p>
             </div>
-            <h1 class="text-6xl md:text-8xl font-black mb-8 text-white leading-tight tracking-tighter">
-                가장 <span class="text-blue-400 italic">부산</span>다운,<br>
-                <span class="text-glow">진짜 여행</span>의 시작
+            
+            <!-- 정갈하고 감성적인 헤드라인 -->
+            <h1 class="text-5xl md:text-8xl font-black mb-8 text-[#5D4A48] leading-[1.15] tracking-tight">
+                가장 <span class="text-[#FF8E8F] italic relative z-10">부산<span class="absolute left-0 bottom-1 w-full h-3 bg-[#E8D3FF] -z-10 rounded-full opacity-60"></span></span>다운,<br>
+                <span class="text-[#B1AFFF] glow-soft-pink">진짜 여행</span>의 시작
             </h1>
-            <p class="text-xl md:text-2xl font-medium mb-12 text-blue-50 max-w-2xl mx-auto opacity-90 leading-relaxed">
+            <p class="text-lg md:text-xl font-medium mb-12 text-[#8A7573] max-w-2xl mx-auto leading-relaxed">
                 복제된 상권과 아파트 숲을 넘어,<br>부산의 역사와 정서가 살아 숨 쉬는 골목을 탐험하세요.
             </p>
-            <div class="flex flex-col md:flex-row gap-6 justify-center">
-                <a href="#contents" class="group bg-blue-600 text-white px-10 py-5 rounded-full font-black text-lg hover:bg-blue-500 transition shadow-2xl flex items-center justify-center gap-3">
+            
+            <!-- 클레이모피즘 스타일 버튼 그룹 -->
+            <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                <a href="#contents" class="clay-action-btn px-10 py-4.5 rounded-full font-black text-base flex items-center gap-3">
                     핵심 콘텐츠 탐색
-                    <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                    <i class="fa-solid fa-arrow-right-long text-sm"></i>
                 </a>
-                <a href="#about" class="bg-white/10 backdrop-blur-md border border-white/30 text-white px-10 py-5 rounded-full font-black text-lg hover:bg-white/20 transition">
+                <a href="#about" class="bg-white/60 hover:bg-white/80 border border-white/80 text-[#8A7573] px-9 py-4 rounded-full font-black text-base transition-all duration-300 shadow-md hover:scale-105">
                     프로젝트 취지
                 </a>
             </div>
         </div>
-        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 floating text-white/50">
-            <p class="text-[10px] font-bold tracking-[0.4em] uppercase mb-4">Scroll Down</p>
-            <i class="fa-solid fa-chevron-down text-xl"></i>
+        
+        <!-- 마우스 스크롤 가이드 -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 floating text-[#8A7573]/60 flex flex-col items-center gap-1">
+            <span class="text-[9px] font-bold tracking-[0.3em] uppercase">Scroll Down</span>
+            <i class="fa-solid fa-angles-down text-lg"></i>
         </div>
     </header>
 
     <!-- About Section -->
-    <section id="about" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div class="order-2 lg:order-1">
-                    <h2 class="text-5xl font-black mb-10 text-slate-900 section-title">왜 부산 <span class="text-blue-600">오리지널리티</span>인가?</h2>
-                    <div class="space-y-8 text-slate-600 text-lg leading-relaxed font-light">
-                        <p>우리는 유튜브 1만 개의 댓글에서 시민들의 진짜 목소리를 들었습니다. "부산은 볼 게 아파트밖에 없다"는 뼈아픈 비판, 하지만 "부산은 기후와 사람이 최고다"라는 따뜻한 자부심.</p>
-                        <p>서울을 따라가는 도시가 아닌, <strong>부산만이 가진 독보적인 정체성</strong>을 관광의 핵심 자산으로 바꿉니다.</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
-                            <div class="flex items-start gap-3 bg-blue-50 p-5 rounded-2xl">
-                                <i class="fa-solid fa-quote-left text-blue-400 text-sm mt-1"></i>
-                                <p class="text-sm font-bold text-slate-700">사투리, 정겨움 등 인적 자산의 상품화</p>
-                            </div>
-                            <div class="flex items-start gap-3 bg-blue-50 p-5 rounded-2xl">
-                                <i class="fa-solid fa-quote-left text-blue-400 text-sm mt-1"></i>
-                                <p class="text-sm font-bold text-slate-700">양산형 카페 대신 로컬 노포 발굴</p>
-                            </div>
+    <section id="about" class="py-24 px-4 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-12 gap-12 items-start">
+            
+            <!-- Left Info (Clay Card) -->
+            <div class="lg:col-span-7 clay-card p-10 md:p-14">
+                <h2 class="text-4xl font-black mb-6 text-[#5D4A48]">
+                    왜 부산 <span class="text-[#FF8E8F]">오리지널리티</span>인가?
+                </h2>
+                
+                <!-- 4. 알약 모양 탭 기능 구현 -->
+                <div class="flex gap-3 mb-10">
+                    <button id="tabIntroBtn" onclick="switchTab('intro')" class="tab-btn active px-6 py-2.5 rounded-full font-bold text-sm">
+                        <i class="fa-solid fa-circle-info mr-1.5"></i> 프로젝트 소개
+                    </button>
+                    <button id="tabDataBtn" onclick="switchTab('data')" class="tab-btn px-6 py-2.5 rounded-full font-bold text-sm">
+                        <i class="fa-solid fa-chart-pie mr-1.5"></i> 데이터 분석
+                    </button>
+                </div>
+
+                <!-- 탭 1: 프로젝트 소개 -->
+                <div id="tabIntro" class="transition-opacity duration-500 space-y-6">
+                    <div class="clay-inner-card p-8 text-[#5D4A48] font-light leading-relaxed">
+                        <p class="mb-4">우리는 유튜브 1만 개의 댓글에서 시민들의 진짜 목소리를 들었습니다. "부산은 볼 게 아파트밖에 없다"는 뼈아픈 비판, 하지만 "부산은 기후와 사람이 최고다"라는 따뜻한 자부심.</p>
+                        <p>서울을 따라가는 양산형 도시개발 대신, <strong>부산만이 가진 독보적인 정체성</strong>을 글로벌 관광의 핵심 자산으로 바꿉니다.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-start gap-3 bg-white/45 border border-white/60 p-5 rounded-3xl shadow-sm">
+                            <i class="fa-solid fa-hands-holding-child text-[#FF8E8F] text-lg mt-1"></i>
+                            <p class="text-sm font-semibold text-[#8A7573]">사투리, 정겨움 등 로컬 인적 자산의 가치화</p>
+                        </div>
+                        <div class="flex items-start gap-3 bg-white/45 border border-white/60 p-5 rounded-3xl shadow-sm">
+                            <i class="fa-solid fa-mug-hot text-[#B1AFFF] text-lg mt-1"></i>
+                            <p class="text-sm font-semibold text-[#8A7573]">양산형 대형 상권 대신 독자 노포 브랜드 발굴</p>
                         </div>
                     </div>
                 </div>
-                <div class="order-1 lg:order-2">
-                    <div class="relative">
-                        <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl"></div>
-                        <div class="grid grid-cols-2 gap-6 relative z-10">
-                            <div class="space-y-6 pt-12">
-                                <div class="bg-slate-900 p-10 rounded-[2.5rem] text-center text-white transform hover:scale-105 transition shadow-2xl">
-                                    <h3 class="text-5xl font-black text-blue-400 mb-3">1위</h3>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">기후 만족도</p>
-                                </div>
-                                <div class="bg-blue-600 p-10 rounded-[2.5rem] text-center text-white transform hover:scale-105 transition shadow-2xl">
-                                    <h3 class="text-3xl font-black mb-3">LOCAL</h3>
-                                    <p class="text-xs font-bold text-blue-200 uppercase tracking-widest">시민 자부심</p>
-                                </div>
-                            </div>
-                            <div class="space-y-6">
-                                <div class="bg-blue-50 p-10 rounded-[2.5rem] text-center text-slate-900 border border-blue-100 transform hover:scale-105 transition shadow-xl">
-                                    <h3 class="text-4xl font-black text-blue-600 mb-3">300만</h3>
-                                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">외국인 방문</p>
-                                </div>
-                                <div class="bg-slate-50 p-10 rounded-[2.5rem] text-center text-slate-900 border border-slate-200 transform hover:scale-105 transition">
-                                    <h3 class="text-4xl font-black text-slate-800 mb-3">가성비</h3>
-                                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">관광 만족도</p>
-                                </div>
-                            </div>
+
+                <!-- 탭 2: 데이터 분석 (Chart.js 탑재) -->
+                <div id="tabData" class="hidden transition-opacity duration-500 space-y-6">
+                    <div class="clay-inner-card p-6">
+                        <h4 class="text-base font-bold text-[#5D4A48] mb-4 text-center">부산 관광 강점 vs 위협 키워드 여론 분포</h4>
+                        <!-- 차트 캔버스 공간 -->
+                        <div class="relative h-64">
+                            <canvas id="opinionChart"></canvas>
                         </div>
                     </div>
+                    <p class="text-xs text-[#8A7573] text-center italic">* 유튜브 분석 데이터(csv) 내 긍정/우려 키워드 가중치 기반 시각화</p>
+                </div>
+
+            </div>
+
+            <!-- Right Statistics (Interactive Grid) -->
+            <div class="lg:col-span-5 grid grid-cols-2 gap-6 pt-2">
+                <div class="clay-card p-8 text-center flex flex-col justify-center min-h-[180px]">
+                    <div class="w-12 h-12 bg-[#FFB3B3]/20 text-[#FF8E8F] rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-cloud-sun text-xl animate-pulse"></i>
+                    </div>
+                    <h3 class="text-4xl font-black text-[#5D4A48] mb-2">1위</h3>
+                    <p class="text-xs font-bold text-[#8A7573] uppercase tracking-widest">기후 만족도</p>
+                </div>
+
+                <div class="clay-card p-8 text-center flex flex-col justify-center min-h-[180px]">
+                    <div class="w-12 h-12 bg-[#E8D3FF]/30 text-[#B1AFFF] rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-face-smile text-xl"></i>
+                    </div>
+                    <h3 class="text-4xl font-black text-[#5D4A48] mb-2">LOCAL</h3>
+                    <p class="text-xs font-bold text-[#8A7573] uppercase tracking-widest">시민 자부심</p>
+                </div>
+
+                <div class="clay-card p-8 text-center flex flex-col justify-center min-h-[180px]">
+                    <div class="w-12 h-12 bg-[#B1AFFF]/20 text-[#B1AFFF] rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-users text-xl"></i>
+                    </div>
+                    <h3 class="text-4xl font-black text-[#5D4A48] mb-2">300만</h3>
+                    <p class="text-xs font-bold text-[#8A7573] uppercase tracking-widest">외국인 방문</p>
+                </div>
+
+                <div class="clay-card p-8 text-center flex flex-col justify-center min-h-[180px]">
+                    <div class="w-12 h-12 bg-[#FFE5D9] text-[#FF8E8F] rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-won-sign text-lg"></i>
+                    </div>
+                    <h3 class="text-4xl font-black text-[#5D4A48] mb-2">가성비</h3>
+                    <p class="text-xs font-bold text-[#8A7573] uppercase tracking-widest">관광지 지출</p>
                 </div>
             </div>
+
         </div>
     </section>
 
     <!-- Content Cards Section -->
-    <section id="contents" class="py-32 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 text-center mb-20">
-            <h2 class="text-5xl font-black mb-6 text-slate-900 section-title">부산의 <span class="text-blue-600 italic">진짜</span> 이야기</h2>
-            <p class="text-slate-500 text-xl font-light">보고 먹기만 하는 여행을 넘어, 부산의 정서에 스며듭니다.</p>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-10">
-            <!-- Content 1 -->
-            <div class="glass-card p-10 rounded-[3rem] group">
-                <div class="w-20 h-20 bg-blue-50 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:rotate-12 transition-all duration-500 shadow-sm">
-                    <i class="fa-solid fa-comment-dots text-blue-600 text-3xl group-hover:text-white transition-colors"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-5 text-slate-900">"마! 이게 부산이다"</h3>
-                <p class="text-slate-500 mb-8 font-light leading-relaxed">단순히 듣기만 하는 사투리가 아닙니다. 부산 어르신들에게 직접 배우는 '진짜' 부산어 워크숍과 골목 에티켓 투어.</p>
-                <span class="inline-block px-4 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-widest">Language Class</span>
+    <section id="contents" class="py-24 bg-white/30">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold text-[#FF8E8F] uppercase tracking-[0.3em]">Program Highlights</span>
+                <h2 class="text-4xl md:text-5xl font-black mt-3 text-[#5D4A48]">부산의 <span class="text-[#B1AFFF]">진짜</span> 이야기</h2>
+                <p class="text-[#8A7573] mt-4 font-light">단순히 보고 지나가는 스쳐가는 관광이 아닌, 부산의 정서에 스며드는 순간들</p>
             </div>
-            <!-- Content 2 -->
-            <div class="glass-card p-10 rounded-[3rem] relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700"></div>
-                <div class="w-20 h-20 bg-blue-600 rounded-3xl flex items-center justify-center mb-8 shadow-xl shadow-blue-200 group-hover:rotate-12 transition-all duration-500">
-                    <i class="fa-solid fa-bowl-food text-white text-3xl"></i>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Content 1 -->
+                <div class="clay-card p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-[#FFB3B3]/20 rounded-3xl flex items-center justify-center mb-8 shadow-inner">
+                            <i class="fa-solid fa-comment-dots text-2xl text-[#FF8E8F]"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#5D4A48]">"마! 이게 부산이다"</h3>
+                        <p class="text-slate-500 font-light leading-relaxed mb-6">단순히 듣기만 하는 사투리가 아닙니다. 부산 어르신들에게 직접 배우는 '진짜' 부산어 워크숍과 골목 에티켓 라이프 투어.</p>
+                    </div>
+                    <div>
+                        <div class="clay-inner-card px-4 py-2 text-center text-xs font-bold text-[#FF8E8F] uppercase tracking-wider">
+                            Language & Heritage Class
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-bold mb-5 text-slate-900">"국밥 마스터 커스텀"</h3>
-                <p class="text-slate-500 mb-8 font-light leading-relaxed">부산 돼지국밥은 개인의 취향입니다. 정구지, 새우젓, 다대기의 황금 비율을 찾아 나만의 레시피 인증을 받으세요.</p>
-                <span class="inline-block px-4 py-1 rounded-full bg-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest">Food Experience</span>
-            </div>
-            <!-- Content 3 -->
-            <div class="glass-card p-10 rounded-[3rem] group">
-                <div class="w-20 h-20 bg-blue-50 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:rotate-12 transition-all duration-500 shadow-sm">
-                    <i class="fa-solid fa-house-chimney text-blue-600 text-3xl group-hover:text-white transition-colors"></i>
+
+                <!-- Content 2 -->
+                <div class="clay-card p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -right-8 -top-8 w-24 h-24 bg-[#FF8E8F]/10 rounded-full"></div>
+                    <div>
+                        <div class="w-16 h-16 bg-[#B1AFFF]/20 rounded-3xl flex items-center justify-center mb-8 shadow-inner">
+                            <i class="fa-solid fa-bowl-food text-2xl text-[#B1AFFF]"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#5D4A48]">"국밥 마스터 커스텀"</h3>
+                        <p class="text-slate-500 font-light leading-relaxed mb-6">부산 돼지국밥은 개인의 미식 철학입니다. 정구지, 새우젓, 다대기의 황금 비율을 찾아 오직 나만의 오리지널 레시피를 인증받으세요.</p>
+                    </div>
+                    <div>
+                        <div class="clay-inner-card px-4 py-2 text-center text-xs font-bold text-[#B1AFFF] uppercase tracking-wider">
+                            Gastronomy Experience
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-bold mb-5 text-slate-900">"산복도로 별밤 스테이"</h3>
-                <p class="text-slate-500 mb-8 font-light leading-relaxed">화려한 호텔 숲 대신, 산복도로에서 바라보는 진짜 부산의 밤. 근대 역사 건물을 재생한 고유의 숙박 경험.</p>
-                <span class="inline-block px-4 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-widest">Historical Stay</span>
+
+                <!-- Content 3 -->
+                <div class="clay-card p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 bg-[#E8D3FF]/40 rounded-3xl flex items-center justify-center mb-8 shadow-inner">
+                            <i class="fa-solid fa-house-chimney text-2xl text-[#B1AFFF]"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#5D4A48]">"산복도로 별밤 스테이"</h3>
+                        <p class="text-slate-500 font-light leading-relaxed mb-6">화려한 초고층 아파트 숲 대신, 산복도로에서 바라보는 오밀조밀한 밤하늘과 진짜 부산의 온기. 근대 공간이 선사하는 편안함.</p>
+                    </div>
+                    <div>
+                        <div class="clay-inner-card px-4 py-2 text-center text-xs font-bold text-[#B1AFFF] uppercase tracking-wider">
+                            Historical Local Stay
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Trust Program Section -->
-    <section id="trust" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="bg-slate-900 rounded-[4rem] p-12 md:p-24 text-white relative overflow-hidden shadow-3xl">
-                <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-600 transform skew-x-12 translate-x-24 z-0 opacity-10"></div>
-                <div class="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
-                    <div>
-                        <div class="inline-block px-4 py-1 mb-6 border border-blue-400 text-blue-400 rounded-full text-xs font-black uppercase tracking-widest">Reliability</div>
-                        <h2 class="text-5xl font-black mb-8 leading-tight">바가지 없는 도시,<br><span class="text-blue-500">신뢰받는 부산</span></h2>
-                        <p class="text-slate-400 text-xl font-light mb-12 leading-relaxed">유튜브 댓글에서 가장 많이 언급된 '바가지 우려'를 해결합니다. 지자체가 인증한 정가제 파트너 마크와 외국어 동시 주문 시스템으로 안심하세요.</p>
-                        <div class="grid grid-cols-3 gap-6">
-                            <div class="text-center">
-                                <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-white/10">
-                                    <i class="fa-solid fa-qrcode text-xl text-blue-500"></i>
-                                </div>
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Smart Order</span>
-                            </div>
-                            <div class="text-center">
-                                <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-white/10">
-                                    <i class="fa-solid fa-language text-xl text-blue-500"></i>
-                                </div>
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Multi-Lang</span>
-                            </div>
-                            <div class="text-center">
-                                <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-white/10">
-                                    <i class="fa-solid fa-handshake text-xl text-blue-500"></i>
-                                </div>
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Fair Trade</span>
-                            </div>
+    <!-- Trust Campaign Section -->
+    <section id="trust" class="py-24 px-4 max-w-7xl mx-auto">
+        <div class="clay-card p-10 md:p-20 relative overflow-hidden">
+            <!-- 감성 일러스트 원형 영역 및 그라데이션 오버레이 -->
+            <div class="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#E8D3FF] to-[#FFB3B3] rounded-full opacity-35 filter blur-2xl pointer-events-none"></div>
+            
+            <div class="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="inline-block px-4 py-1.5 mb-6 bg-[#FFB3B3]/20 border border-[#FFB3B3] text-[#FF8E8F] rounded-full text-xs font-bold tracking-widest uppercase">Safe & Clean Busan</span>
+                    <h2 class="text-4xl md:text-5xl font-black mb-6 text-[#5D4A48] leading-tight">바가지 없는 도시,<br><span class="text-[#FF8E8F]">신뢰받는 부산</span></h2>
+                    <p class="text-[#8A7573] text-lg font-light mb-10 leading-relaxed">댓글을 통해 시민들이 남겨주신 우려인 '바가지 요금'을 투명하게 종식시킵니다. 지자체가 공동 인증하는 가격 안심 마크와 다국어 실시간 오더 시스템으로 안심하고 로컬을 체험할 수 있습니다.</p>
+                    
+                    <div class="grid grid-cols-3 gap-6 text-center">
+                        <div class="clay-inner-card p-4">
+                            <i class="fa-solid fa-qrcode text-2xl text-[#FF8E8F] mb-2"></i>
+                            <p class="text-[10px] font-black text-[#5D4A48] uppercase tracking-wider">Smart QR Menu</p>
+                        </div>
+                        <div class="clay-inner-card p-4">
+                            <i class="fa-solid fa-language text-2xl text-[#B1AFFF] mb-2"></i>
+                            <p class="text-[10px] font-black text-[#5D4A48] uppercase tracking-wider">Multi-Lang</p>
+                        </div>
+                        <div class="clay-inner-card p-4">
+                            <i class="fa-solid fa-shield-halved text-2xl text-[#FF8E8F] mb-2"></i>
+                            <p class="text-[10px] font-black text-[#5D4A48] uppercase tracking-wider">Fair Trade</p>
                         </div>
                     </div>
-                    <div class="flex justify-center">
-                        <div class="bg-blue-600 p-1 w-72 h-72 rounded-full shadow-[0_0_80px_rgba(37,99,235,0.3)] floating">
-                            <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center border-4 border-dashed border-blue-400/30">
-                                <div class="text-center">
-                                    <i class="fa-solid fa-shield-check text-5xl text-blue-500 mb-4"></i>
-                                    <span class="block text-3xl font-black">CERTIFIED</span>
-                                    <span class="block text-[10px] font-bold text-slate-500 tracking-[0.4em] uppercase mt-2">Busan Partner</span>
-                                </div>
-                            </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <div class="w-72 h-72 rounded-full border-4 border-dashed border-[#FFB3B3]/50 flex items-center justify-center p-4 floating">
+                        <div class="w-full h-full bg-white/80 rounded-full flex flex-col items-center justify-center shadow-xl border border-white">
+                            <i class="fa-solid fa-circle-check text-5xl text-[#FF8E8F] mb-3"></i>
+                            <span class="block text-2xl font-black text-[#5D4A48]">CERTIFIED</span>
+                            <span class="block text-[10px] font-bold text-[#8A7573] tracking-[0.3em] uppercase mt-1">Busan Trust Partner</span>
                         </div>
                     </div>
                 </div>
@@ -264,85 +444,120 @@
     </section>
 
     <!-- Download Section -->
-    <section class="py-32 bg-blue-600 text-center relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0 100 C 20 0 50 0 100 100" fill="white" />
-            </svg>
-        </div>
-        <div class="max-w-4xl mx-auto px-4 relative z-10 text-white">
-            <h2 class="text-4xl md:text-5xl font-black mb-8 leading-tight">프로젝트의 상세 전략을<br>지금 바로 확인하세요</h2>
-            <p class="text-blue-100 mb-16 text-xl font-light opacity-80">댓글 데이터 분석부터 세부 실행 방안까지,<br>부산 관광의 넥스트 스텝이 담긴 PDF 리포트입니다.</p>
-            <a href="busan.pdf" download="busan.pdf" class="inline-flex items-center gap-4 bg-white text-blue-600 px-12 py-6 rounded-full font-black text-xl hover:bg-slate-100 transition shadow-3xl group">
-                <i class="fa-solid fa-file-arrow-down group-hover:translate-y-1 transition-transform"></i>
+    <section class="py-24 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-4xl font-black mb-6 text-[#5D4A48]">부산 관광의 미래 전략을 한눈에</h2>
+            <p class="text-[#8A7573] mb-12 text-lg font-light">유튜브 빅데이터 여론 조사와 실제 인프라 전략이 연계된 핵심 기획서를 받아보세요.</p>
+            <a href="busan.pdf" download="busan.pdf" class="clay-action-btn inline-flex items-center gap-3 px-12 py-5 rounded-full font-black text-xl group">
+                <i class="fa-solid fa-file-pdf text-lg group-hover:scale-125 transition-transform"></i>
                 기획서 다운로드 (PDF)
             </a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-20 bg-slate-950 text-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-16 items-start text-center md:text-left">
-                <div>
-                    <div class="flex items-center justify-center md:justify-start gap-3 mb-8">
-                        <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-                            <span class="text-white font-black">B</span>
-                        </div>
-                        <span class="text-xl font-black tracking-tight">BUSAN ORIGINALITY</span>
-                    </div>
-                    <p class="text-slate-500 text-sm leading-relaxed max-w-xs mx-auto md:mx-0">부산광역시 연제구 중앙대로 1001 부산광역시청<br>본 기획은 시민들의 소중한 여론을 바탕으로 제작되었습니다.</p>
+    <footer class="py-16 border-t border-[#FFE5D9]/50">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <div class="w-8 h-8 bg-[#FFB3B3] rounded-lg flex items-center justify-center rotate-3 shadow-md">
+                    <span class="text-white font-black">B</span>
                 </div>
-                <div class="flex flex-col gap-4 text-slate-400 font-bold uppercase tracking-widest text-xs">
-                    <a href="#about" class="hover:text-blue-500 transition-colors">Project Story</a>
-                    <a href="#contents" class="hover:text-blue-500 transition-colors">Tourism Plan</a>
-                    <a href="#trust" class="hover:text-blue-500 transition-colors">Trust Campaign</a>
-                </div>
-                <div class="flex flex-col gap-6">
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-[0.4em]">Follow us</p>
-                    <div class="flex justify-center md:justify-start space-x-6 text-slate-400">
-                        <a href="#" class="hover:text-blue-500 transition-colors"><i class="fa-brands fa-instagram text-2xl"></i></a>
-                        <a href="#" class="hover:text-blue-500 transition-colors"><i class="fa-brands fa-youtube text-2xl"></i></a>
-                        <a href="#" class="hover:text-blue-500 transition-colors"><i class="fa-brands fa-x-twitter text-2xl"></i></a>
-                    </div>
-                </div>
+                <span class="text-lg font-black tracking-widest text-[#5D4A48]">BUSAN ORIGINALITY</span>
             </div>
-            <div class="border-t border-slate-900 mt-20 pt-10 text-center text-[10px] font-bold text-slate-600 uppercase tracking-widest">
-                &copy; 2026 Busan Metropolitan City. Dynamic Busan Originality Project.
+            <p class="text-[#8A7573] text-sm leading-relaxed max-w-md mx-auto mb-8 font-light">
+                부산광역시 연제구 중앙대로 1001 부산광역시청<br>본 프로젝트는 대중 여론 데이터 및 감성 크리에이터 분석 기법을 반영했습니다.
+            </p>
+            <div class="flex justify-center space-x-6 text-[#8A7573]/60 mb-8">
+                <a href="#" class="hover:text-[#FF8E8F] transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                <a href="#" class="hover:text-[#FF8E8F] transition-colors"><i class="fa-brands fa-youtube text-xl"></i></a>
+                <a href="#" class="hover:text-[#FF8E8F] transition-colors"><i class="fa-brands fa-x-twitter text-xl"></i></a>
             </div>
+            <p class="text-[10px] font-bold text-[#8A7573]/50 uppercase tracking-widest">
+                &copy; 2026 Busan Originality Project. All rights reserved.
+            </p>
         </div>
     </footer>
 
     <script>
-        // Smooth Scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                if (this.getAttribute('href') !== '#' && this.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
+        // 4. 탭 전환 기능 구현 및 페이드인 애니메이션 제어
+        function switchTab(tabId) {
+            const introTab = document.getElementById('tabIntro');
+            const dataTab = document.getElementById('tabData');
+            const introBtn = document.getElementById('tabIntroBtn');
+            const dataBtn = document.getElementById('tabDataBtn');
+
+            if (tabId === 'intro') {
+                // 활성화 토글
+                introBtn.classList.add('active');
+                dataBtn.classList.remove('active');
+
+                // 페이드인 연출
+                dataTab.classList.add('hidden');
+                introTab.classList.remove('hidden');
+                introTab.style.opacity = '0';
+                setTimeout(() => { introTab.style.opacity = '1'; }, 50);
+            } else {
+                introBtn.classList.remove('active');
+                dataBtn.classList.add('active');
+
+                introTab.classList.add('hidden');
+                dataTab.classList.remove('hidden');
+                dataTab.style.opacity = '0';
+                setTimeout(() => { dataTab.style.opacity = '1'; }, 50);
+                
+                // 차트가 새로 드러날 때 그리기
+                initOpinionChart();
+            }
+        }
+
+        // 6. 시각화/차트 스타일링 (Chart.js 적용)
+        let opinionChartInstance = null;
+        function initOpinionChart() {
+            if (opinionChartInstance) return; // 이미 그려진 상태면 무시
+            
+            const ctx = document.getElementById('opinionChart').getContext('2d');
+            opinionChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['온화한 기후', '친절한 시민성', '부산 특화 미식', '지역 소멸 우려', '컨텐츠 중복성', '바가지 염려'],
+                    datasets: [{
+                        label: '여론 지수(가중치)',
+                        data: [85, 78, 92, 65, 45, 70],
+                        backgroundColor: [
+                            'rgba(255, 142, 143, 0.85)', // 핑크
+                            'rgba(255, 179, 179, 0.85)', // 소프트 핑크
+                            'rgba(177, 175, 255, 0.85)', // 연보라
+                            'rgba(232, 211, 255, 0.85)', // 라벤더
+                            'rgba(138, 117, 115, 0.5)',  // 그레이 브라운
+                            'rgba(138, 117, 115, 0.65)'  // 그레이 브라운
+                        ],
+                        borderColor: [
+                            '#FF8E8F', '#FFB3B3', '#B1AFFF', '#E8D3FF', '#8A7573', '#8A7573'
+                        ],
+                        borderWidth: 1.5,
+                        borderRadius: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(93, 74, 72, 0.05)' },
+                            ticks: { color: '#8A7573', font: { family: 'Pretendard' } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#5D4A48', font: { family: 'Pretendard', weight: 'bold', size: 11 } }
+                        }
+                    }
                 }
             });
-        });
-
-        // Scroll Animation Observer
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.glass-card, h2').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
-            observer.observe(el);
-        });
+        }
     </script>
 </body>
 </html>
