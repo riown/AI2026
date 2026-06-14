@@ -4,118 +4,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>따뜻한 문지기 - 김리원 포트폴리오</title>
+    <!-- Tailwind CSS, Pretendard Font, FontAwesome, Chart.js, Lucide Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         :root {
             --warm-bg: #FDF6F0;
-            --main-pink: #FF85A1;
-            --soft-shadow: 12px 12px 24px rgba(255, 133, 161, 0.1), -12px -12px 24px rgba(255, 255, 255, 0.9);
-            --inset-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.02), inset -4px -4px 10px rgba(255, 255, 255, 0.8);
+            --main-pink: #FF8E8F;
+            --soft-pink: #FFB3B3;
+            --lavender: #E8D3FF;
+            --warm-violet: #B1AFFF;
+            --clay-text: #6A5250;
+            --tab-inactive: #8A7573;
         }
 
         body {
             font-family: 'Pretendard', sans-serif;
             background-color: var(--warm-bg);
-            color: #6a4f56;
+            color: var(--clay-text);
             scroll-behavior: smooth;
             margin: 0;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Moving Background Circles */
-        .bg-circles {
+        /* Floating Cloud Blobs Background */
+        .bg-blobs {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -2;
             overflow: hidden;
             pointer-events: none;
         }
 
-        .circle {
+        .blob {
             position: absolute;
-            background: radial-gradient(circle, rgba(255, 133, 161, 0.1) 0%, rgba(255, 133, 161, 0) 70%);
             border-radius: 50%;
-            animation: move linear infinite;
+            filter: blur(80px);
+            opacity: 0.6;
         }
 
-        @keyframes move {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(100px, 100px) rotate(360deg); }
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background-color: var(--soft-pink);
+            top: -10%;
+            left: -10%;
+            animation: floatAround1 25s ease-in-out infinite alternate;
         }
 
+        .blob-2 {
+            width: 600px;
+            height: 600px;
+            background-color: var(--lavender);
+            bottom: -15%;
+            right: -10%;
+            animation: floatAround2 30s ease-in-out infinite alternate;
+        }
+
+        .blob-3 {
+            width: 450px;
+            height: 450px;
+            background-color: #FFE5D9;
+            top: 40%;
+            left: 50%;
+            animation: floatAround3 28s ease-in-out infinite alternate;
+        }
+
+        .blob-4 {
+            width: 550px;
+            height: 550px;
+            background-color: var(--warm-violet);
+            bottom: 40%;
+            left: -15%;
+            animation: floatAround1 35s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatAround1 {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(80px, -100px) scale(1.15); }
+            66% { transform: translate(-60px, 70px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+
+        @keyframes floatAround2 {
+            0% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(-100px, 80px) scale(1.2); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+
+        @keyframes floatAround3 {
+            0% { transform: translate(0px, 0px) scale(1.1); }
+            33% { transform: translate(60px, 100px) scale(0.95); }
+            66% { transform: translate(-80px, -60px) scale(1.05); }
+            100% { transform: translate(0px, 0px) scale(1.1); }
+        }
+
+        /* High-fidelity Claymorphic Card */
         .clay-card {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 45px;
-            box-shadow: var(--soft-shadow);
-            border: 2px solid white;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 
+                12px 12px 28px rgba(224, 189, 189, 0.35), 
+                -12px -12px 28px rgba(255, 255, 255, 0.9),
+                inset 4px 4px 10px rgba(255, 255, 255, 0.8),
+                inset -4px -4px 10px rgba(224, 189, 189, 0.15);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Floating Cloud Animation */
         .clay-card:hover {
-            transform: translateY(-20px) scale(1.02);
-            box-shadow: 20px 30px 50px rgba(255, 133, 161, 0.15);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 
+                18px 18px 36px rgba(224, 189, 189, 0.45), 
+                -18px -18px 36px rgba(255, 255, 255, 1),
+                inset 6px 6px 12px rgba(255, 255, 255, 0.9),
+                inset -6px -6px 12px rgba(224, 189, 189, 0.2);
         }
 
-        .nav-bar {
+        /* Sunken Clay Inner Card */
+        .clay-inner-card {
+            background: rgba(255, 255, 255, 0.45);
+            border-radius: 30px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 
+                inset 3px 3px 8px rgba(224, 189, 189, 0.15),
+                inset -3px -3px 8px rgba(255, 255, 255, 0.85);
+        }
+
+        /* Pill Navigation Bar */
+        .pill-nav {
             position: fixed;
-            top: 25px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(15px);
-            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 8px 24px;
             border-radius: 100px;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                8px 8px 24px rgba(224, 189, 189, 0.25), 
+                -8px -8px 24px rgba(255, 255, 255, 0.9),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.5);
             display: flex;
-            gap: 15px;
-            border: 1px solid white;
-            box-shadow: 0 10px 30px rgba(255, 133, 161, 0.05);
+            align-items: center;
+            gap: 20px;
         }
 
-        .nav-item {
-            position: relative;
-            display: flex; align-items: center; justify-content: center;
-            height: 44px; width: 44px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 100px;
-            text-decoration: none;
-        }
-
-        .nav-heart { color: var(--main-pink); transition: all 0.3s ease; font-size: 1.2rem; }
-        .nav-text {
-            position: absolute;
-            opacity: 0;
-            white-space: nowrap;
+        .pill-nav-item {
+            color: var(--clay-text);
             font-weight: 700;
-            font-size: 0.95rem;
-            color: white;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            border-radius: 100px;
             transition: all 0.3s ease;
-            transform: scale(0.7);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .nav-item:hover { background-color: var(--main-pink); width: 110px; }
-        .nav-item:hover .nav-heart { opacity: 0; transform: scale(0); }
-        .nav-item:hover .nav-text { opacity: 1; transform: scale(1); }
-
-        .gradient-title {
-            background: linear-gradient(135deg, #FF85A1 0%, #FFAFBD 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .pill-nav-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--main-pink);
+            box-shadow: 
+                4px 4px 10px rgba(224, 189, 189, 0.15),
+                inset 1px 1px 3px rgba(255, 255, 255, 0.8);
         }
 
+        .pill-nav-home {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--main-pink);
+            box-shadow: 
+                3px 3px 8px rgba(224, 189, 189, 0.2),
+                inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .pill-nav-home:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--soft-pink);
+            color: white;
+        }
+
+        /* Section Container Layout */
         section {
-            padding: 80px 24px;
+            padding: 100px 24px 80px 24px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -124,127 +215,157 @@
             position: relative;
         }
 
+        /* Structured Profiles Grid layout to avoid breakage */
         .profile-container {
-            width: 100%;
-            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
+            padding-top: 50px;
         }
 
         .photo-slot {
-            width: 140px; height: 140px;
-            background: white; border-radius: 35px;
-            box-shadow: var(--soft-shadow);
-            display: flex; align-items: center; justify-content: center;
-            border: 4px solid white;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 35px;
+            border: 3px solid white;
+            box-shadow: 
+                8px 8px 20px rgba(224, 189, 189, 0.3),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: absolute;
-            top: -70px; left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
+            top: -10px;
+            z-index: 10;
         }
 
         .profile-main-card {
-            padding-top: 90px;
-            padding-bottom: 50px;
+            padding-top: 80px;
+            padding-bottom: 40px;
         }
 
         .synergy-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(1, minmax(0, 1fr));
             gap: 20px;
-            margin-top: 40px;
-            padding: 0 30px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .synergy-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
         }
 
         .synergy-card {
-            background: white;
             padding: 24px;
-            border-radius: 30px;
-            box-shadow: var(--inset-shadow);
-            text-align: left;
-            border: 1px solid rgba(255,255,255,0.8);
-            transition: transform 0.3s ease;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
-        .synergy-card:hover { transform: translateY(-5px); }
-        .synergy-icon { color: var(--main-pink); margin-bottom: 12px; }
 
+        .synergy-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 
+                6px 6px 15px rgba(224, 189, 189, 0.25),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.9);
+        }
+
+        /* Smooth Interactive Tabs */
         .tab-btn {
-            padding: 12px 24px;
+            padding: 12px 28px;
             border-radius: 100px;
             font-weight: 800;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             border: 2px solid transparent;
+            box-shadow: 
+                4px 4px 10px rgba(224, 189, 189, 0.15),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.8);
         }
+
         .tab-btn.active {
-            background: var(--main-pink);
+            background: var(--soft-pink);
             color: white;
-            box-shadow: 0 10px 20px rgba(255, 133, 161, 0.2);
+            box-shadow: 
+                0px 8px 16px rgba(255, 179, 179, 0.35),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.3);
         }
+
         .tab-btn:not(.active) {
-            background: white;
-            color: #d1d1d1;
-            border-color: #f0f0f0;
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--tab-inactive);
         }
-        .tab-content { display: none; animation: fadeIn 0.5s ease; }
-        .tab-content.active { display: block; }
+
+        .tab-btn:not(.active):hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--clay-text);
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .subject-tag {
-            background: rgba(255, 133, 161, 0.05);
-            border: 1px solid rgba(255, 133, 161, 0.1);
-            color: #FF85A1;
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            background: rgba(255, 142, 143, 0.08);
+            border: 1px solid rgba(255, 142, 143, 0.15);
+            color: var(--main-pink);
+            padding: 8px 16px;
+            border-radius: 14px;
+            font-size: 0.8rem;
             font-weight: 700;
+            box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.7);
         }
 
+        /* Overlay System */
         #info-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(12px);
             z-index: 2000; display: none; align-items: center; justify-content: center;
             cursor: zoom-out;
+            animation: fadeIn 0.4s ease;
         }
-        #info-overlay img { max-width: 90%; max-height: 90%; border-radius: 20px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+        #info-overlay img { max-width: 85%; max-height: 85%; border-radius: 35px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 4px solid white; }
 
-        .chart-container { position: relative; height: 220px; width: 100%; margin-bottom: 20px; }
-        .badge { background: #FF85A1; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; }
-        
-        .career-card {
-            background: white; padding: 40px 30px; border-radius: 40px; text-align: left; position: relative;
-            border: 1px solid rgba(255,255,255,0.5); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .career-card:hover { 
-            transform: translateY(-20px) scale(1.02); 
-            box-shadow: 20px 30px 50px rgba(255, 133, 161, 0.15); 
-        }
+        .chart-container { position: relative; height: 220px; width: 100%; }
+        .badge { background: var(--main-pink); color: white; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.4); }
 
-        .insight-summary {
-            background: white;
-            border-radius: 25px;
-            padding: 20px;
-            box-shadow: var(--inset-shadow);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            margin-top: 15px;
+        .gradient-title {
+            background: linear-gradient(135deg, var(--main-pink) 0%, var(--warm-violet) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .btn-podcast {
-            background: #FF85A1; 
+            background: linear-gradient(135deg, var(--main-pink) 0%, var(--soft-pink) 100%);
             color: white; 
-            padding: 14px 36px; 
+            padding: 16px 40px; 
             border-radius: 100px; 
             font-weight: 800;
             display: inline-flex; 
             align-items: center; 
             gap: 12px; 
-            transition: all 0.3s ease; 
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(255, 133, 161, 0.25); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 
+                0 8px 24px rgba(255, 142, 143, 0.35),
+                inset 3px 3px 6px rgba(255, 255, 255, 0.4); 
             font-size: 1rem;
             cursor: pointer;
             border: none;
@@ -252,23 +373,24 @@
         }
         
         .btn-podcast:hover {
-            transform: translateY(-3px) scale(1.02);
-            background: #ff6b8e;
-            box-shadow: 0 10px 25px rgba(255, 133, 161, 0.4);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 
+                0 12px 32px rgba(255, 142, 143, 0.45),
+                inset 4px 4px 8px rgba(255, 255, 255, 0.5);
         }
 
         .video-container {
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: #f8f8f8;
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 35px;
             overflow: hidden;
             box-shadow: var(--inset-shadow);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.7);
         }
 
         .video-container video {
@@ -277,67 +399,105 @@
             object-fit: cover;
         }
 
-        .video-placeholder {
-            text-align: center;
-            color: #d1d1d1;
+        .insight-summary {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: var(--inset-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin-top: 15px;
+        }
+
+        /* Structured Roadmaps card grid */
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 24px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .career-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .career-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 32px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Moving Background Decoration -->
-    <div class="bg-circles" id="bg-circles"></div>
+    <!-- Floating Blobs Background -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
 
-    <!-- Info Overlay -->
+    <!-- Info Image Modal Overlay -->
     <div id="info-overlay" onclick="this.style.display='none'">
         <img src="./info.png" alt="전공 정보" onerror="this.alt='이미지를 불러올 수 없습니다 (./info.png)'">
     </div>
 
-    <nav class="nav-bar">
-        <a href="#profile" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Profile</span></a>
-        <a href="#major" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Major</span></a>
-        <a href="#insight" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Insight</span></a>
-        <a href="#project" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Project</span></a>
-        <a href="#future" class="nav-item"><i class="fa-solid fa-heart nav-heart"></i><span class="nav-text">Future</span></a>
+    <!-- Pill-shaped Top Navigation (Home Button Updated to redirect to ../index.html) -->
+    <nav class="pill-nav">
+        <a href="../index.html" class="pill-nav-home">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <div class="flex gap-1">
+            <a href="#profile" class="pill-nav-item"><i class="fa-solid fa-heart text-[0.8rem]"></i> Profile</a>
+            <a href="#major" class="pill-nav-item"><i class="fa-solid fa-graduation-cap text-[0.8rem]"></i> Major</a>
+            <a href="#insight" class="pill-nav-item"><i class="fa-solid fa-chart-line text-[0.8rem]"></i> Insight</a>
+            <a href="#project" class="pill-nav-item"><i class="fa-solid fa-project-diagram text-[0.8rem]"></i> Project</a>
+            <a href="#future" class="pill-nav-item"><i class="fa-solid fa-road text-[0.8rem]"></i> Future</a>
+        </div>
     </nav>
 
+    <!-- Header Hero Banner -->
     <header class="pt-48 pb-10 text-center px-4">
         <div class="relative inline-block max-w-4xl">
             <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold gradient-title leading-tight mb-8">세상의 모든 발걸음이<br>다정하게 연결되도록</h1>
-            <p class="text-xl md:text-2xl text-gray-400 font-medium leading-relaxed max-w-3xl mx-auto">공공정책을 통해 사람과 세상을 잇는<br>따뜻한 관문이 되고자 합니다.</p>
+            <p class="text-xl md:text-2xl text-gray-500 font-semibold leading-relaxed max-w-3xl mx-auto">공공정책을 통해 사람과 세상을 잇는<br>따뜻한 관문이 되고자 합니다.</p>
         </div>
     </header>
 
+    <!-- Profile Section -->
     <section id="profile">
-        <div class="profile-container">
-            <!-- Profile Icon Updated from User to Heart -->
+        <div class="profile-container w-full max-w-[1000px] relative">
             <div class="photo-slot">
                 <div class="text-pink-300 flex flex-col items-center">
-                    <i data-lucide="heart" size="48" fill="currentColor"></i>
-                    <span class="text-[10px] mt-2 font-bold uppercase tracking-widest">Profile</span>
+                    <i class="fa-solid fa-heart text-[44px]"></i>
+                    <span class="text-[9px] mt-2 font-black uppercase tracking-widest">Profile</span>
                 </div>
             </div>
-            <div class="clay-card profile-main-card w-full text-center">
+            <div class="clay-card profile-main-card w-full text-center px-6">
                 <h2 class="text-4xl font-extrabold text-gray-700 mb-1">김리원</h2>
                 <p class="text-pink-400 font-bold mb-6 italic">"다정함이 지닌 힘을 믿습니다."</p>
-                <p class="text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto px-6 mb-4">
+                <p class="text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-4">
                     단순히 효율적인 시스템을 넘어 모든 이의 일상이 <br class="hidden md:block">
                     안전하고 따뜻하게 연결되는 사회를 꿈꾸는 다정한 행정 전문가입니다.
                 </p>
                 
                 <div class="synergy-grid">
-                    <div class="synergy-card">
-                        <i data-lucide="heart" class="synergy-icon" size="24"></i>
+                    <div class="synergy-card clay-inner-card">
+                        <i class="fa-solid fa-baseball-bat-ball text-pink-400 text-2xl mb-3"></i>
                         <h4 class="font-bold text-gray-700 text-sm mb-2">야구와 여행</h4>
                         <p class="text-[11px] text-gray-400 leading-relaxed">협력과 규칙 중심의 사고, 낯선 환경에서도 해답을 찾는 유연한 정책 마인드</p>
                     </div>
-                    <div class="synergy-card">
-                        <i data-lucide="message-circle" class="synergy-icon" size="24"></i>
+                    <div class="synergy-card clay-inner-card">
+                        <i class="fa-solid fa-comments text-pink-400 text-2xl mb-3"></i>
                         <h4 class="font-bold text-gray-700 text-sm mb-2">경청과 리액션</h4>
                         <p class="text-[11px] text-gray-400 leading-relaxed">시민의 요구를 세밀하게 수용하고 즉각적으로 반응하는 행정가의 핵심 역량</p>
                     </div>
-                    <div class="synergy-card">
-                        <i data-lucide="globe" class="synergy-icon" size="24"></i>
+                    <div class="synergy-card clay-inner-card">
+                        <i class="fa-solid fa-earth-americas text-pink-400 text-2xl mb-3"></i>
                         <h4 class="font-bold text-gray-700 text-sm mb-2">교환학생 경험</h4>
                         <p class="text-[11px] text-gray-400 leading-relaxed">글로벌 거버넌스를 체감하며 얻은 비교 행정학적 통찰과 거시적 시각</p>
                     </div>
@@ -346,12 +506,13 @@
         </div>
     </section>
 
-    <section id="major" class="bg-[#FFF9F5]/30">
+    <!-- Major Section -->
+    <section id="major">
         <div class="max-w-5xl w-full">
             <div class="text-center mb-12">
-                <span class="text-blue-400 font-black text-xs uppercase tracking-[0.3em] mb-2 block">Major Introduction</span>
+                <span class="text-pink-400 font-black text-xs uppercase tracking-[0.3em] mb-2 block">Major Introduction</span>
                 <h2 class="text-4xl font-extrabold text-gray-800 mb-6">부산대학교 공공정책학부</h2>
-                <div class="clay-card p-8 md:p-10 text-left bg-white/80 border-l-8 border-l-blue-400">
+                <div class="clay-card p-8 md:p-10 text-left bg-white/80 border-l-8 border-l-pink-400">
                     <p class="text-lg text-gray-600 leading-relaxed">
                         "공공부문의 정책 과정을 과학적으로 탐구하고 연구합니다. 정치·경제·사회·법학의 기초 지식을 통합하여 정책의 수립부터 평가까지 전 과정을 아우르는 전문성을 갖추고 있습니다."
                     </p>
@@ -361,7 +522,7 @@
             <div class="clay-card p-8 md:p-12 relative">
                 <div class="flex justify-center mb-8">
                     <button onclick="document.getElementById('info-overlay').style.display='flex'" class="flex items-center gap-2 px-6 py-3 bg-pink-50 text-pink-400 rounded-full text-sm font-extrabold hover:bg-pink-100 transition-all border border-pink-100 shadow-sm">
-                        <i data-lucide="info" size="18"></i>
+                        <i class="fa-solid fa-circle-info text-[0.95rem]"></i>
                         공공정책학부 한눈에 보기
                     </button>
                 </div>
@@ -374,8 +535,8 @@
 
                 <div id="track-public" class="tab-content active">
                     <div class="flex flex-col md:flex-row gap-8 items-center">
-                        <div class="w-20 h-20 bg-blue-50 text-blue-400 rounded-3xl flex items-center justify-center shrink-0">
-                            <i data-lucide="building-2" size="40"></i>
+                        <div class="w-20 h-20 bg-blue-50 text-blue-400 rounded-3xl flex items-center justify-center shrink-0 shadow-sm">
+                            <i class="fa-solid fa-building text-3xl"></i>
                         </div>
                         <div class="flex-grow">
                             <h3 class="text-2xl font-black text-gray-700 mb-3">Public Enterprise Track</h3>
@@ -394,12 +555,12 @@
                 <div id="track-gov" class="tab-content">
                     <div class="flex flex-col md:flex-row gap-8 items-center">
                         <div class="w-20 h-20 bg-pink-50 text-pink-400 rounded-3xl flex items-center justify-center shrink-0">
-                            <i data-lucide="shield-check" size="40"></i>
+                            <i class="fa-solid fa-user-shield text-3xl"></i>
                         </div>
                         <div class="flex-grow">
                             <h3 class="text-2xl font-black text-gray-700 mb-3">Government Track</h3>
                             <p class="text-gray-500 leading-relaxed mb-6">국가 운영의 핵심 인프라인 행정 체계와 법적 근거를 연구합니다. 출입국관리직, 일반행정직 등 현장에서 정책을 직접 집행하며 시민의 안전과 질서를 책임지는 공직 전문가를 양성합니다.</p>
-                            <h4 class="text-xs font-black text-black font-black text-gray-400 uppercase tracking-widest mb-3">주요 교과목</h4>
+                            <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">주요 교과목</h4>
                             <div class="flex flex-wrap gap-2">
                                 <span class="subject-tag">공직적성론</span>
                                 <span class="subject-tag">인사정책론</span>
@@ -412,8 +573,8 @@
 
                 <div id="track-law" class="tab-content">
                     <div class="flex flex-col md:flex-row gap-8 items-center">
-                        <div class="w-20 h-20 bg-purple-50 text-purple-400 rounded-3xl flex items-center justify-center shrink-0">
-                            <i data-lucide="scale" size="40"></i>
+                        <div class="w-20 h-20 bg-purple-50 text-purple-400 rounded-3xl flex items-center justify-center shrink-0 border border-purple-100">
+                            <i class="fa-solid fa-scale-balanced text-3xl"></i>
                         </div>
                         <div class="flex-grow">
                             <h3 class="text-2xl font-black text-gray-700 mb-3">Law School Track</h3>
@@ -432,11 +593,12 @@
         </div>
     </section>
 
+    <!-- Insight Section -->
     <section id="insight">
         <div class="max-w-7xl w-full">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-extrabold mb-4 gradient-title">사회적 책임과 통찰</h2>
-                <p class="text-gray-400 font-medium">데이터를 통해 기술의 이면을 분석하고 정책적 안전망을 고민합니다.</p>
+                <p class="text-gray-400 font-semibold">데이터를 통해 기술의 이면을 분석하고 정책적 안전망을 고민합니다.</p>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
@@ -473,10 +635,10 @@
                 </div>
             </div>
 
+            <!-- Podcast Play Button with Audio element -->
             <div class="flex justify-center">
-                <!-- 팟캐스트 재생 버튼 로직 추가 -->
                 <button onclick="playPodcast()" class="btn-podcast">
-                    <i data-lucide="mic" id="podcast-icon" size="22"></i>
+                    <i class="fa-solid fa-microphone-lines text-xl" id="podcast-icon"></i>
                     <span id="podcast-text">통찰을 들려드려요 : 팟캐스트 청취</span>
                 </button>
                 <audio id="podcast-audio">
@@ -486,17 +648,16 @@
         </div>
     </section>
 
-    <!-- UPDATED PROJECT SECTION -->
-    <section id="project" class="bg-[#FDF6F0]/50">
+    <!-- Project Section -->
+    <section id="project">
         <div class="max-w-5xl w-full">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">PROJECT FOCUS</h2>
-                <p class="text-gray-400 font-medium italic">둥실둥실 신공항!<br>공공정책으로 지역 경제를 깨우다</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4 font-extrabold">PROJECT FOCUS</h2>
+                <p class="text-gray-400 font-semibold italic">둥실둥실 신공항!<br>공공정책으로 지역 경제를 깨우다</p>
             </div>
             
             <div class="clay-card p-6 md:p-10 bg-white/90">
                 <div class="video-container">
-                    <!-- 영상 소스를 ./video.mp4로 업데이트 -->
                     <video controls poster="https://placehold.co/1280x720/fff9f5/ff85a1?text=Gadeokdo+Airport+Project">
                         <source src="./video.mp4" type="video/mp4">
                         브라우저가 동영상을 지원하지 않습니다.
@@ -513,37 +674,47 @@
         </div>
     </section>
 
+    <!-- Future Roadmap Section -->
     <section id="future">
         <div class="max-w-6xl w-full text-center">
             <h2 class="text-4xl md:text-5xl font-extrabold mb-4 gradient-title">커리어 로드맵</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-                <div class="career-card">
-                    <div class="w-12 h-12 bg-pink-50 text-pink-400 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="shield-check" size="24"></i></div>
+            
+            <div class="career-grid">
+                <div class="career-card clay-card">
+                    <div class="w-12 h-12 bg-pink-50 text-pink-400 rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
+                    </div>
                     <h3 class="text-xl font-extrabold text-gray-700 mb-3">Safe Landing</h3>
                     <p class="text-sm text-gray-500 leading-relaxed">디지털 역기능으로부터 시민을 보호하고 안전한 기술 환경을 조성하는 정책적 방어선 구축</p>
                 </div>
-                <div class="career-card">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-400 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="users" size="24"></i></div>
+                <div class="career-card clay-card">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-400 rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                        <i class="fa-solid fa-users-viewfinder text-xl"></i>
+                    </div>
                     <h3 class="text-xl font-extrabold text-gray-700 mb-3">Inclusive Service</h3>
                     <p class="text-sm text-gray-500 leading-relaxed">사회적 약자도 소외되지 않는 보편적 서비스를 기획하여 모두의 발걸음이 평등하게 이어지도록 함</p>
                 </div>
-                <div class="career-card">
-                    <div class="w-12 h-12 bg-purple-50 text-purple-400 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="zap" size="24"></i></div>
+                <div class="career-card clay-card">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-400 rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                        <i class="fa-solid fa-circle-nodes text-xl"></i>
+                    </div>
                     <h3 class="text-xl font-extrabold text-gray-700 mb-3">Public Innovation</h3>
                     <p class="text-sm text-gray-500 leading-relaxed">데이터를 기반으로 공공 행정의 문턱을 낮추고 시민 중심의 혁신적인 행정 경험 제공</p>
                 </div>
             </div>
+            
             <div class="clay-card p-12 bg-white/90 mt-20 flex flex-wrap justify-center gap-6">
-                <div class="px-8 py-4 bg-white rounded-full shadow-md text-pink-400 font-bold border border-pink-50">한국공항공사</div>
-                <div class="px-8 py-4 bg-white rounded-full shadow-md text-pink-400 font-bold border border-pink-50">인천국제공항공사</div>
-                <div class="px-8 py-4 bg-white rounded-full shadow-md text-pink-400 font-bold border border-pink-50">출입국관리직</div>
+                <div class="px-8 py-4 bg-white rounded-full shadow-md text-pink-400 font-bold border border-pink-50 clay-inner-card">한국공항공사</div>
+                <div class="px-8 py-4 bg-white rounded-full shadow-md text-pink-400 font-bold border border-pink-50 clay-inner-card">인천국제공항공사</div>
+                <div class="px-8 py-4 bg-white rounded-full shadow-md text-pink-400 font-bold border border-pink-50 clay-inner-card">출입국관리직</div>
             </div>
-            <footer class="mt-32 pb-10 text-pink-200 font-bold tracking-[0.3em] text-[10px] uppercase">&copy; 2026 Kim Ri-won Portfolio</footer>
+            <footer class="mt-32 pb-10 text-pink-300 font-bold tracking-[0.3em] text-[10px] uppercase">&copy; 2026 Kim Ri-won Portfolio</footer>
         </div>
     </section>
 
+    <!-- Scripts -->
     <script>
-        // Podcast Playback Logic
+        // Podcast Playback Control
         function playPodcast() {
             const audio = document.getElementById('podcast-audio');
             const icon = document.getElementById('podcast-icon');
@@ -552,84 +723,110 @@
             if (audio.paused) {
                 audio.play();
                 text.innerText = "팟캐스트 재생 중...";
-                icon.setAttribute('data-lucide', 'pause');
+                icon.className = "fa-solid fa-circle-pause text-xl";
             } else {
                 audio.pause();
                 text.innerText = "통찰을 들려드려요 : 팟캐스트 청취";
-                icon.setAttribute('data-lucide', 'mic');
-            }
-            lucide.createIcons();
-        }
-
-        // Create moving background circles
-        function createBgDecoration() {
-            const container = document.getElementById('bg-circles');
-            const circleCount = 15;
-            for (let i = 0; i < circleCount; i++) {
-                const circle = document.createElement('div');
-                circle.className = 'circle';
-                const size = Math.random() * 300 + 100;
-                circle.style.width = size + 'px';
-                circle.style.height = size + 'px';
-                circle.style.left = Math.random() * 100 + '%';
-                circle.style.top = Math.random() * 100 + '%';
-                circle.style.animationDuration = (Math.random() * 20 + 10) + 's';
-                circle.style.animationDelay = (Math.random() * -20) + 's';
-                container.appendChild(circle);
+                icon.className = "fa-solid fa-microphone-lines text-xl";
             }
         }
 
+        // Major Tracks Tab Selector
         function openTrack(evt, trackName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) tabcontent[i].classList.remove("active");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
             tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) tablinks[i].classList.remove("active");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
             document.getElementById(trackName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
 
+        // Set global ChartJS defaults matching the warm pastel aesthetic
         Chart.defaults.font.family = 'Pretendard';
-        Chart.defaults.color = '#6a4f56';
+        Chart.defaults.color = '#6A5250';
 
         function initCharts() {
+            // Chart 1: Deepfake requests counts (Pink themed)
             new Chart(document.getElementById('deepfakeChart').getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: ['2019', '2020', '2021', '2022', '2023'],
                     datasets: [{
                         label: '요청 건수',
-                        data:[473, 1913, 3574, 7187, 10305],
-                        backgroundColor: '#FF85A1',
-                        borderRadius: 10
+                        data: [473, 1913, 3574, 7187, 10305],
+                        backgroundColor: 'rgba(255, 142, 143, 0.85)',
+                        borderColor: '#FF8E8F',
+                        borderWidth: 1.5,
+                        borderRadius: 12
                     }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false } 
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(106, 82, 80, 0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
             });
+
+            // Chart 2: AI Procurement contract trends (Violet themed)
             new Chart(document.getElementById('aiProcurementChart').getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: ['2014년', '2023년'],
                     datasets: [{
                         label: '계약 건수',
-                        data:[134, 1033],
-                        backgroundColor: ['#D1E9FF', '#5D9CEC'],
-                        borderRadius: 15
+                        data: [134, 1033],
+                        backgroundColor: ['rgba(232, 211, 255, 0.95)', 'rgba(177, 175, 255, 0.9)'],
+                        borderColor: ['#E8D3FF', '#B1AFFF'],
+                        borderWidth: 1.5,
+                        borderRadius: 16
                     }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false } 
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(106, 82, 80, 0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
             });
         }
 
+        // Onload Initialization
         window.onload = function() {
             lucide.createIcons();
             initCharts();
-            createBgDecoration();
+            
+            // Smooth Scroll Setup for Anchor Tag Navigations (Except relative directory movements)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
-                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
                 });
             });
         };
