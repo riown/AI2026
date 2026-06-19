@@ -206,6 +206,79 @@
   <!-- Main Content Container -->
   <main class="max-w-7xl mx-auto px-4 space-y-12">
 
+    <!-- 신규 추가 섹션: 부산광역시 당면 과제: 3대 핵심 위기 요인 -->
+    <section id="challenges" class="clay-card p-6 md:p-10">
+      <div class="border-b border-[#FFB3B3]/20 pb-5 mb-8">
+        <span class="text-xs font-bold text-[#FF8E8F] uppercase tracking-wider block mb-2">Crucial Challenges</span>
+        <h3 class="text-xl md:text-2xl font-black text-[#5D4D4B]">부산광역시 당면 과제: 3대 핵심 위기 요인</h3>
+        <p class="text-[#8A7573] text-xs mt-2 leading-relaxed">
+          본 분석을 통해 도출한 부산광역시의 주요 현안은 다음과 같이 세 가지 차원으로 요약할 수 있습니다.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 위기 요인 1 -->
+        <div class="clay-inner-card p-6 flex flex-col justify-between hover:scale-[1.01] transition-transform duration-300">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <span class="bg-[#FFB3B3]/20 text-[#FF8E8F] w-8 h-8 rounded-full flex items-center justify-center font-black text-xs">01</span>
+              <h4 class="font-extrabold text-[#5D4D4B] text-sm leading-tight">경제 활력의 불균형과<br>공간적 쏠림 현상</h4>
+            </div>
+            <div class="space-y-3.5 text-xs text-[#8A7573] leading-relaxed">
+              <p>
+                <span class="font-bold text-[#5D4D4B] block mb-1">■ 특징</span>
+                강서구는 사업체 및 종사자 수가 급증하며 핵심지로 부상하는 반면, 사상구 등 전통 산업 지역과 원도심은 활력이 정체 또는 감소하여 지역 격차가 심화하고 있습니다.
+              </p>
+              <p>
+                <span class="font-bold text-[#5D4D4B] block mb-1">■ 문제점</span>
+                경제 성장 에너지가 특정 구군에 편중됨에 따라 시 전체의 고른 발전과 내부 균형 발전 동력이 지속적으로 약화되는 결과를 낳습니다.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 위기 요인 2 -->
+        <div class="clay-inner-card p-6 flex flex-col justify-between hover:scale-[1.01] transition-transform duration-300">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <span class="bg-[#B1AFFF]/20 text-[#B1AFFF] w-8 h-8 rounded-full flex items-center justify-center font-black text-xs">02</span>
+              <h4 class="font-extrabold text-[#5D4D4B] text-sm leading-tight">청년 인구 유출로 인한<br>인구 절벽 심화</h4>
+            </div>
+            <div class="space-y-3.5 text-xs text-[#8A7573] leading-relaxed">
+              <p>
+                <span class="font-bold text-[#5D4D4B] block mb-1">■ 특징</span>
+                강서구를 제외한 대부분의 자치구에서 청년 순이동률이 마이너스를 기록하는 등, 부산 전역에 걸쳐 전방위적인 청년 유출 흐름이 지속되고 있습니다.
+              </p>
+              <p>
+                <span class="font-bold text-[#5D4D4B] block mb-1">■ 문제점</span>
+                양질의 일자리와 기회를 찾아 청년층이 시외로 대거 이탈하고 있으며, 이는 향후 장기적인 도시 지속 가능성을 직접 위협하는 구조적 원인이 됩니다.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 위기 요인 3 -->
+        <div class="clay-inner-card p-6 flex flex-col justify-between hover:scale-[1.01] transition-transform duration-300">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <span class="bg-[#FFE3D1] text-[#8A7573] border border-[#FFB3B3]/20 w-8 h-8 rounded-full flex items-center justify-center font-black text-xs">03</span>
+              <h4 class="font-extrabold text-[#5D4D4B] text-sm leading-tight">기초지자체 재정 자립성 약화와<br>악순환의 고리</h4>
+            </div>
+            <div class="space-y-3.5 text-xs text-[#8A7573] leading-relaxed">
+              <p>
+                <span class="font-bold text-[#5D4D4B] block mb-1">■ 특징</span>
+                전체 재정자립도가 하락하는 가운데 특히 영도구와 북구 등은 자립도가 10% 미만에 머무는 등 자치구별 격차가 극심하게 나타납니다.
+              </p>
+              <p>
+                <span class="font-bold text-[#5D4D4B] block mb-1">■ 문제점</span>
+                ‘경제 활력 저하 → 청년 인구 이탈 → 재정 악화’의 악순환이 고착화되어, 시 차원의 재정 조정과 산업 고도화 같은 기민한 대책 마련이 긴요합니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Section 1: Executive Summary -->
     <section id="summary" class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="md:col-span-1 clay-card p-8 flex flex-col justify-between">
@@ -361,7 +434,7 @@
               <canvas id="heatmapChart" class="max-h-[310px] w-full"></canvas>
             </div>
             <p class="text-[10px] text-[#8A7573] text-center mt-3">
-              * 히트맵 버블 크기 및 색상이 짙을수록 상관계수가 1.0(정적 상관) 또는 -1.0(부적 상관)에 가까움을 의미합니다.
+              * 히트맵 버러 크기 및 색상이 짙을수록 상관계수가 1.0(정적 상관) 또는 -1.0(부적 상관)에 가까움을 의미합니다.
             </p>
           </div>
         </div>
@@ -790,7 +863,7 @@
         {x: 0, y: 6, r: 0.228}, {x: 1, y: 6, r: 0.112}, {x: 2, y: 6, r: 0.153}, {x: 3, y: 6, r: -0.177}, {x: 4, y: 6, r: 0.293}, {x: 5, y: 6, r: 0.877}, {x: 6, y: 6, r: 1.000},
         {x: 0, y: 5, r: 0.447}, {x: 1, y: 5, r: 0.208}, {x: 2, y: 5, r: 0.252}, {x: 3, y: 5, r: -0.159}, {x: 4, y: 5, r: 0.384}, {x: 5, y: 5, r: 1.000}, {x: 6, y: 5, r: 0.877},
         {x: 0, y: 4, r: 0.523}, {x: 1, y: 4, r: 0.130}, {x: 2, y: 4, r: 0.162}, {x: 3, y: 4, r: -0.617}, {x: 4, y: 4, r: 1.000}, {x: 5, y: 4, r: 0.384}, {x: 6, y: 4, r: 0.293},
-        {x: 0, y: 3, r: 0.001}, {x: 1, y: 3, r: 0.570}, {x: 2, y: 3, r: 0.568}, {x: 3, y: 3, r: 1.000}, {x: 4, y: 3, r: -0.617}, {x: 5, y: 3, r: -0.159}, {x: 6, y: 3, r: -0.177},
+        {x: 0, y: 3, r: 0.001}, {x: 1, y: 3, r: 0.570}, {x: 2, y: 3, r: 0.568}, {x: 3, y: 3, r: 1.000}, {x: 4, y: 3, r: -0.617}, {x: 5, y: 3, r: -0.159}, {x: 5, y: 3, r: -0.177},
         {x: 0, y: 2, r: 0.664}, {x: 1, y: 2, r: 0.976}, {x: 2, y: 2, r: 1.000}, {x: 3, y: 2, r: 0.568}, {x: 4, y: 2, r: 0.162}, {x: 5, y: 2, r: 0.252}, {x: 6, y: 2, r: 0.153},
         {x: 0, y: 1, r: 0.658}, {x: 1, y: 1, r: 1.000}, {x: 2, y: 1, r: 0.976}, {x: 3, y: 1, r: 0.570}, {x: 4, y: 1, r: 0.130}, {x: 5, y: 1, r: 0.208}, {x: 6, y: 1, r: 0.112},
         {x: 0, y: 0, r: 1.000}, {x: 1, y: 0, r: 0.658}, {x: 2, y: 0, r: 0.664}, {x: 3, y: 0, r: 0.001}, {x: 4, y: 0, r: 0.523}, {x: 5, y: 0, r: 0.447}, {x: 6, y: 0, r: 0.228},
